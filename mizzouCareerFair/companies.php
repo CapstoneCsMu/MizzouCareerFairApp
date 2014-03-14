@@ -23,29 +23,41 @@
  <body> 
     <div data-role="page" data-theme="a"> 
          <div data-role="header"> 
-               <h1>Mizzou Career Fair Application</h1>
+               <h1>Companies</h1>
 				<a href="../../" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 		<a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
          </div>
 		 
          <div data-role="content">      
                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
-                     <li data-role="list-divider">Options</li> 
-                     <li><a href="companies.php">Companies</a></li> 
-                     <li><a href="option2.html">Fair Map</a></li> 
-                     <li><a href="option3.html">Events</a></li> 
-                     <li><a href="option4.html">Announcements</a></li> 
-					 <li><a href="option5.html">Career Fair 101</a></li>
-					 <li><a href="option6.html">Support</a></li>
-					 <li><a href="option7.html">Fairs</a></li>
-					 <li><a href="option8.html">Updates</a></li>
-               </ul>           
+                     <li data-role="list-divider">Full Time</li> 
+                     <li><a href="companies.php">3M</a></li> 
+                     <li><a href="option2.html">ABB, Inc.</a></li> 
+                     <li><a href="option3.html">Ameren</a></li> 
+                     <li><a href="option4.html">Anheuser-Busch</a></li> 
+					 <li><a href="option5.html">Burns and McDonnell</a></li>
+					 <li><a href="option6.html">Cerner</a></li>
+					 <li><a href="option7.html">Commerce Bank</a></li>
+					 <li><a href="option8.html">IBM</a></li>
+               </ul>
+
+				 <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
+                     <li data-role="list-divider">Internships</li> 
+                     <li><a href="companies.php">3M</a></li> 
+                     <li><a href="option2.html">DISH</a></li> 
+                     <li><a href="option3.html">Express-Scripts</a></li> 
+                     <li><a href="option4.html">Garmin International</a></li> 
+					 <li><a href="option5.html">Georgia-Pacific</a></li>
+					 <li><a href="option6.html">IBM</a></li>
+					 <li><a href="option7.html">Laclede Gas Company</a></li>
+					 <li><a href="option8.html">Mindtree Ltd</a></li>
+               </ul>
          </div>
 
 <div data-role="footer" data-position="fixed">		 
         <div data-role="footer">
-				<input type="text" name="name" placeholder="Search the Career Fair"id="basic" value="" data-mini="true" />
-
+		
+		<input type="text" name="name" placeholder="Search the Career Fair"id="basic" value="" data-mini="true" />
          <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
         </div> 
     </div> 

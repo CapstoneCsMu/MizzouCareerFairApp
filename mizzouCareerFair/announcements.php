@@ -23,14 +23,14 @@
  <body> 
     <div data-role="page" data-theme="a"> 
          <div data-role="header"> 
-               <h1>Mizzou Career Fair Application</h1>
+               <h1>Companies</h1>
 				<a href="../../" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 		<a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
          </div>
 		 
          <div data-role="content">      
                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
-                     <li data-role="list-divider">Options</li> 
+                     <li data-role="list-divider">Full Time </li> 
                      <li><a href="companies.php">Companies</a></li> 
                      <li><a href="option2.html">Fair Map</a></li> 
                      <li><a href="option3.html">Events</a></li> 
@@ -44,8 +44,8 @@
 
 <div data-role="footer" data-position="fixed">		 
         <div data-role="footer">
-				<input type="text" name="name" placeholder="Search the Career Fair"id="basic" value="" data-mini="true" />
-
+		
+		<input type="text" name="name" placeholder="Search the Career Fair"id="basic" value="" data-mini="true" />
          <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
         </div> 
     </div> 
