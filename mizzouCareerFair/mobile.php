@@ -24,7 +24,7 @@
     <div data-role="page" data-theme="a"> 
          <div data-role="header"> 
                <h1>Mizzou Career Fair Application</h1>
-				<a href="../../" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+				<a href="mobile.php" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 		<a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
          </div>
 		 
@@ -32,8 +32,8 @@
                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
                      <li data-role="list-divider">Options</li> 
                      <li><a href="companies.php">Companies</a></li> 
-                     <li><a href="option2.html">Fair Map</a></li> 
-                     <li><a href="option3.html">Events</a></li> 
+                     <li><a href="fairmap.php">Fair Map</a></li> 
+                     <li><a href="events.php">Events</a></li> 
                      <li><a href="option4.html">Announcements</a></li> 
 					 <li><a href="option5.html">Career Fair 101</a></li>
 					 <li><a href="option6.html">Support</a></li>
