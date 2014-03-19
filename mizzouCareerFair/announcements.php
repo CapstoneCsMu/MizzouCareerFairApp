@@ -23,21 +23,16 @@
  <body> 
     <div data-role="page" data-theme="a"> 
          <div data-role="header"> 
-               <h1>Companies</h1>
-				<a href="../../" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+               <h1>Announcements</h1>
+				<a href="mobile.php" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
 		<a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
          </div>
 		 
          <div data-role="content">      
                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
-                     <li data-role="list-divider">Full Time </li> 
-                     <li><a href="companies.php">Companies</a></li> 
-                     <li><a href="option2.html">Fair Map</a></li> 
-                     <li><a href="option3.html">Events</a></li> 
-                     <li><a href="option4.html">Announcements</a></li> 
-					 <li><a href="option5.html">Career Fair 101</a></li>
-					 <li><a href="option6.html">Support</a></li>
-					 <li><a href="option7.html">Fairs</a></li>
+                     <li data-role="list-divider">Career Fair Announcements </li> 
+                     <li><a href="option">New Companies</a></li> 
+                     <li><a href="option2.html">Changed Booth Locations</a></li> 
 					 <li><a href="option8.html">Updates</a></li>
                </ul>           
          </div>

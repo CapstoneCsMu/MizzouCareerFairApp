@@ -34,20 +34,40 @@
                      <li><a href="companies.php">Companies</a></li> 
                      <li><a href="fairmap.php">Fair Map</a></li> 
                      <li><a href="events.php">Events</a></li> 
-                     <li><a href="option4.html">Announcements</a></li> 
-					 <li><a href="option5.html">Career Fair 101</a></li>
+                     <li><a href="announcements.php">Announcements</a></li> 
+					 <li><a href="option5.html">Career Fair Neccessities</a></li>
 					 <li><a href="option6.html">Support</a></li>
 					 <li><a href="option7.html">Fairs</a></li>
 					 <li><a href="option8.html">Updates</a></li>
-               </ul>           
+			   </ul>
+
+				<ul data-role="listview" data-inset="true" data-dividertheme="b"> 
+                     <li data-role="list-divider">Sign In To Check In With Recruiters</li> 
+                     <li><a href="linkedinpop.php">LinkedIn - Sign In!</a></li>
+					 <li><a href="tigerspop.php">Mizzou Tigers - Sign In!</a></li>
+				</ul>
          </div>
 
-<div data-role="footer" data-position="fixed">		 
-        <div data-role="footer">
+		<div data-role="footer" data-position="fixed">		 
+			<div data-role="footer">
 				<input type="text" name="name" placeholder="Search the Career Fair"id="basic" value="" data-mini="true" />
-
          <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
         </div> 
-    </div> 
-    </body> 
+		</div>
+		
+		<div data-role="page" data-dialog="true" id="linkedinpop">
+			<div data-role="header">
+				<h1>Log in with LinkedIn</h1>
+			</div>
+			
+			<div data-role="main" class="ui-content">
+				<p>You have the ability to Check In at the Employer Booths.  If you would like the Recruiters to have your LinkedIn profile sent to them Sign In Here</p>
+				<a href="mobile.php">Back to Home</a>
+			</div>
+			
+			<div data-role="footer">
+				<h1>LinkedIn Sign In</h1>
+			</div>
+		</div>
+	</body> 
     </html>
