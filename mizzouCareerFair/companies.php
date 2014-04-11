@@ -25,13 +25,23 @@
          <div data-role="header"> 
                <h1>Companies</h1>
 				<a href="mobile.php" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
-		<a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
-         </div>
+		 <a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
+         </div
 		 
          <div data-role="content">      
                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
                      <li data-role="list-divider">Full Time</li> 
-                     <li><a href="companies.php">3M</a></li> 
+               		<?php
+                     include 'companyParse.php';
+                     
+					 //sort names alphabetically and print them as list options
+					 asort($companyNames);
+					 $i = 1;
+                     foreach($companyNames as $companyName => $val)
+                     	echo "<li><a href=\"option".$i.".html\">".$val."</a></li>";
+							$i++;
+            		?>
+            		<!--?<li><a href="companies.php">3M</a></li> 
                      <li><a href="option2.html">ABB, Inc.</a></li> 
                      <li><a href="option3.html">Ameren</a></li> 
                      <li><a href="option4.html">Anheuser-Busch</a></li> 
@@ -51,7 +61,9 @@
 					 <li><a href="option6.html">IBM</a></li>
 					 <li><a href="option7.html">Laclede Gas Company</a></li>
 					 <li><a href="option8.html">Mindtree Ltd</a></li>
+               --!>
                </ul>
+               
          </div>
 
 <div data-role="footer" data-position="fixed">		 

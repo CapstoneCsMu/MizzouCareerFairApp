@@ -61,6 +61,17 @@ CREATE TABLE careerSchema.companies (
 	PRIMARY KEY (companyID)
 );
 
+DROP TABLE IF EXISTS careerSchema.rssinfo;
+CREATE TABLE careerSchema.rssinfo(
+	rss varchar(2000),
+	name varchar(50),
+	positionsAvailable varchar(300),
+	majors varchar(300),
+	positionTypes varchar(50),
+	location varchar(50),
+	entryTime timestamp NOT NULL default CURRENT_TIMESTAMP
+);
+
 INSERT INTO careerSchema.companies 
 VALUES 	('3M', '3M is a global innovation company that never stops inventing. Over the years, our innovations have improved daily life for hundreds of millions of people all over the world. We have made driving at night easier, made buildings safer, and made consumer electronics lighter, less energy-intensive and less harmful to the environment. We even helped put a man on the moon. Every day at 3M, one idea always leads to the next, igniting momentum to make progress possible around the world.', 'Location: Columbia & Nevada, MO','Website: http://www.mmm.com','Bio-Medical Engineers, Chemical Engineers, Industrial Engineers, Electrical Engineers, Manufacturing Engineer, Process Engineer, Product Engineer', 'Industrial & Manufacturing Systems Engineering, Chemical Engineering, Mechanical & Aerospace Engineering', 'Full-time', 'U.S. Citizen or National'),
 		('ABB, Inc.','ABB Inc.s Jefferson City facility is a major supplier of distribution transformers for the North American market. The factory includes significant production, engineering and marketing resources, as well as a full complement of operational support including supply management, quality, finance & accounting and human resources. ABB Group is a global company based in Zurich, Switzerland with over 140,000 employees worldwide. ABB is one of the worlds leading power and automation technology companies.', 'location', 'www.ABB.com', 'Electrical Engineering, Mechanical Engineering, Process Engineering, Sales Engineers, Marketing', 'Engineering, Business', 'Full-time, Internship/Coop','TBD'),			

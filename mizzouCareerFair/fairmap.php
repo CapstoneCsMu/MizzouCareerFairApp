@@ -24,7 +24,7 @@
     <div data-role="page" data-theme="a"> 
          <div data-role="header"> 
                <h1>Mizzou Career Fair App Hearnes Map</h1>
-				<a href="mobile.php/" data-icon="home" data-iconpos="notext" data-direction="reverse">Home</a>
+				<a href="mobile.php/" data-icon="home" data-iconpos="notext" data-direction="reverse" data-transition="flip">Home</a>
 				<a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
          </div>
 		 

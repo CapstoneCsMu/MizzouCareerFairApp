@@ -31,14 +31,14 @@
          <div data-role="content">      
                <ul data-role="listview" data-inset="true" data-dividertheme="b"> 
                      <li data-role="list-divider">Options</li> 
-                     <li><a href="companies.php">Companies</a></li> 
-                     <li><a href="fairmap.php">Fair Map</a></li> 
-                     <li><a href="events.php">Events</a></li> 
-                     <li><a href="announcements.php">Announcements</a></li> 
-					 <li><a href="option5.html">Career Fair Neccessities</a></li>
-					 <li><a href="option6.html">Support</a></li>
-					 <li><a href="option7.html">Fairs</a></li>
-					 <li><a href="option8.html">Updates</a></li>
+                     <li><a href="companies.php" data-transition="flip">Companies</a></li> 
+                     <li><a href="fairmap.php" data-transition="flip">Fair Map</a></li> 
+                     <li><a href="events.php" data-transition="flip">Events</a></li> 
+                     <li><a href="announcements.php" data-transition="flip">Announcements</a></li> 
+					 <li><a href="option5.html" data-transition="flip">Career Fair Neccessities</a></li>
+					 <li><a href="option6.html"data-transition="flip">Support</a></li>
+					 <li><a href="option7.html" data-transition="flip">Fairs</a></li>
+					 <li><a href="option8.html" data-transition="flip">Updates</a></li>
 			   </ul>
 
 				<ul data-role="listview" data-inset="true" data-dividertheme="b"> 
