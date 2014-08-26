@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    
+    <!-- Include CSS and JQM CSS -->
+    <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
+    <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
+    <link href=
+    "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
+    rel="stylesheet">
+    
+    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src=
+    "http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+    
+    <!-- Include JS file for our JS -->
+    <script src="js/index.js"></script>
+    
+    <!-- Include LinkedIn Framework, API Key Unique to Us -->
+    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+  		api_key: 75a6k7ahbjlrny
+	</script>
+
+    <title>
+    </title>
+</head>
+
+<body>
+    <div data-role="page" data-theme="a" id="home">
+        <div data-role="header">
+            <h1 class="no-ellipses">Mizzou Careers</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="index.php">Home</a> <a data-icon="search" data-iconpos=
+            "notext" data-rel="dialog" data-transition="fade" href=
+            "search.php">Search</a>
+        </div>
+
+		<script type="in/Login">
+Hello, <?js= firstName ?> <?js= lastName ?>.
+</script>
+
+        <div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Options</li>
+
+
+                <li>
+                    <a data-transition="flip" href="#companies">Companies</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href="#companyTest">Test
+                    Company/API's</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href="#map">Fair Map</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href="#events">Events</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href=
+                    "#announcements">Announcements</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href="#">Career Fair
+                    Neccessities</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href="#">Support</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href="#">Fairs</a>
+                </li>
+
+
+                <li>
+                    <a data-transition="flip" href="#">Updates</a>
+                </li>
+            </ul>
+
+
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Sign In To Check In With
+                Recruiters</li>
+
+
+                <li>
+                    <a href="linkedinpop.php">LinkedIn - Sign In!</a>
+                </li>
+                
+
+
+                <li>
+                    <a href="tigerspop.php">Mizzou Tigers - Sign In!</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div data-position="fixed" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
+        </div>
+    </div>
+    <!-- This page should have a list of all of the companies in the RSS feed -->
+
+
+    <div data-role="page" data-theme="a" id="companies">
+        <div data-role="header">
+            <h1>Companies</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+            data-rel="dialog" data-transition="fade" href=
+            "../nav.html">Search</a>
+        </div>
+
+
+        <ul data-dividertheme="b" data-inset="true" data-role="listview">
+            <li data-role="list-divider">Full Time</li>
+            <?php
+                            include 'companyParse.php';
+                                                         
+                            //sort names alphabetically and print them as list options
+                            asort($companyNames);
+                            $i = 1;
+                            foreach($companyNames as $companyName => $val)
+                            echo "<li><a href=\"option".$i.".html\">".$val."</a></li>";
+                            $i++;
+                        ?>
+        </ul>
+    </div>
+
+	<!-- Static Data, Just to test what we can do -->
+    <div data-role="page" data-theme="a" id="companyTest">
+        <div data-role="header">
+            <h1>Companies</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+            data-rel="dialog" data-transition="fade" href=
+            "../nav.html">Search</a>
+        </div>
+
+
+        <ul data-dividertheme="b" data-inset="true" data-role="listview">
+            <li data-role="list-divider">Full Time</li>
+
+
+            <li>
+                <a href="#ibm">IBM</a>
+            </li>
+
+        </ul>
+    </div>
+    
+    <div data-role="page" data-theme="a" id="ibm">
+    	<div data-role="header">
+            <h1>IBM</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+            data-rel="dialog" data-transition="fade" href=
+            "../nav.html">Search</a>
+        </div>
+        <div>
+        	<h3>Company Information:
+        	</h3>
+        	The International Business Machines Corporation (IBM) is an American multinational technology and consulting corporation, with headquarters in Armonk, New York, United States. IBM manufactures and markets computer hardware and software, and offers infrastructure, hosting and consulting services in areas ranging from mainframe computers to nanotechnology.
+        </div>
+        
+    </div>
+
+
+    <div data-role="page" data-theme="a" id="map">
+        <div data-role="header">
+            <h1>Mizzou Career Fair App Hearnes Map</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+
+        <div data-role="content"><img alt="Fair Map" src="images/fairmap.jpg"
+        style="width:100%">
+        </div>
+
+
+        <div data-position="fixed" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
+        </div>
+    </div>
+
+
+    <div data-role="page" data-theme="a" id="events">
+        <div data-role="header">
+            <h1>Career Fair Events</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+
+        <div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">On Campus Preparation</li>
+
+
+                <li>
+                    <a href="option">Resume Review</a>
+                </li>
+
+
+                <li>
+                    <a href="option2.html">Planning Your Career Fair</a>
+                </li>
+
+
+                <li>
+                    <a href="option3.html">How To Act Proffesional</a>
+                </li>
+            </ul>
+
+
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">How To's and Tutorials</li>
+
+
+                <li>
+                    <a href="option">Dress for Success</a>
+                </li>
+
+
+                <li>
+                    <a href="option2.html">Standing Out</a>
+                </li>
+
+
+                <li>
+                    <a href="option3.html">Making Your Speech Count</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div data-position="fixed" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
+        </div>
+    </div>
+
+
+    <div data-role="page" data-theme="a" id="announcements">
+        <div data-role="header">
+            <h1>Announcements</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+
+        <div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Career Fair Announcements</li>
+
+
+                <li>
+                    <a href="option">New Companies</a>
+                </li>
+
+
+                <li>
+                    <a href="option2.html">Changed Booth Locations</a>
+                </li>
+
+
+                <li>
+                    <a href="option8.html">Updates</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div data-position="fixed" data-role="footer" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
+        </div>
+    </div>
+</body>
+</html>

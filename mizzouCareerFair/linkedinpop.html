@@ -1,5 +1,12 @@
-
-<div data-role="page" data-dialog="true" id="linkedinpop">
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+  api_key: 75p162g90ec3uj
+</script>
+</head>
+<body>
+<div data-role="popup" data-dialog="true" id="linkedinpop">
 			<div data-role="header">
 				<h1>Log in with LinkedIn</h1>
 			</div>
@@ -15,6 +22,9 @@
 							<input type="text" name="name" id="name"> 
 					</div>
 					<input type="submit" data-inline="true" value="Submit">
+					<script type="in/Login">
+					Hello, <?js= firstName ?> <?js= lastName ?>.
+					</script>
 				</form>
 				
 				<a href="mobile.php">Back to Home</a>
@@ -24,3 +34,5 @@
 				<h1>LinkedIn Sign In</h1>
 			</div>
 </div>
+</body>
+</html>
