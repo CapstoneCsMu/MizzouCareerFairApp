@@ -11,11 +11,15 @@ $query = 'SELECT * FROM careerSchema.rssinfo ORDER BY entryTime DESC LIMIT 1';
 $result =  pg_query($query) or die('Query failed: ' . pg_last_error());
 $line = pg_fetch_array($result, null, PGSQL_ASSOC);
 
+// RSS URL
 $link = $line['rss'];
+
+// Location of 
 $name = $line['name'];
 
 //load rss feed
 $xml=simplexml_load_file($link);
+
 //get number of items in feed
 $length = sizeof($xml->channel->item);
 
@@ -43,8 +47,8 @@ for($i = 0; $i<$length; $i++){
 /*for($i=0; $i<sizeof($companyNames); $i++){
 
 	echo $companyNames[$i]."<br>";
-}
-*/
+}*/
+
 
 ?>
 </html>
