@@ -1,6 +1,6 @@
 <div data-role="page" data-dialog="true" id="linkedinpop">
 			<div data-role="header">
-				<h1>Log in with Your PawPrint</h1>
+				<h1>PawPrint Login</h1>
 			</div>
 			
 			<div data-role="main" class="ui-content">
