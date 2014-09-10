@@ -5,11 +5,13 @@
  
  </head> 
  <body>
- 
+ <center>In order to populate a new RSS field, please enter the URL to the RSS field and click submit.</center></br>
+ <center>
 <form method="post" action="" id="link">
 	<input type="text" name="link" placeholder="RSS Link"></input>
 	<input type="submit" name="submitLink"></input>
 </form>
+</center>
 
 <?php
 	include ("data.php");
