@@ -2,7 +2,7 @@
 <title>Company Data</title>
 
 <?php
-
+//Include Database information
 include ("data.php");
 
 //get rss info from database
@@ -23,7 +23,7 @@ $xml=simplexml_load_file($link);
 //get number of items in feed
 $length = sizeof($xml->channel->item);
 
-//get content of each item
+//Read the XML File Company by Company
 for($i = 0; $i<$length; $i++){
 	$content  = $xml->channel->item[$i]->children("http://purl.org/rss/1.0/modules/content/");
 	$companyData = $content->encoded;
@@ -32,23 +32,25 @@ for($i = 0; $i<$length; $i++){
 	$table = $dom->loadHTML($companyData);
 	$dom->preserveWhiteSpace = false;
 	$tables = $dom->getElementsByTagName('table');
-	$rows = $tables->item(0)->getElementsByTagName('tr');
-	
-	
-	foreach($rows as $row){
+	$rows= $tables->item(0)->getElementsByTagName('tr');
+
+	$j = 0;
+	//Look at this company's cluster of Data
+	foreach($rows as $row)
+	{
 		$cols = $row->getElementsByTagName('td');
+		// FYI: item(0) holds the type of data while item(1) holds the value
 		if($cols->item(0)->nodeValue == $name){
 			$companyNames[$i] = $cols->item(1)->nodeValue;
 			}
-		}
-	
+
+		//Store this Company's data in a 2-dimensional array. The first dimension holds the company's index, while the second dimension holds all of it's bits of data such as name, city, state, etc.
+		$companyDataKey[$i][$j] = $cols->item(0)->nodeValue;
+		$companyDataValue[$i][$j] = $cols->item(1)->nodeValue;
+		$j++;
+	}
+	// Used for Looking up Company's rank after the names are sorted alphabetically so we can grab the rest of the company's data
+	$companeeNames = $companyNames;
 }
-
-/*for($i=0; $i<sizeof($companyNames); $i++){
-
-	echo $companyNames[$i]."<br>";
-}*/
-
-
 ?>
 </html>
