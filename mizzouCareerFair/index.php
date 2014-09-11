@@ -9,6 +9,7 @@
     <!-- Include CSS and JQM CSS -->
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
+	
     <link href=
     "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
     rel="stylesheet">
@@ -102,7 +103,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
     <!-- This page should have a list of all of the companies in the RSS feed 
     
-    	 The data in RSS must made useful and unique so we know what companys we are using
+    	 The data in RSS must made useful and unique so we know what companies we are using
     -->
 
     <div data-role="page" data-theme="a" id="companies">
@@ -118,9 +119,8 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
       		<input id="companyFilter" data-type="search">
     	</form>
 
-		<!-- List of all of the companies at the career fair -->
-		
-		<!-- As list populates each company becomes href=#company(i) so that each company can be accessed as an individual page -->
+		<!-- List all of the companies at the career fair
+		As list populates each company becomes href=#company(i) so that each company can be accessed as an individual page -->
         <ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
             <li data-role="list-divider">Full Time</li>
             <?php
@@ -131,15 +131,17 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                             $i = 1;
                             foreach($companyNames as $companyName => $val)
                             {
-                            	echo "<li><a href=\"#company".$i."\">".$val."</a></li>";
+								echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
                             	$i++;
-                            	
-                            	// make a page for each company dynamically here
-                            	// build up HTML string for the next pages
                             }
-                        ?>
+            ?>
         </ul>
     </div>
+	
+	<?php
+	//Load a page for each company dynamically
+	include('companyLoad.php');
+	?>
 
 	<!-- Static Data, Just to test what we can do -->
     <div data-role="page" data-theme="a" id="companyTest">
