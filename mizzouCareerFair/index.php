@@ -28,7 +28,106 @@
   		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
+	
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+	
+	 <script type="text/javascript">
+            $(document).on("pageinit", "#map_page", function() {
+                initialize();
+            });
 
+            $(document).on('click', '#submit', function(e) {
+                e.preventDefault();
+                calculateRoute();
+            });
+
+            var directionDisplay,
+                directionsService = new google.maps.DirectionsService(),
+                map;
+
+            function initialize() 
+            {
+                directionsDisplay = new google.maps.DirectionsRenderer();
+                var mapCenter = new google.maps.LatLng(38.9343, -92.3306);
+
+                var myOptions = {
+                    zoom:10,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: mapCenter
+                }
+
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                directionsDisplay.setMap(map);
+                directionsDisplay.setPanel(document.getElementById("directions"));
+
+				
+				
+				navigator.geolocation.getCurrentPosition(showPosition);
+				var latlon;
+				
+				function showPosition(pos) {
+					var latlon = pos.coords.latitude+","+pos.coords.longitude;
+					console.log(latlon);
+					
+					$('#from').val(latlon);
+				};
+            }
+
+			
+			
+			
+            function calculateRoute() 
+            {
+				var x = document.getElementById("map_canvas");
+				
+				navigator.geolocation.getCurrentPosition(showPosition);
+				var latlon;
+				
+				function showPosition(pos) {
+					var latlon = pos.coords.latitude+","+pos.coords.longitude;
+					console.log(latlon);
+					
+				};
+					
+			
+			
+                var selectedMode = $("#mode").val(),
+                    start = $("#from").val(),
+                    end = $("#to").val();
+
+                if(start == '' || end == '')
+                {
+                    // cannot calculate route
+                    $("#results").hide();
+                    return;
+                }
+                else
+                {
+                    var request = {
+                        origin:start, 
+                        destination:end,
+                        travelMode: google.maps.DirectionsTravelMode[selectedMode]
+                    };
+
+                    directionsService.route(request, function(response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setDirections(response); 
+                            $("#results").show();
+                            /*
+                                var myRoute = response.routes[0].legs[0];
+                                for (var i = 0; i < myRoute.steps.length; i++) {
+                                    alert(myRoute.steps[i].instructions);
+                                }
+                            */
+                        }
+                        else {
+                            $("#results").hide();
+                        }
+                    });
+
+                }
+            }
+        </script>
    
 </head>
 
@@ -61,6 +160,10 @@
                     <a data-transition="flip" href="#companyTest">Test
                     Company/API's this is Static</a>
                 </li>
+                
+                <li>
+                    <a data-transition="flip" href="#map_page">Directions to Fair-In Progress</a>
+                </li>
 
 
                 <li>
@@ -73,7 +176,7 @@
                 </li>
 
                 <li>
-                    <a data-transition="flip" href="#">Fairs</a>
+                    <a data-transition="flip" href="fairSelection.php">Fairs</a>
                 </li>
             </ul>
 
@@ -99,8 +202,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         </div>
 
     </div>
-
-
+	
     <!-- This page should have a list of all of the companies in the RSS feed 
     
     	 The data in RSS must made useful and unique so we know what companies we are using
@@ -121,29 +223,52 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
 		<!-- List all of the companies at the career fair
 		As list populates each company becomes href=#company(i) so that each company can be accessed as an individual page -->
+
         <ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
             <li data-role="list-divider">Full Time</li>
             <?php
-                            include 'companyParse.php';
-                                                         
-                            //sort names alphabetically and print them as list options
-                            asort($companyNames);
-                            $i = 1;
-                            foreach($companyNames as $companyName => $val)
-                            {
-								echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-                            	$i++;
-                            }
+			//Parse the XML File
+			include 'companyParse.php';
+			
+			//If RSS Feed is down
+			if (!$link)
+			{
+				echo 'The RSS Feed is broken right now, Sorry about that...';
+			}
+			else
+			{
+				//sort names alphabetically and print them as list options
+				asort($companyNames);
+				$i = 1;
+				foreach($companyNames as $companyName => $val)
+				{
+					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
+					$i++;
+				}
+			}
             ?>
         </ul>
     </div>
+
+	<div data-role="page" data-theme="a" id="companyDetails">
+        <div data-role="header" data-position="fixed">
+            <h1>Company Details</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+            data-rel="dialog" data-transition="fade" href=
+            "../nav.html">Search</a>
+        </div>
 	
+		<div data-role="content"></div>
+	
+    </div>
+
 	<?php
 	//Load a page for each company dynamically
 	include('companyLoad.php');
 	?>
 
-	<!-- Static Data, Just to test what we can do -->
+	<!-- Static Data, Just to test what we can do with some APIs-->
     <div data-role="page" data-theme="a" id="companyTest">
         <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
@@ -164,6 +289,51 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
         </ul>
     </div>
+    
+	
+	
+	
+	
+	
+	
+	
+    <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
+    <div data-role="page" id="map_page">
+            <div data-role="header" data-position="fixed">
+            <h1>Directions</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+            data-rel="dialog" data-transition="fade" href=
+            "../nav.html">Search</a>
+        </div>
+            <div data-role="content">
+                <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
+                    <div id="map_canvas" style="height:300px;"></div>
+                    <div data-role="fieldcontain">
+                        <label for="from">From</label> 
+                        <input type="text" id="from"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="to">To</label> 
+                        <input type="text" id="to" value="Hearnes Center 600 E Stadium Blvd, Columbia, MO 65203"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="mode" class="select">Transportation method:</label>
+                        <select name="select-choice-0" id="mode">
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLING">Bicycling</option>
+                        </select>
+                    </div>
+                    <a data-icon="navigation" data-role="button" href="#" id="submit">Get directions</a>
+                </div>
+                <div id="results" style="display:none;">
+                    <div id="directions"></div>
+                </div>
+            </div>
+        </div>
+    
+    
     
     <!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
@@ -249,25 +419,25 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                 <li data-role="list-divider">How To's and Tutorials</li>
 				
 				<li>
-                    <a href="#questions">Recruiter Questions</a>
+                    <a href="#questions">REWRITE ME Recruiter Questions</a>
                 </li>
 
                 <li>
-                    <a href="#dress">Dress for Success</a>
-                </li>
-
-
-                <li>
-                    <a href="#standOut">Standing Out</a>
+                    <a href="#dress">REWRITE ME Dress for Success</a>
                 </li>
 
 
                 <li>
-                    <a href="#speech">Making Your Speech Count</a>
+                    <a href="#standOut">REWRITE ME Standing Out</a>
+                </li>
+
+
+                <li>
+                    <a href="#speech">REWRITE ME Making Your Speech Count</a>
                 </li>
 				
 				<li>
-                    <a href="#badGrades">Bad Grades?</a>
+                    <a href="#badGrades">REWRITE ME Bad Grades?</a>
                 </li>
             </ul>
         </div>
