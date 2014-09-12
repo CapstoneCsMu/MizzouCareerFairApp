@@ -22,7 +22,6 @@
 				}
 
 				//Display the correct Data for this Company
-				//echo "<table data-role='table' id='company-table-".$i."'>";
 				echo '<center><table>';
 				for($j=0; $j < count($companyDataKey[0]); $j++)
 				{

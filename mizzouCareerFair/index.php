@@ -176,7 +176,7 @@
                 </li>
 
                 <li>
-                    <a data-transition="flip" href="#">Fairs</a>
+                    <a data-transition="flip" href="fairSelection.php">Fairs</a>
                 </li>
             </ul>
 
@@ -202,8 +202,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         </div>
 
     </div>
-
-
+	
     <!-- This page should have a list of all of the companies in the RSS feed 
     
     	 The data in RSS must made useful and unique so we know what companies we are using
@@ -229,43 +228,29 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         <ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
             <li data-role="list-divider">Full Time</li>
             <?php
-                            include 'companyParse.php';
-                                                         
-                            //sort names alphabetically and print them as list options
-                            asort($companyNames);
-                            $i = 1;
-                            foreach($companyNames as $companyName => $val)
-                            {
-								echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-                            	$i++;
-                            }
+			//Parse the XML File
+			include 'companyParse.php';
+			
+			//If RSS Feed is down
+			if (!$link)
+			{
+				echo 'The RSS Feed is broken right now, Sorry about that...';
+			}
+			else
+			{
+				//sort names alphabetically and print them as list options
+				asort($companyNames);
+				$i = 1;
+				foreach($companyNames as $companyName => $val)
+				{
+					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
+					$i++;
+				}
+			}
             ?>
         </ul>
     </div>
 
-	<!--  
-		The company details should be built up into a html string using JS or PHP and appended
-		to the content div on this page
-		
-		You can add the data by doing something like 
-		
-		$("#details-page").data("info", info[this.id]);
-		$.mobile.changePage("#company Details");
-		
-		$(document).on("pagebeforeshow", "#companyDetails", function () {
-			var info = $(this).data("info");
-			var info_view = "";
-			
-			 for (var key in info) {
-				info_view += '<div class="ui-grid-a"><div class="ui-block-a">
-				<div class="ui-bar field" style="font-weight : bold; text-align: left;">' + key + '</div></div>
-				<div class="ui-block-b"><div class="ui-bar value" style="width : 75%">' 
-				+ info[key] + '</div></div></div>'
-			}
-			
-			//add this to html
-			$(this).find("[data-role=content]").html(info_view)
-	-->
 	<div data-role="page" data-theme="a" id="companyDetails">
         <div data-role="header" data-position="fixed">
             <h1>Company Details</h1>
@@ -276,8 +261,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         </div>
 	
 		<div data-role="content"></div>
-	
-    </div>
+	</div>
 
 	<?php
 	//Load a page for each company dynamically
@@ -347,10 +331,8 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                     <div id="directions"></div>
                 </div>
             </div>
-        </div>>
-    
-    
-    
+    </div>
+
     <!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
     	<div data-role="header" data-position="fixed">

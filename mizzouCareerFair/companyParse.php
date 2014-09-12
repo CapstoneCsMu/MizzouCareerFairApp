@@ -2,20 +2,29 @@
 <title>Company Data</title>
 
 <?php
+//Grab the correct fair's rss Feed (could be Engineering, or Business Career Fair, etc.)
+if (isset($_POST['fairname']))
+	$fairName = $_POST['fairname'];
+else
+	$fairName = "2014 Fall Engineering Career Fair";
+				
 //Include Database information
 include ("data.php");
 
 //get rss info from database
 $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-$query = 'SELECT * FROM careerSchema.rssinfo ORDER BY entryTime DESC LIMIT 1';
+
+$query = "SELECT * FROM careerSchema.rssinfo WHERE fairname='".$fairName."'";
+
 $result =  pg_query($query) or die('Query failed: ' . pg_last_error());
 $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+
 
 // RSS URL
 $link = $line['rss'];
 
 // Location of 
-$name = $line['name'];
+$name = $line['companyname'];
 
 //load rss feed
 $xml=simplexml_load_file($link);
@@ -51,6 +60,7 @@ for($i = 0; $i<$length; $i++){
 	}
 	// Used for Looking up Company's rank after the names are sorted alphabetically so we can grab the rest of the company's data
 	$companeeNames = $companyNames;
+	//var_dump($companyNames);
 }
 ?>
 </html>
