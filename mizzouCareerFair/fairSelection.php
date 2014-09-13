@@ -44,6 +44,7 @@ rel="stylesheet">
 			$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 			$query = 'SELECT fairName FROM careerSchema.rssinfo ORDER BY fairName ASC';
 			$result =  pg_query($query) or die('Query failed: ' . pg_last_error());
+			//counter
 			$numOfFeeds=0;
 			while ($fair = pg_fetch_array($result, null, PGSQL_ASSOC))
 			{
