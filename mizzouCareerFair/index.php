@@ -1,3 +1,11 @@
+<?php
+	if (!isset($_SESSION))
+	{
+		session_start();
+	}
+
+	$_SESSION['filter_0'] = $_POST['filter_0'];
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -208,31 +216,36 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     	 The data in RSS must made useful and unique so we know what companies we are using
     -->
 
-    <div data-role="page" data-theme="a" id="companies">
+  <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
+			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filter</a>
         </div>
 	
 		<form class="ui-filterable">
       		<input id="companyFilter" data-type="search">
     	</form>
+		
+		
+			<div data-role="tabs">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#companies-1">All</a></li>
+						<li><a href="#filtered">Filtered</a></li>
+						<li><a href="#following">Following</a></li>
+					</ul>
+				</div>
 
-
-		<!-- List all of the companies at the career fair
-		As list populates each company becomes href=#company(i) so that each company can be accessed as an individual page -->
-
-        <ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
-            <li data-role="list-divider">Full Time</li>
-            <?php
+			<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
+			<div id="companies-1">
+			<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
+			 <?php
 			//Parse the XML File
 			include 'companyParse.php';
 			
 			//If RSS Feed is down
-			if (!$link)
+			if (!$line['rss'])
 			{
 				echo 'The RSS Feed is broken right now, Sorry about that...';
 			}
@@ -248,7 +261,70 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 				}
 			}
             ?>
-        </ul>
+			</ul>
+			</div>
+			<div id="filtered">
+				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
+					<?php
+					//Parse the XML File
+					include 'companyParse.php';
+					$succesfulFilterCount = 0;
+					$filters = NULL;
+					$filters = $_SESSION['filter0'];
+					//var_dump($_POST);
+					//$filters = 'Computer Science';
+					//If RSS Feed is down
+					if (!$line['rss'])
+					{
+						echo 'The RSS Feed is broken right now, Sorry about that...';
+					}
+					else
+					{
+						//sort names alphabetically and print them as list options
+						//asort RETAINS the previous key, pretty weird, but it helps increase the efficiency.
+						asort($companyNames);
+						$i = 1;
+						foreach($companyNames as $key => $val)
+						{
+							// Filter Statements
+							if ($filters != NULL)
+							{
+								// Step 1. Exclude companies that didn't list a major
+								if ( $company[$i]->Majors == NULL)
+									continue;
+								else
+								{
+									// Step 2. Look for Computer Science within this company's majors given
+									for ($j=0; $j < count($companyMajor[$i]); $j++)
+									{
+										//echo $company[$i]->MajorArray[$j];
+										if ($filters == $companyMajor[$i][$j])
+										{
+											echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
+											$succesfulFilterCount++;
+										}
+										else //Skip Listing of this Company
+											continue;
+									}
+								}
+							}
+							else
+							{
+								continue;
+							}
+							$i++;
+						}
+						if ($succesfulFilterCount == 0)
+							echo "</br><center>Sorry, You're Filters Did Not Return Any Results. Please Try Editing Your Filters.</center>";
+					}
+					?>
+				</ul>
+			</div>
+			
+			<div id="following">
+				<center><p>You haven't followed any companies yet.</p></center>
+			</div>
+		</div>
     </div>
 
 	<div data-role="page" data-theme="a" id="companyDetails">
