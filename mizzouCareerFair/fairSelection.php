@@ -27,6 +27,7 @@ rel="stylesheet">
 
 <!-- Include JS file for our JS -->
 <script src="js/index.js"></script>
+</head>
 
 <div data-role="page" data-theme="a" id="fairs">
 	<div data-role="header" data-position="fixed">
@@ -64,7 +65,7 @@ rel="stylesheet">
 			//Dynamically creates a form for each RSS Feed, so tha the right form can be submitted by the user.
 			for ($j=0; $j<$numOfFeeds; $j++)
 			{
-				echo '<form id="myForm'.$j.'" action="index.php" method="post">';
+				echo '<form id="myForm'.$j.'" method="post" action="index.php">';
 				echo '<input type="hidden" name="fairname" value="'.$fairForm[$j].'">';
 				echo '</form>';
 			}

@@ -3,8 +3,7 @@
 	{
 		session_start();
 	}
-
-	$_SESSION['filter_0'] = $_POST['filter_0'];
+	$_SESSION['prevPage'] = 'index.php';
  ?>
 <!DOCTYPE html>
 <html>
@@ -40,6 +39,13 @@
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
 	
 	 <script type="text/javascript">
+
+			function submitFilter()
+			{
+				document.getElementById("filterForm").submit();
+				window.alert("You're Settings have been saved.");
+			}
+
             $(document).on("pageinit", "#map_page", function() {
                 initialize();
             });
@@ -220,7 +226,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
-			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filter</a>
+			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filters</a>
         </div>
 	
 		<form class="ui-filterable">
@@ -239,7 +245,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
 			<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
 			<div id="companies-1">
-			<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
+			<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
 			 <?php
 			//Parse the XML File
 			include 'companyParse.php';
@@ -264,31 +270,51 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 			</ul>
 			</div>
 			<div id="filtered">
-				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
+				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#FILTERED" data-autodividers="true">
 					<?php
 					//Parse the XML File
 					include 'companyParse.php';
 					$succesfulFilterCount = 0;
 					$filters = NULL;
-					$filters = $_SESSION['filter0'];
-					//var_dump($_POST);
-					//$filters = 'Computer Science';
-					//If RSS Feed is down
-					if (!$line['rss'])
+					// build $filters Array 
+					// NOTE: The value 10 is Static because we will need to possibly implement a dynamic way to load Filter Options
+					$x=0;
+					for ($y=0; $y <  10; $y++)
 					{
-						echo 'The RSS Feed is broken right now, Sorry about that...';
-					}
-					else
-					{
-						//sort names alphabetically and print them as list options
-						//asort RETAINS the previous key, pretty weird, but it helps increase the efficiency.
-						asort($companyNames);
-						$i = 1;
-						foreach($companyNames as $key => $val)
+						if($_SESSION['filters']['filter_'.$y] ==NULL)
+							continue;
+						else
 						{
-							// Filter Statements
-							if ($filters != NULL)
+							$filters[$x] = $_SESSION['filters']['filter_'.$y];
+							$x++;
+						}
+					}
+
+					if($filters != NULL)
+					{
+						//If RSS Feed is down
+						if (!$line['rss'])
+						{
+							echo 'The RSS Feed is broken right now, Sorry about that...';
+						}
+						else
+						{
+							//Display Filters:
+							echo "</br><center><b>Filters: </b>";
+							for($m=1; $m <= count($filters); $m++)
 							{
+								echo $filters[$m-1];
+								if ($m != count($filters))
+									echo ' & ';
+							}
+							echo "</center></br>";
+							//sort names alphabetically and print them as list options
+							//asort RETAINS the previous key, pretty weird, but it helps increase the efficiency.
+							asort($companyNames);
+							$i = 0;
+							foreach($companyNames as $key => $val)
+							{
+								$i++;
 								// Step 1. Exclude companies that didn't list a major
 								if ( $company[$i]->Majors == NULL)
 									continue;
@@ -297,32 +323,35 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 									// Step 2. Look for Computer Science within this company's majors given
 									for ($j=0; $j < count($companyMajor[$i]); $j++)
 									{
-										//echo $company[$i]->MajorArray[$j];
-										if ($filters == $companyMajor[$i][$j])
+										for($k=0; $k < count($filters); $k++)
 										{
-											echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-											$succesfulFilterCount++;
+											//echo $company[$i]->MajorArray[$j];
+											if ($filters[$k] == $companyMajor[$i][$j])
+											{
+												echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
+												$succesfulFilterCount++;
+											}
+											else //Skip Listing of this Company
+												continue;
 										}
-										else //Skip Listing of this Company
-											continue;
 									}
 								}
 							}
-							else
-							{
-								continue;
-							}
-							$i++;
 						}
 						if ($succesfulFilterCount == 0)
 							echo "</br><center>Sorry, You're Filters Did Not Return Any Results. Please Try Editing Your Filters.</center>";
+						
+					}
+					else
+					{
+						echo "</br><center><b>No Filters have been set. Add them Above.</b></center>";
 					}
 					?>
 				</ul>
 			</div>
 			
 			<div id="following">
-				<center><p>You haven't followed any companies yet.</p></center>
+				<center><p><b>You haven't followed any companies yet.</b></p></center>
 			</div>
 		</div>
     </div>

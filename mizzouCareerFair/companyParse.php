@@ -40,7 +40,7 @@ for($i = 0; $i<$length; $i++){
 		$cols = $row->getElementsByTagName('td');
 		// FYI: item(0) holds the type of data while item(1) holds the value
 		if($cols->item(0)->nodeValue == $line['companyname']){
-			$companyNames[$i] = $cols->item(1)->nodeValue; //Needed for Sorting Algorithm. It's very difficult to sort objects in this case.
+			$companyNames[$i] = $cols->item(1)->nodeValue; //Needed for Sorting Algorithm
 			$company[$i]->Name = $cols->item(1)->nodeValue;
 			}
 		if($cols->item(0)->nodeValue == $line['positiontypes']){
@@ -48,13 +48,14 @@ for($i = 0; $i<$length; $i++){
 			}
 		if($cols->item(0)->nodeValue == $line['majors']){
 			$company[$i]->Majors = $cols->item(1)->nodeValue;
-			$companyMajor[$i] = explode(", ", $company[$i]->Majors);
+			$companyMajor[$i] = explode(", ", $company[$i]->Majors); //Neede for Filtering
 			}
 		if($cols->item(0)->nodeValue == $line['city']){
 			$company[$i]->City = $cols->item(1)->nodeValue;
 			}
 		if($cols->item(0)->nodeValue == $line['states']){
 			$company[$i]->States = $cols->item(1)->nodeValue;
+			$companyState[$i] = explode(", ", $company[$i]->States); 
 			}
 		if($cols->item(0)->nodeValue == $line['website']){
 			$company[$i]->Website = $cols->item(1)->nodeValue;
