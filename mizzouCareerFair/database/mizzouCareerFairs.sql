@@ -1,9 +1,9 @@
 -- mizzouCareerFair.sql for Mizzou Career Fair Application
 -- creates tables in database for careerSchema
 
--- team x
+-- team 4
 
-DROP SCHEMA IF EXISTS careerSchema;
+DROP SCHEMA IF EXISTS careerSchema CASCADE;
 CREATE SCHEMA careerSchema;
 
 -- Change to careerSchema and public schema
