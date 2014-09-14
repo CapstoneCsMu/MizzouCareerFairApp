@@ -79,7 +79,7 @@ CREATE TABLE careerSchema.studentAuthentication (
 );
 
 -- test student authentication data
-INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd'),('kedxw3');
+--INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd'),('kedxw3');
 
 -- NOT IMPLEMENTED
 DROP TABLE IF EXISTS careerSchema.fairs CASCADE;
@@ -174,7 +174,7 @@ CREATE TABLE careerSchema.adminAuthentication (
 );
 
 -- test admin authentication data
-INSERT INTO careerSchema.adminAuthentication VALUES ('admin'), ('thunderkiss'), ('littlejon');
+--INSERT INTO careerSchema.adminAuthentication VALUES ('admin'), ('thunderkiss'), ('littlejon');
 
 
 -- NOT IMPLEMENTED
@@ -185,7 +185,7 @@ INSERT INTO careerSchema.adminAuthentication VALUES ('admin'), ('thunderkiss'), 
 --    ip_address - The IP address of the user at the time the log was entered.
 --    log_date   - The date of the log entry. Set automatically by a default value.
 --    action     - What the user did to generate a log entry (i.e., "logged in").
-DROP TABLE careerSchema.log CASCADE;
+DROP TABLE IF EXISTS careerSchema.log CASCADE;
 CREATE TABLE careerSchema.log (
 	log_id  	SERIAL PRIMARY KEY,
 	username 	VARCHAR(30) NOT NULL,
