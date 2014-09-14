@@ -146,6 +146,16 @@
 </head>
 
 <body>
+<!--JavaScript SDK for facebook login button-->
+    <div id="fb-root"></div>
+	<script>(function(d, s, id) {
+  		var js, fjs = d.getElementsByTagName(s)[0];
+  		if (d.getElementById(id)) return;
+  		js = d.createElement(s); js.id = id;
+  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
+  		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
             <h1 class="no-ellipses">Mizzou Careers</h1>
@@ -171,8 +181,7 @@
 
 
                 <li>
-                    <a data-transition="flip" href="#companyTest">Test
-                    Company/API's this is Static</a>
+                    <a data-transition="flip" href="#companyTest">Test Company/API's this is Static</a>
                 </li>
                 
                 <li>
@@ -184,6 +193,10 @@
                     <a data-transition="flip" href="#map">Fair Map - Coming soon</a>
                 </li>
 
+		<li>
+		    <a data-transition="flip" href="announcements.php">Announcements</a>
+		</li>
+
 
                 <li>
                     <a data-transition="flip" href="#events">Events and Preparation</a>
@@ -192,6 +205,10 @@
                 <li>
                     <a data-transition="flip" href="fairSelection.php">Fairs</a>
                 </li>
+
+		<li>
+		    <a data-transition="flip" href="support.php">Support</a>
+		</li>
             </ul>
 
 
@@ -212,6 +229,8 @@
             <a><?php echo "<script type=\"in/Login\">
 Hello, <?js= firstName ?> <?js= lastName ?>.
 </script>" ?></a>
+
+	    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
             
         </div>
 
