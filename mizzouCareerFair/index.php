@@ -1,3 +1,10 @@
+<?php
+	if (!isset($_SESSION))
+	{
+		session_start();
+	}
+	$_SESSION['prevPage'] = 'index.php';
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +16,7 @@
     <!-- Include CSS and JQM CSS -->
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
+	
     <link href=
     "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
     rel="stylesheet">
@@ -27,7 +35,113 @@
   		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
+	
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+	
+	 <script type="text/javascript">
 
+			function submitFilter()
+			{
+				document.getElementById("filterForm").submit();
+				window.alert("You're Settings have been saved.");
+			}
+
+            $(document).on("pageinit", "#map_page", function() {
+                initialize();
+            });
+
+            $(document).on('click', '#submit', function(e) {
+                e.preventDefault();
+                calculateRoute();
+            });
+
+            var directionDisplay,
+                directionsService = new google.maps.DirectionsService(),
+                map;
+
+            function initialize() 
+            {
+                directionsDisplay = new google.maps.DirectionsRenderer();
+                var mapCenter = new google.maps.LatLng(38.9343, -92.3306);
+
+                var myOptions = {
+                    zoom:10,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: mapCenter
+                }
+
+                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                directionsDisplay.setMap(map);
+                directionsDisplay.setPanel(document.getElementById("directions"));
+
+				
+				
+				navigator.geolocation.getCurrentPosition(showPosition);
+				var latlon;
+				
+				function showPosition(pos) {
+					var latlon = pos.coords.latitude+","+pos.coords.longitude;
+					console.log(latlon);
+					
+					$('#from').val(latlon);
+				};
+            }
+
+			
+			
+			
+            function calculateRoute() 
+            {
+				var x = document.getElementById("map_canvas");
+				
+				navigator.geolocation.getCurrentPosition(showPosition);
+				var latlon;
+				
+				function showPosition(pos) {
+					var latlon = pos.coords.latitude+","+pos.coords.longitude;
+					console.log(latlon);
+					
+				};
+					
+			
+			
+                var selectedMode = $("#mode").val(),
+                    start = $("#from").val(),
+                    end = $("#to").val();
+
+                if(start == '' || end == '')
+                {
+                    // cannot calculate route
+                    $("#results").hide();
+                    return;
+                }
+                else
+                {
+                    var request = {
+                        origin:start, 
+                        destination:end,
+                        travelMode: google.maps.DirectionsTravelMode[selectedMode]
+                    };
+
+                    directionsService.route(request, function(response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setDirections(response); 
+                            $("#results").show();
+                            /*
+                                var myRoute = response.routes[0].legs[0];
+                                for (var i = 0; i < myRoute.steps.length; i++) {
+                                    alert(myRoute.steps[i].instructions);
+                                }
+                            */
+                        }
+                        else {
+                            $("#results").hide();
+                        }
+                    });
+
+                }
+            }
+        </script>
    
 </head>
 
@@ -60,6 +174,10 @@
                     <a data-transition="flip" href="#companyTest">Test
                     Company/API's this is Static</a>
                 </li>
+                
+                <li>
+                    <a data-transition="flip" href="#map_page">Directions to Fair-In Progress</a>
+                </li>
 
 
                 <li>
@@ -72,7 +190,7 @@
                 </li>
 
                 <li>
-                    <a data-transition="flip" href="#">Fairs</a>
+                    <a data-transition="flip" href="fairSelection.php">Fairs</a>
                 </li>
             </ul>
 
@@ -98,50 +216,164 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         </div>
 
     </div>
-
-
+	
     <!-- This page should have a list of all of the companies in the RSS feed 
     
-    	 The data in RSS must made useful and unique so we know what companys we are using
+    	 The data in RSS must made useful and unique so we know what companies we are using
     -->
 
-    <div data-role="page" data-theme="a" id="companies">
+  <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
+			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filters</a>
+        </div>
+	
+		<form class="ui-filterable">
+      		<input id="companyFilter" data-type="search">
+    	</form>
+		
+		
+			<div data-role="tabs">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#companies-1">All</a></li>
+						<li><a href="#filtered">Filtered</a></li>
+						<li><a href="#following">Following</a></li>
+					</ul>
+				</div>
+
+			<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
+			<div id="companies-1">
+			<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
+			 <?php
+			//Parse the XML File
+			include 'companyParse.php';
+			
+			//If RSS Feed is down
+			if (!$line['rss'])
+			{
+				echo 'The RSS Feed is broken right now, Sorry about that...';
+			}
+			else
+			{
+				//sort names alphabetically and print them as list options
+				asort($companyNames);
+				$i = 1;
+				foreach($companyNames as $companyName => $val)
+				{
+					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
+					$i++;
+				}
+			}
+            ?>
+			</ul>
+			</div>
+			<div id="filtered">
+				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#FILTERED" data-autodividers="true">
+					<?php
+					//Parse the XML File
+					include 'companyParse.php';
+					$succesfulFilterCount = 0;
+					$filters = NULL;
+					// build $filters Array 
+					// NOTE: The value 10 is Static because we will need to possibly implement a dynamic way to load Filter Options
+					$x=0;
+					for ($y=0; $y <  10; $y++)
+					{
+						if($_SESSION['filters']['filter_'.$y] ==NULL)
+							continue;
+						else
+						{
+							$filters[$x] = $_SESSION['filters']['filter_'.$y];
+							$x++;
+						}
+					}
+
+					if($filters != NULL)
+					{
+						//If RSS Feed is down
+						if (!$line['rss'])
+						{
+							echo 'The RSS Feed is broken right now, Sorry about that...';
+						}
+						else
+						{
+							//Display Filters:
+							echo "</br><center><b>Filters: </b>";
+							for($m=1; $m <= count($filters); $m++)
+							{
+								echo $filters[$m-1];
+								if ($m != count($filters))
+									echo ' & ';
+							}
+							echo "</center></br>";
+							//sort names alphabetically and print them as list options
+							//asort RETAINS the previous key, pretty weird, but it helps increase the efficiency.
+							asort($companyNames);
+							$i = 0;
+							foreach($companyNames as $key => $val)
+							{
+								$i++;
+								// Step 1. Exclude companies that didn't list a major
+								if ( $company[$i]->Majors == NULL)
+									continue;
+								else
+								{
+									// Step 2. Look for Computer Science within this company's majors given
+									for ($j=0; $j < count($companyMajor[$i]); $j++)
+									{
+										for($k=0; $k < count($filters); $k++)
+										{
+											//echo $company[$i]->MajorArray[$j];
+											if ($filters[$k] == $companyMajor[$i][$j])
+											{
+												echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
+												$succesfulFilterCount++;
+											}
+											else //Skip Listing of this Company
+												continue;
+										}
+									}
+								}
+							}
+						}
+						if ($succesfulFilterCount == 0)
+							echo "</br><center>Sorry, You're Filters Did Not Return Any Results. Please Try Editing Your Filters.</center>";
+						
+					}
+					else
+					{
+						echo "</br><center><b>No Filters have been set. Add them Above.</b></center>";
+					}
+					?>
+				</ul>
+			</div>
+			
+			<div id="following">
+				<center><p><b>You haven't followed any companies yet.</b></p></center>
+			</div>
+		</div>
+    </div>
+
+	<div data-role="page" data-theme="a" id="companyDetails">
+        <div data-role="header" data-position="fixed">
+            <h1>Company Details</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
             data-rel="dialog" data-transition="fade" href=
             "../nav.html">Search</a>
         </div>
 	
-		<form class="ui-filterable">
-      		<input id="companyFilter" data-type="search">
-    	</form>
+		<div data-role="content"></div>
+	</div>
 
-		<!-- List of all of the companies at the career fair -->
-		
-		<!-- As list populates each company becomes href=#company(i) so that each company can be accessed as an individual page -->
-        <ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
-            <li data-role="list-divider">Full Time</li>
-            <?php
-                            include 'companyParse.php';
-                                                         
-                            //sort names alphabetically and print them as list options
-                            asort($companyNames);
-                            $i = 1;
-                            foreach($companyNames as $companyName => $val)
-                            {
-                            	echo "<li><a href=\"#company".$i."\">".$val."</a></li>";
-                            	$i++;
-                            	
-                            	// make a page for each company dynamically here
-                            	// build up HTML string for the next pages
-                            }
-                        ?>
-        </ul>
-    </div>
+	<?php
+	//Load a page for each company dynamically
+	include('companyLoad.php');
+	?>
 
-	<!-- Static Data, Just to test what we can do -->
+	<!-- Static Data, Just to test what we can do with some APIs-->
     <div data-role="page" data-theme="a" id="companyTest">
         <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
@@ -163,6 +395,49 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         </ul>
     </div>
     
+	
+	
+	
+	
+	
+	
+	
+    <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
+    <div data-role="page" id="map_page">
+            <div data-role="header" data-position="fixed">
+            <h1>Directions</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+            data-rel="dialog" data-transition="fade" href=
+            "../nav.html">Search</a>
+        </div>
+            <div data-role="content">
+                <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
+                    <div id="map_canvas" style="height:300px;"></div>
+                    <div data-role="fieldcontain">
+                        <label for="from">From</label> 
+                        <input type="text" id="from"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="to">To</label> 
+                        <input type="text" id="to" value="Hearnes Center 600 E Stadium Blvd, Columbia, MO 65203"/>
+                    </div>
+                    <div data-role="fieldcontain">
+                        <label for="mode" class="select">Transportation method:</label>
+                        <select name="select-choice-0" id="mode">
+                            <option value="DRIVING">Driving</option>
+                            <option value="WALKING">Walking</option>
+                            <option value="BICYCLING">Bicycling</option>
+                        </select>
+                    </div>
+                    <a data-icon="navigation" data-role="button" href="#" id="submit">Get directions</a>
+                </div>
+                <div id="results" style="display:none;">
+                    <div id="directions"></div>
+                </div>
+            </div>
+    </div>
+
     <!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
     	<div data-role="header" data-position="fixed">
@@ -247,25 +522,25 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                 <li data-role="list-divider">How To's and Tutorials</li>
 				
 				<li>
-                    <a href="#questions">Recruiter Questions</a>
+                    <a href="#questions">REWRITE ME Recruiter Questions</a>
                 </li>
 
                 <li>
-                    <a href="#dress">Dress for Success</a>
-                </li>
-
-
-                <li>
-                    <a href="#standOut">Standing Out</a>
+                    <a href="#dress">REWRITE ME Dress for Success</a>
                 </li>
 
 
                 <li>
-                    <a href="#speech">Making Your Speech Count</a>
+                    <a href="#standOut">REWRITE ME Standing Out</a>
+                </li>
+
+
+                <li>
+                    <a href="#speech">REWRITE ME Making Your Speech Count</a>
                 </li>
 				
 				<li>
-                    <a href="#badGrades">Bad Grades?</a>
+                    <a href="#badGrades">REWRITE ME Bad Grades?</a>
                 </li>
             </ul>
         </div>

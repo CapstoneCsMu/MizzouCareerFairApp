@@ -33,7 +33,7 @@
 
 <body>
     <div data-role="page" data-theme="a" id="home">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1 class="no-ellipses">Mizzou Careers</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             href="index.php">Home</a> <a data-icon="search" data-iconpos=
@@ -106,16 +106,25 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     -->
 
     <div data-role="page" data-theme="a" id="companies">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
             data-rel="dialog" data-transition="fade" href=
             "../nav.html">Search</a>
         </div>
+	
+		<form class="ui-filterable">
+      		<input id="companyFilter" data-type="search">
+    	</form>
 
-
-        <ul data-dividertheme="b" data-inset="true" data-role="listview">
+		<!-- List of all of the companies at the career fair -->
+		
+		<!-- As list populates each company becomes href = "#" id="i" so that each company can be accessed as an individual page 
+			
+			The individual page will be based on the next page #companyDetails
+		-->
+        <ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#companyFilter" data-autodividers="true">
             <li data-role="list-divider">Full Time</li>
             <?php
                             include 'companyParse.php';
@@ -124,15 +133,40 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                             asort($companyNames);
                             $i = 1;
                             foreach($companyNames as $companyName => $val)
-                            echo "<li><a href=\"option".$i.".html\">".$val."</a></li>";
-                            i++;
+                            {
+                            	echo "<li><a href=\"#\" id=".$i." class=\"info-go\">".$val."</a></li>";
+                            	$i++;
+                            	
+                            	// make a page for each company dynamically here
+                            	// build up HTML string for the next pages
+                            }
                         ?>
         </ul>
     </div>
+	
+	<!-- When a user clicks on a company the company details page is created using this page 
+	
+		The company details should be built up into a html string using JS or PHP and appended
+		to the content div on this page
+	-->
+	<div data-role="page" data-theme="a" id="companyDetails">
+        <div data-role="header" data-position="fixed">
+            <h1>Company Details</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+            data-rel="dialog" data-transition="fade" href=
+            "../nav.html">Search</a>
+        </div>
+	
+		<div data-role="content"></div>
+	
+    </div>
+	
+	
 
 	<!-- Static Data, Just to test what we can do -->
     <div data-role="page" data-theme="a" id="companyTest">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
@@ -154,7 +188,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     
     <!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
-    	<div data-role="header">
+    	<div data-role="header" data-position="fixed">
             <h1>IBM</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
@@ -177,7 +211,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
 
     <div data-role="page" data-theme="a" id="map">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Mizzou Career Fair App Hearnes Map</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             data-transition="flip" href="#home">Home</a> <a data-icon="search"
@@ -201,7 +235,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
 
     <div data-role="page" data-theme="a" id="events">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Career Fair Events</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             data-transition="flip" href="#home">Home</a> <a data-icon="search"
@@ -269,7 +303,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     </div>
 	
 	<div data-role="page" data-theme="a" id="dress">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>How to Dress</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
             data-transition="flip" href="#events">Home</a> <a data-icon="search"
@@ -297,7 +331,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
 	
 	<div data-role="page" data-theme="a" id="standOut">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Standing Out</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
             data-transition="flip" href="#events">Back</a> <a data-icon="search"
@@ -329,7 +363,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	
 	
 	<div data-role="page" data-theme="a" id="speech">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Practice your speech</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
             data-transition="flip" href="#events">Back</a>  <a data-icon="search"
@@ -371,7 +405,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     </div>
 	
 	<div data-role="page" data-theme="a" id="questions">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Common Recruiter Questions</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
             data-transition="flip" href="#events">Back</a>  <a data-icon="search"
@@ -407,7 +441,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     </div>
 	
 	<div data-role="page" data-theme="a" id="badGrades">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Dealing with Bad Grades</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
             data-transition="flip" href="#events">Back</a>  <a data-icon="search"
@@ -510,7 +544,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	
 
     <div data-role="page" data-theme="a" id="announcements">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>Announcements</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             data-transition="flip" href="#home">Home</a> <a data-icon="search"
@@ -550,7 +584,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     </div>
     
     <div data-role="page" data-theme="a" id="jobHunt">
-        <div data-role="header">
+        <div data-role="header" data-position="fixed">
             <h1>My Job Hunt</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             data-transition="flip" href="#home">Home</a> <a data-icon="search"
