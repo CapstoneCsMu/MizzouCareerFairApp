@@ -1,9 +1,9 @@
 -- mizzouCareerFair.sql for Mizzou Career Fair Application
 -- creates tables in database for careerSchema
 
--- team x
+-- team 4
 
-DROP SCHEMA IF EXISTS careerSchema;
+DROP SCHEMA IF EXISTS careerSchema CASCADE;
 CREATE SCHEMA careerSchema;
 
 -- Change to careerSchema and public schema
@@ -73,20 +73,30 @@ INSERT INTO careerSchema.students VALUES ('mcwrmd','Matthew','Weiner','IT',1, 'm
 DROP TABLE IF EXISTS careerSchema.studentAuthentication CASCADE;
 CREATE TABLE careerSchema.studentAuthentication (
 	username 		VARCHAR(30) PRIMARY KEY,
-	--password_hash 	CHAR(40) NOT NULL,
-	--salt 			CHAR(40) NOT NULL,
+	password_hash 		CHAR(40) NOT NULL,
+	salt 			CHAR(40) NOT NULL,
 	FOREIGN KEY (username) REFERENCES careerSchema.students(username)
 );
 
 -- test student authentication data
-INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd'),('kedxw3');
+--INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd'),('kedxw3');
 
+-- NOT IMPLEMENTED
+DROP TABLE IF EXISTS careerSchema.fairs CASCADE;
+CREATE TABLE careerSchema.fairs (
+        careerFairID    SERIAL PRIMARY KEY,
+        name            varchar(50),
+        colleges        varchar(250),
+        dateOf          varchar(50),
+        description     varchar(500)
+);
 
 -- NOT IMPLEMENTED 
 -- store company data to DB
 DROP TABLE IF EXISTS careerSchema.companies CASCADE;
 CREATE TABLE careerSchema.companies (
-	companyID 	SERIAL,
+	companyID 	SERIAL PRIMARY KEY,
+	careerFairID	int,
 	name 		varchar(50),
 	description	varchar(500),
 	location 	varchar(50),
@@ -99,8 +109,9 @@ CREATE TABLE careerSchema.companies (
 	majors		varchar(250),
 	posType		varchar(50),
 	citizenReq	varchar(50),
+	contact_email   varchar(50),
 	--booth		varchar(50),
-	PRIMARY KEY (companyID)
+	FOREIGN KEY (careerFairID) REFERENCES careerSchema.fairs(careerFairID)
 );
 
 
@@ -108,22 +119,40 @@ CREATE TABLE careerSchema.companies (
 -- NOT IMPLEMENTED
 DROP TABLE IF EXISTS careerSchema.jobs CASCADE;
 CREATE TABLE careerSchema.jobs (
-	jobID		int,
+	jobID		int PRIMARY KEY,
+	companyID	int,
+	careerFairID	int,
 	jobTitle	varchar(50),
 	company		varchar(50),
-	PRIMARY KEY (jobID)
+	majors		varchar(250),
+	description	varchar(500),
+	FOREIGN KEY (companyID) REFERENCES careerSchema.companies(companyID),
+	FOREIGN KEY (careerFairID) REFERENCES careerSchema.fairs(careerFairID)
 );
 
+--NOT IMPLEMENTED
+--Table to hold information on employers about their career fair information
+DROP TABLE IF EXISTS careerSchema.employerInfo CASCADE;
+CREATE TABLE careerSchema.employerInfo (
+	booth		varchar(25),
+	companyID       int,
+        careerFairID    int,
+	contact_name	varchar(100),
+	contact_phone	varchar(25),
+	contact_email	varchar(50),
+	check_in	varchar(50),
+	FOREIGN KEY 	(companyID) REFERENCES careerSchema.companies(companyID),
+	FOREIGN KEY (careerFairID) REFERENCES careerSchema.fairs(careerFairID)
+);
 
 -- NOT IMPLEMENTED
 -- Table to hold admin account data
 DROP TABLE IF EXISTS careerSchema.admin_info CASCADE;
 CREATE TABLE careerSchema.admin_info (
-	username			varchar(50),
+	username			varchar(50) PRIMARY KEY,
 	firstName			varchar(50),
 	lastName			varchar(50),
-	description			varchar(50),
-	PRIMARY KEY (username)
+	description			varchar(50)
 );
 
 -- test Admin data
@@ -139,13 +168,13 @@ INSERT INTO careerSchema.admin_info VALUES ('admin', 'Matt', 'Weiner', 'Original
 DROP TABLE IF EXISTS careerSchema.adminAuthentication CASCADE;
 CREATE TABLE careerSchema.adminAuthentication (
 	username 		VARCHAR(30) PRIMARY KEY,
---	password_hash 	CHAR(40) NOT NULL,
---	salt 			CHAR(40) NOT NULL,
+	password_hash 		CHAR(40) NOT NULL,
+	salt 			CHAR(40) NOT NULL,
 	FOREIGN KEY (username) REFERENCES careerSchema.admin_info(username)
 );
 
 -- test admin authentication data
-INSERT INTO careerSchema.adminAuthentication VALUES ('admin'), ('thunderkiss'), ('littlejon');
+--INSERT INTO careerSchema.adminAuthentication VALUES ('admin'), ('thunderkiss'), ('littlejon');
 
 
 -- NOT IMPLEMENTED
@@ -156,7 +185,7 @@ INSERT INTO careerSchema.adminAuthentication VALUES ('admin'), ('thunderkiss'), 
 --    ip_address - The IP address of the user at the time the log was entered.
 --    log_date   - The date of the log entry. Set automatically by a default value.
 --    action     - What the user did to generate a log entry (i.e., "logged in").
-DROP TABLE careerSchema.log CASCADE;
+DROP TABLE IF EXISTS careerSchema.log CASCADE;
 CREATE TABLE careerSchema.log (
 	log_id  	SERIAL PRIMARY KEY,
 	username 	VARCHAR(30) NOT NULL,
