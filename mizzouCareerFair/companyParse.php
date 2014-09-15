@@ -6,7 +6,10 @@ else
 	$fairName = "2014 Fall Engineering Career Fair";
 				
 //Include Database information
-include ("data.php");
+if($_SERVER['HTTP_HOST'] == 'localhost')
+	include('data_ryanslocal.php');
+else
+	include ("data.php");
 
 //get rss info from database
 $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
