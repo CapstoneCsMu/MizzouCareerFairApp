@@ -205,10 +205,6 @@
                 <li>
                     <a data-transition="flip" href="fairSelection.php">Fairs</a>
                 </li>
-				
-				<li>
-                    <a data-transition="flip" href="#aboutECS">Engineering Career Services</a>
-                </li>
 
 		<li>
 		    <a data-transition="flip" href="support.php">Support</a>
@@ -602,6 +598,12 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
+
+    </div>	
+
+    </div>
+
+
     </div>
 	
 	<div data-role="page" data-theme="a" id="aboutECS">
