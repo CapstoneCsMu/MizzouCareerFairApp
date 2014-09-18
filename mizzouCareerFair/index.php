@@ -875,7 +875,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	<!--Start preparation HTML-->
 	<div data-role="page" data-theme="a" id="preparation">
         <div data-role="header" data-position="fixed">
-            <h1>Career Fair Events</h1>
+            <h1>Prepare yourself!</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             data-transition="flip" href="#home">Home</a> <a data-icon="search"
             data-iconpos="notext" data-rel="dialog" data-transition="fade"
