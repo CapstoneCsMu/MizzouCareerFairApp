@@ -205,6 +205,9 @@
                 <li>
                     <a data-transition="flip" href="fairSelection.php">Fairs</a>
                 </li>
+				<li>
+                    <a data-transition="flip" href="#aboutECS">Engineering Career Services</a>
+                </li>
 
 		<li>
 		    <a data-transition="flip" href="support.php">Support</a>
