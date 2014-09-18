@@ -598,14 +598,12 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     </div>	
-=======
+
     </div>
 
->>>>>>> parent of 05f9abf... added ECS
-=======
+
     </div>
 	
 	<div data-role="page" data-theme="a" id="aboutECS">
@@ -658,7 +656,6 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 				</ul>	
 			</div>
 	</div>	
->>>>>>> parent of a3855e3... updated index.php
 	
 	<div data-role="page" data-theme="a" id="standOut">
         <div data-role="header" data-position="fixed">
