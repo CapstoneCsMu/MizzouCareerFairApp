@@ -179,7 +179,10 @@
                     <a data-transition="flip" href="#companies">Companies</a>
                 </li>
 
-
+				<li>
+                    <a data-transition="flip" href="#preparation">Preparation</a>
+                </li>	
+				
                 <li>
                     <a data-transition="flip" href="#companyTest">Test Company/API's this is Static</a>
                 </li>
@@ -187,8 +190,7 @@
                 <li>
                     <a data-transition="flip" href="#map_page">Directions to Fair-In Progress</a>
                 </li>
-
-
+				
                 <li>
                     <a data-transition="flip" href="#map">Fair Map - Coming soon</a>
                 </li>
@@ -196,10 +198,6 @@
 				<li>
 					<a data-transition="flip" href="announcements.php">Announcements</a>
 				</li>
-					
-				<li>
-                    <a data-transition="flip" href="#preparation">Preparation</a>
-                </li>	
 				
                 <li>
                     <a data-transition="flip" href="#events">Events</a>
@@ -208,6 +206,7 @@
                 <li>
                     <a data-transition="flip" href="fairSelection.php">Fairs</a>
                 </li>
+				
 				<li>
                     <a data-transition="flip" href="#aboutECS">Engineering Career Services</a>
                 </li>
