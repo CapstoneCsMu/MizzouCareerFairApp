@@ -603,62 +603,6 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         </div>
 
     </div>	
-
-    </div>
-
-
-    </div>
-	
-	<div data-role="page" data-theme="a" id="aboutECS">
-        <div data-role="header" data-position="fixed">
-            <h1>About Us</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-			<div data-role="content">
-				<p>
-				Engineering Career Services provides information, guidance and resources to empower Mizzou 
-				Engineering students to develop and achieve their career goals.
-				</p>
-				
-				<h2>Typical Career Events</h2>
-				<ul>
-					<li><span style="font-size:11.0pt">Career fairs (2 a year)<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Professional development workshops with employers<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Company visits to Mizzou for on-campus interviews and networking opportunites<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Special targeted events with employers<o:p></o:p></span></li>
-				</ul>
-				
-				<h2>Employer Access to Students</h2>
-				<p>
-				In addition to professional development activities offered to students, 
-				Engineering Career Services also develops corporate partnerships that increase access to students.
-				</p>
-				<p>
-				If you have questions about Engineering Career Services, feel free to contact us.
-				</p>
-				
-				<h3>Mission</h3>
-				<p>In all our work these beliefs and values will guide us:</p>
-				<ul>
-					<li><span style="font-size:11.0pt">Career development is a lifelong learning process consisting of the following components:<o:p></o:p></span></li>
-						<ul>
-							<li><span style="font-size:9.0pt">self-assessment<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">occupational exploration<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career decision making<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career planning<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">acting on options<o:p></o:p></span></li>
-						</ul>
-					<li><span style="font-size:11.0pt">Each student has diverse experiences, interests and goals, and deserves to be respected as an individual.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Each student deserves to be assisted with her/his individual needs in a caring manner that also allows the student to develop individual responsibility.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Services and programs need to be evaluated and redirected as academic environment and employment trends dictate.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
-				</ul>	
-			</div>
-	</div>	
 	
 	<div data-role="page" data-theme="a" id="standOut">
         <div data-role="header" data-position="fixed">
@@ -920,14 +864,6 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
 					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
 				</ul>	
-			</div>
-			<div data-position="fixed" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-	</div>
 	
 	
     <div data-role="page" data-theme="a" id="announcements">
