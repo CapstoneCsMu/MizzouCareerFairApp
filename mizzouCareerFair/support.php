@@ -36,12 +36,12 @@
                                          <li><a href="option8.html"></a></li>
                </ul>
          </div>
-
+	</div>
 <div data-role="footer" data-position="fixed">
         <div data-role="footer">
 <input type="text" name="name" placeholder="Search the Career Fair"id="basic" value="" data-mini="true" />
          <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
         </div>
-    </div>
-    </body>
-    </html>
+</div>
+</body>
+</html>
