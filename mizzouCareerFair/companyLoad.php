@@ -57,6 +57,9 @@
 				echo '</table></div></center>';
 				echo '</br>';
 				
+				//Does the company have a linked In?
+				//echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script><script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ;
+				
 		echo '</div>';
 			$i++;
 	}

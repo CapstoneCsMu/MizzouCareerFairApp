@@ -1,4 +1,6 @@
 <?php
+//Parse the XML File
+include 'companyParse.php';
 $succesfulFilterCount = 0;
 $Majorfilters = NULL;
 // build $Majorfilters Array 
