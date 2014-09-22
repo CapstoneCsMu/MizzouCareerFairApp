@@ -180,7 +180,7 @@
                 </li>
 
 				<li>
-                    <a data-transition="flip" href="#preparation">Preparation</a>
+                    <a data-transition="flip" href="#prepare">Preparation</a>
                 </li>	
 				
                 <li>
@@ -871,8 +871,46 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	</div>
 	<!--End about ECS HTML-->
 	
+	<!--Start test HTML-->
+	 <div data-role="page" data-theme="a" id="preparation">
+        <div data-role="header" data-position="fixed">
+            <h1>The keys to success</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+
+        <div data-role="content">
+			 <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Keys to a successful career fair</li>
+				
+				<li>
+                    <a href="#prepare">Preparation</a>
+                </li>
+				<li>
+                    <a href="#resume">Resume</a>
+                </li>
+				<li>
+                    <a href="#dress">Dress Code</a>
+                </li>
+				<li>
+                    <a href="#confidence">Confidence</a>
+                </li>
+				<!--<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>
+				<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>-->
+            </ul>
+        </div>
+	</div>	
+	<!--End test HTML-->
+	
 	<!--Start preparation HTML-->
-	<div data-role="page" data-theme="a" id="preparation">
+	<div data-role="page" data-theme="a" id="apples">
         <div data-role="header" data-position="fixed">
             <h1>Prepare yourself!</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -897,15 +935,14 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 				<li>
                     <a href="#confidence">Confidence</a>
                 </li>
-				<li>
+				<!--<li>
                     <a href="#new'n">Placeholder</a>
                 </li>
 				<li>
                     <a href="#new'n">Placeholder</a>
-                </li>
+                </li>-->
             </ul>
         </div>
-
 
         <div data-position="fixed" data-role="footer">
             <input data-mini="true" id="basic" name="name" placeholder=
