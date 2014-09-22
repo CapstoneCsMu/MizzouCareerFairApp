@@ -407,10 +407,8 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             "../nav.html">Search</a>
         </div>
 
-
         <ul data-dividertheme="b" data-inset="true" data-role="listview">
             <li data-role="list-divider">Full Time</li>
-
 
             <li>
                 <a href="#ibm">IBM</a>
@@ -418,13 +416,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
         </ul>
     </div>
-    
-	
-	
-	
-	
-	
-	
+	<!-- End Static Data, Just to test what we can do with some APIs-->
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
     <div data-role="page" id="map_page">
@@ -461,7 +453,8 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                 </div>
             </div>
     </div>
-
+	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->
+	
     <!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
     	<div data-role="header" data-position="fixed">
@@ -480,12 +473,10 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         <?php echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
 <script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ?>
         </div>	
-        
-        
-        
     </div>
+	<!--End Testing what we can do for a company-->
 
-
+	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
         <div data-role="header" data-position="fixed">
             <h1>Mizzou Career Fair App Hearnes Map</h1>
@@ -508,8 +499,9 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
+	<!--End map HTML-->
 
-
+	<!--Start old rewrite code-->
     <div data-role="page" data-theme="a" id="events">
         <div data-role="header" data-position="fixed">
             <h1>Career Fair Events</h1>
@@ -805,10 +797,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         remaining time at
         school!
 	</p>
-     
-    
 		</div>
-
 
         <div data-position="fixed" data-role="footer" data-role="footer">
             <input data-mini="true" id="basic" name="name" placeholder=
@@ -817,6 +806,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
+	<!--End old rewrite HTML-->
 	
 	<!--Start about ECS HTML-->
 	<div data-role="page" data-theme="a" id="aboutECS">
@@ -872,7 +862,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	<!--End about ECS HTML-->
 	
 	<!--Start test HTML-->
-	 <div data-role="page" data-theme="a" id="preparation">
+	 <div data-role="page" data-theme="a" id="test">
         <div data-role="header" data-position="fixed">
             <h1>The keys to success</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -893,7 +883,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                     <a href="#resume">Resume</a>
                 </li>
 				<li>
-                    <a href="#dress">Dress Code</a>
+                    <a href="#dressCode">Dress Code</a>
                 </li>
 				<li>
                     <a href="#confidence">Confidence</a>
@@ -910,7 +900,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	<!--End test HTML-->
 	
 	<!--Start preparation HTML-->
-	<div data-role="page" data-theme="a" id="apples">
+	<div data-role="page" data-theme="a" id="preparation">
         <div data-role="header" data-position="fixed">
             <h1>Prepare yourself!</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -930,7 +920,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                     <a href="#resume">Resume</a>
                 </li>
 				<li>
-                    <a href="#dress">Dress Code</a>
+                    <a href="#dressCode">Dress Code</a>
                 </li>
 				<li>
                     <a href="#confidence">Confidence</a>
@@ -1016,7 +1006,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     </div>
 	
 	
-	<div data-role="page" data-theme="a" id="dress">
+	<div data-role="page" data-theme="a" id="dressCode">
         <div data-role="header" data-position="fixed">
             <h1>Dress for Success</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
@@ -1120,6 +1110,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
     </div>
 	<!--End preparation HTML-->
 	
+	<!--Start announcements HTML-->
     <div data-role="page" data-theme="a" id="announcements">
         <div data-role="header" data-position="fixed">
             <h1>Announcements</h1>
@@ -1128,30 +1119,20 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             data-iconpos="notext" data-rel="dialog" data-transition="fade"
             href="../nav.html">Search</a>
         </div>
-
-
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">Career Fair Announcements</li>
-
-
                 <li>
                     <a href="option">New Companies</a>
                 </li>
-
-
                 <li>
                     <a href="option2.html">Changed Booth Locations</a>
                 </li>
-
-
                 <li>
                     <a href="option8.html">Updates</a>
                 </li>
             </ul>
         </div>
-
-
         <div data-position="fixed" data-role="footer" data-role="footer">
             <input data-mini="true" id="basic" name="name" placeholder=
             "Search the Career Fair" type="text" value="">
@@ -1159,7 +1140,9 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
-    
+    <!--End announcements HTML-->
+	
+	<!--Start Job Hunt HTML-->
     <div data-role="page" data-theme="a" id="jobHunt">
         <div data-role="header" data-position="fixed">
             <h1>My Job Hunt</h1>
@@ -1179,14 +1162,12 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                 <li>
                     <a href="#">Add a Resume</a>
                 </li>
-
-
                 <li>
                     <a id="hireMizzou">Hire Mizzou Tigers</a>
                 </li>
-
             </ul>
         </div>
     </div>
+	<!--End Job Hunt HTML.-->
 </body>
 </html>
