@@ -42,8 +42,17 @@
 
 			function submitFilter()
 			{
-				document.getElementById("filterForm").submit();
-				window.alert("You're Settings have been saved.");
+				//Check to make sure a major has been selected
+				var filter_0 = document.getElementById('filter_0');
+				//Submit Form
+				if (filter_0.checked) {
+					document.getElementById("filterForm").submit();
+					window.alert("You're Settings have been saved.");
+				}
+				else {
+				//alert("Please Select a Major");
+				alert(str.fontcolor( "red" ));
+				}
 			}
 
             $(document).on("pageinit", "#map_page", function() {
@@ -298,78 +307,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 					<?php
 					//Parse the XML File
 					include 'companyParse.php';
-					$succesfulFilterCount = 0;
-					$filters = NULL;
-					// build $filters Array 
-					// NOTE: The value 10 is Static because we will need to possibly implement a dynamic way to load Filter Options
-					$x=0;
-					for ($y=0; $y <  10; $y++)
-					{
-						if($_SESSION['filters']['filter_'.$y] ==NULL)
-							continue;
-						else
-						{
-							$filters[$x] = $_SESSION['filters']['filter_'.$y];
-							$x++;
-						}
-					}
-
-					if($filters != NULL)
-					{
-						//If RSS Feed is down
-						if (!$line['rss'])
-						{
-							echo 'The RSS Feed is broken right now, Sorry about that...';
-						}
-						else
-						{
-							//Display Filters:
-							echo "</br><center><b>Filters: </b>";
-							for($m=1; $m <= count($filters); $m++)
-							{
-								echo $filters[$m-1];
-								if ($m != count($filters))
-									echo ' & ';
-							}
-							echo "</center></br>";
-							//sort names alphabetically and print them as list options
-							//asort RETAINS the previous key, pretty weird, but it helps increase the efficiency.
-							asort($companyNames);
-							$i = 0;
-							foreach($companyNames as $key => $val)
-							{
-								$i++;
-								// Step 1. Exclude companies that didn't list a major
-								if ( $company[$i]->Majors == NULL)
-									continue;
-								else
-								{
-									// Step 2. Look for Computer Science within this company's majors given
-									for ($j=0; $j < count($companyMajor[$i]); $j++)
-									{
-										for($k=0; $k < count($filters); $k++)
-										{
-											//echo $company[$i]->MajorArray[$j];
-											if ($filters[$k] == $companyMajor[$i][$j])
-											{
-												echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-												$succesfulFilterCount++;
-											}
-											else //Skip Listing of this Company
-												continue;
-										}
-									}
-								}
-							}
-						}
-						if ($succesfulFilterCount == 0)
-							echo "</br><center>Sorry, You're Filters Did Not Return Any Results. Please Try Editing Your Filters.</center>";
-						
-					}
-					else
-					{
-						echo "</br><center><b>No Filters have been set. Add them Above.</b></center>";
-					}
+					include 'displayWithFilters.php';
 					?>
 				</ul>
 			</div>
