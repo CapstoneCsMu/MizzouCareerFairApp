@@ -73,13 +73,13 @@ INSERT INTO careerSchema.students VALUES ('mcwrmd','Matthew','Weiner','IT',1, 'm
 DROP TABLE IF EXISTS careerSchema.studentAuthentication CASCADE;
 CREATE TABLE careerSchema.studentAuthentication (
 	username 		VARCHAR(30) PRIMARY KEY,
-	password_hash 		CHAR(40) NOT NULL,
-	salt 			CHAR(40) NOT NULL,
+	hash 		VARCHAR(40) NOT NULL,
+	salt 			VARCHAR(50) NOT NULL,
 	FOREIGN KEY (username) REFERENCES careerSchema.students(username)
 );
 
 -- test student authentication data
---INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd'),('kedxw3');
+INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd','826763918','58e06579e9985016bfe35caf52516ffd6038d945'),('kedxw3','826763918','33f42ae9da78e80bbb509a9af75a27b099f5574e'),('dcm53f','826763918','90f4486f60d7154516509713c2a66bc048b44891');
 
 -- NOT IMPLEMENTED
 DROP TABLE IF EXISTS careerSchema.fairs CASCADE;
