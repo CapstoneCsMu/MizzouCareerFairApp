@@ -39,7 +39,10 @@ rel="stylesheet">
 		<li data-role="list-divider">Select a Career Fair</li>
 		<?php
 			//Include Database information
-			include ("data.php");
+			if($_SERVER['HTTP_HOST'] == 'localhost')
+				include('data_ryanslocal.php');
+			else
+				include ("data.php");
 
 			//get rss info from database
 			$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());

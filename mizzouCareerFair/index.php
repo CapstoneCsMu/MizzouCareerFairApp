@@ -37,112 +37,7 @@
 	</script>
 	
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
-	
-	 <script type="text/javascript">
-
-			function submitFilter()
-			{
-				document.getElementById("filterForm").submit();
-				window.alert("You're Settings have been saved.");
-			}
-
-            $(document).on("pageinit", "#map_page", function() {
-                initialize();
-            });
-
-            $(document).on('click', '#submit', function(e) {
-                e.preventDefault();
-                calculateRoute();
-            });
-
-            var directionDisplay,
-                directionsService = new google.maps.DirectionsService(),
-                map;
-
-            function initialize() 
-            {
-                directionsDisplay = new google.maps.DirectionsRenderer();
-                var mapCenter = new google.maps.LatLng(38.9343, -92.3306);
-
-                var myOptions = {
-                    zoom:10,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    center: mapCenter
-                }
-
-                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-                directionsDisplay.setMap(map);
-                directionsDisplay.setPanel(document.getElementById("directions"));
-
-				
-				
-				navigator.geolocation.getCurrentPosition(showPosition);
-				var latlon;
-				
-				function showPosition(pos) {
-					var latlon = pos.coords.latitude+","+pos.coords.longitude;
-					console.log(latlon);
-					
-					$('#from').val(latlon);
-				};
-            }
-
-			
-			
-			
-            function calculateRoute() 
-            {
-				var x = document.getElementById("map_canvas");
-				
-				navigator.geolocation.getCurrentPosition(showPosition);
-				var latlon;
-				
-				function showPosition(pos) {
-					var latlon = pos.coords.latitude+","+pos.coords.longitude;
-					console.log(latlon);
-					
-				};
-					
-			
-			
-                var selectedMode = $("#mode").val(),
-                    start = $("#from").val(),
-                    end = $("#to").val();
-
-                if(start == '' || end == '')
-                {
-                    // cannot calculate route
-                    $("#results").hide();
-                    return;
-                }
-                else
-                {
-                    var request = {
-                        origin:start, 
-                        destination:end,
-                        travelMode: google.maps.DirectionsTravelMode[selectedMode]
-                    };
-
-                    directionsService.route(request, function(response, status) {
-                        if (status == google.maps.DirectionsStatus.OK) {
-                            directionsDisplay.setDirections(response); 
-                            $("#results").show();
-                            /*
-                                var myRoute = response.routes[0].legs[0];
-                                for (var i = 0; i < myRoute.steps.length; i++) {
-                                    alert(myRoute.steps[i].instructions);
-                                }
-                            */
-                        }
-                        else {
-                            $("#results").hide();
-                        }
-                    });
-
-                }
-            }
-        </script>
-   
+	<script type="text/javascript" src="index.js"></script>
 </head>
 
 <body>
@@ -183,10 +78,6 @@
 				<li>
                     <a data-transition="flip" href="#preparation">Preparation</a>
                 </li>	
-				
-                <li>
-                    <a data-transition="flip" href="#companyTest">Test Company/API's this is Static</a>
-                </li>
                 
                 <li>
                     <a data-transition="flip" href="#map_page">Directions to Fair-In Progress</a>
@@ -232,9 +123,7 @@
                 
             </ul>
             
-            <a><?php echo "<script type=\"in/Login\">
-Hello, <?js= firstName ?> <?js= lastName ?>.
-</script>" ?></a>
+            <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
 
 	    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
             
@@ -242,11 +131,6 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
     </div>
 	
-    <!-- This page should have a list of all of the companies in the RSS feed 
-    
-    	 The data in RSS must made useful and unique so we know what companies we are using
-    -->
-
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
@@ -258,125 +142,29 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
       		<input id="companyFilter" data-type="search">
     	</form>
 		
-		
-			<div data-role="tabs">
-				<div data-role="navbar">
-					<ul>
-						<li><a href="#companies-1">All</a></li>
-						<li><a href="#filtered">Filtered</a></li>
-						<li><a href="#following">Following</a></li>
-					</ul>
-				</div>
+		<div data-role="tabs">
+			<div data-role="navbar">
+				<ul>
+					<li><a href="#unfiltered">All</a></li>
+					<li><a href="#filtered">Filtered</a></li>
+					<li><a href="#visited">Visited</a></li>
+				</ul>
+			</div>
 
 			<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
-			<div id="companies-1">
-			<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
-			 <?php
-			//Parse the XML File
-			include 'companyParse.php';
-			
-			//If RSS Feed is down
-			if (!$line['rss'])
-			{
-				echo 'The RSS Feed is broken right now, Sorry about that...';
-			}
-			else
-			{
-				//sort names alphabetically and print them as list options
-				asort($companyNames);
-				$i = 1;
-				foreach($companyNames as $companyName => $val)
-				{
-					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-					$i++;
-				}
-			}
-            ?>
+			<div id="unfiltered">
+				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
+				<?php include 'displayWithoutFilters.php'; ?>
 			</ul>
 			</div>
 			<div id="filtered">
 				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#FILTERED" data-autodividers="true">
-					<?php
-					//Parse the XML File
-					include 'companyParse.php';
-					$succesfulFilterCount = 0;
-					$filters = NULL;
-					// build $filters Array 
-					// NOTE: The value 10 is Static because we will need to possibly implement a dynamic way to load Filter Options
-					$x=0;
-					for ($y=0; $y <  10; $y++)
-					{
-						if($_SESSION['filters']['filter_'.$y] ==NULL)
-							continue;
-						else
-						{
-							$filters[$x] = $_SESSION['filters']['filter_'.$y];
-							$x++;
-						}
-					}
-
-					if($filters != NULL)
-					{
-						//If RSS Feed is down
-						if (!$line['rss'])
-						{
-							echo 'The RSS Feed is broken right now, Sorry about that...';
-						}
-						else
-						{
-							//Display Filters:
-							echo "</br><center><b>Filters: </b>";
-							for($m=1; $m <= count($filters); $m++)
-							{
-								echo $filters[$m-1];
-								if ($m != count($filters))
-									echo ' & ';
-							}
-							echo "</center></br>";
-							//sort names alphabetically and print them as list options
-							//asort RETAINS the previous key, pretty weird, but it helps increase the efficiency.
-							asort($companyNames);
-							$i = 0;
-							foreach($companyNames as $key => $val)
-							{
-								$i++;
-								// Step 1. Exclude companies that didn't list a major
-								if ( $company[$i]->Majors == NULL)
-									continue;
-								else
-								{
-									// Step 2. Look for Computer Science within this company's majors given
-									for ($j=0; $j < count($companyMajor[$i]); $j++)
-									{
-										for($k=0; $k < count($filters); $k++)
-										{
-											//echo $company[$i]->MajorArray[$j];
-											if ($filters[$k] == $companyMajor[$i][$j])
-											{
-												echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-												$succesfulFilterCount++;
-											}
-											else //Skip Listing of this Company
-												continue;
-										}
-									}
-								}
-							}
-						}
-						if ($succesfulFilterCount == 0)
-							echo "</br><center>Sorry, You're Filters Did Not Return Any Results. Please Try Editing Your Filters.</center>";
-						
-					}
-					else
-					{
-						echo "</br><center><b>No Filters have been set. Add them Above.</b></center>";
-					}
-					?>
+				<?php include 'displayWithFilters.php'; ?>
 				</ul>
 			</div>
 			
-			<div id="following">
-				<center><p><b>You haven't followed any companies yet.</b></p></center>
+			<div id="visited">
+				<center><p><b>You haven't visited any companies yet. Once a company scans your QR Code,  they will appear here.</b></p></center>
 			</div>
 		</div>
     </div>
@@ -397,27 +185,6 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	//Load a page for each company dynamically
 	include('companyLoad.php');
 	?>
-
-	<!-- Static Data, Just to test what we can do with some APIs-->
-    <div data-role="page" data-theme="a" id="companyTest">
-        <div data-role="header" data-position="fixed">
-            <h1>Companies</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-
-        <ul data-dividertheme="b" data-inset="true" data-role="listview">
-            <li data-role="list-divider">Full Time</li>
-
-            <li>
-                <a href="#ibm">IBM</a>
-            </li>
-
-        </ul>
-    </div>
-	<!-- End Static Data, Just to test what we can do with some APIs-->
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
     <div data-role="page" id="map_page">
@@ -1091,8 +858,221 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
 					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
 				</ul>	
-			</div>
+		</div>
 	</div>
+	<!--End about ECS HTML-->
+	
+	<!--Start preparation HTML-->
+	<div data-role="page" data-theme="a" id="preparation">
+        <div data-role="header" data-position="fixed">
+            <h1>Prepare yourself!</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+        <div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Keys to a successful career fair</li>
+				
+				<li>
+                    <a href="#prepare">Preparation</a>
+                </li>
+				<li>
+                    <a href="#resume">Resume</a>
+                </li>
+				<li>
+                    <a href="#dress">Dress Code</a>
+                </li>
+				<li>
+                    <a href="#confidence">Confidence</a>
+                </li>
+				<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>
+				<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div data-position="fixed" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
+        </div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="prepare">
+        <div data-role="header" data-position="fixed">
+            <h1>Preparation Steps</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#events">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>How to prepare</h2>
+			
+			<p>
+			Know which companies want to talk with: 
+			</p>
+			<ul>
+				<li><span style="font-size:11.0pt">The day before the career fair, google each company and learn in a broad sense what they do.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Once you have done this, decide which of your accomplishments fit their scope and focus on those when you talk to their recruiters. <o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Pick which of your traits fit the company best and sell yourself to the company with those traits in mind.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Memorize some questions about the company so the recruiter knows you’ve done some research and you are actually interested in the company. <o:p></o:p></span></li>
+			</ul>
+		</div>
+		
+        <div data-position="fixed" data-role="footer" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
+        </div>
+    </div>	
+	
+	<div data-role="page" data-theme="a" id="resume">
+        <div data-role="header" data-position="fixed">
+            <h1>Rules of the Resume</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#events">Back</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>How?</h2>
+			
+			<p>
+			Know which companies want to talk with: 
+			</p>
+			<ul>
+				<li><span style="font-size:11.0pt">Have a clean ONE page resume. With very few exceptions, college students have do not have enough experience to fill more than one page.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Do not staple references or a cover page to your resume. You may bring a reference page, but only give it to the employers if they ask.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Since you are not applying for a specific job, you do not need a cover sheet.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">We strongly recommend taking advantage of the resume builder seminars given by Engineering Career Services.<o:p></o:p></span></li>
+			</ul>
+		</div>
+
+
+        <div data-position="fixed" data-role="footer" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
+        </div>
+    </div>
+	
+	
+	<div data-role="page" data-theme="a" id="dress">
+        <div data-role="header" data-position="fixed">
+            <h1>Dress for Success</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#events">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+		
+		<div data-role="content">
+			<h2>Dress like your job depends on it!</h2>
+
+			
+			<p>
+			The dress code is business professional.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Students should dress as if they are going to a professional job interview.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Do not wear polos, jeans, shorts, or open toed shoes.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Men should wear a suit and tie.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Women should wear a suit, dress, or knee length skirt.<o:p></o:p></span></li>
+			</ul>
+		</div>
+
+        <div data-position="fixed" data-role="footer" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
+        </div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="confidence">
+        <div data-role="header" data-position="fixed">
+            <h1>Confidence</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#events">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+		<div data-role="content">
+			<h2>Be confident in yourself</h2>
+
+			
+			<p>
+			Whether you are graduating at the end of the semester or in two years, you are at the career fair trying to get either a job or an internship.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Walk around the entire arena atleast once before you talk to someone. Get the feel for how everyone is acting, 
+				calm yourself down, etc, etc. Plan an exit strategy just in case you get nervous and have a panic attack.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Make yourself stand out – highlight the things you are good at AND enjoy. Pick companies that are looking for just that. If you go to a company and talk about what you know, they are going to know what you are talking about.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Make a small portfolio with some of the work you have done in that area and show it to potential employers.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Have confidence. Know what you are doing.<o:p></o:p></span></li>
+			</ul>
+		</div>
+
+        <div data-position="fixed" data-role="footer" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
+        </div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="new'n'">
+        <div data-role="header" data-position="fixed">
+            <h1>Dealing with Bad Grades</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#events">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>Generic title placeholder.</h2>
+
+			
+			<p>
+			HTML is all done. We will add more content as it becomes available.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Bullet 1<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 2<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 3<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 4<o:p></o:p></span></li>
+			</ul>
+			
+			<p>
+				Have a question? Send it to "engineering.careers@mail.missouri.edu" with the subject of "HELP!" and we will be glad to answer it and post it to the webpage!
+			</p>
+		</div>
+
+        <div data-position="fixed" data-role="footer" data-role="footer">
+            <input data-mini="true" id="basic" name="name" placeholder=
+            "Search the Career Fair" type="text" value="">
+
+            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
+        </div>
+    </div>
+	<!--End preparation HTML-->
 	<!--End about ECS HTML-->
 	
 	<!--Start announcements HTML-->
