@@ -21,6 +21,8 @@
     "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
     rel="stylesheet">
     
+	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href=="css/themes/scrensize.css"/>
+	
     <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src=
