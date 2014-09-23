@@ -21,6 +21,8 @@
     "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
     rel="stylesheet">
     
+	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css" />
+	
     <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src=
@@ -142,10 +144,17 @@
                 }
             }
         </script>
+	<style>
+	.container {
+		margin:0 auto;
+		width:90%;
+	}
+	</style>
    
 </head>
 
 <body>
+<div class="container">
 <!--JavaScript SDK for facebook login button-->
     <div id="fb-root"></div>
 	<script>(function(d, s, id) {
@@ -407,10 +416,8 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             "../nav.html">Search</a>
         </div>
 
-
         <ul data-dividertheme="b" data-inset="true" data-role="listview">
             <li data-role="list-divider">Full Time</li>
-
 
             <li>
                 <a href="#ibm">IBM</a>
@@ -418,13 +425,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
         </ul>
     </div>
-    
-	
-	
-	
-	
-	
-	
+	<!-- End Static Data, Just to test what we can do with some APIs-->
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
     <div data-role="page" id="map_page">
@@ -461,8 +462,201 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                 </div>
             </div>
     </div>
+	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->
+	
+	<!--Start preparation HTML-->
+	<div data-role="page" data-theme="a" id="preparation">
+        <div data-role="header" data-position="fixed">
+            <h1>Prepare yourself!</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
 
-    <!-- Testing what we can do for a company -->
+        <div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Keys to a successful career fair</li>
+				
+				<li>
+                    <a href="#prepare">Preparation</a>
+                </li>
+				<li>
+                    <a href="#resume">Resume</a>
+                </li>
+				<li>
+                    <a href="#dressCode">Dress Code</a>
+                </li>
+				<li>
+                    <a href="#confidence">Confidence</a>
+                </li>
+				<!--<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>
+				<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="prepare">
+        <div data-role="header" data-position="fixed">
+            <h1>Preparation Steps</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>How to prepare</h2>
+			
+			<p>
+			Know which companies want to talk with: 
+			</p>
+			<ul>
+				<li><span style="font-size:11.0pt">The day before the career fair, google each company and learn in a broad sense what they do.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Once you have done this, decide which of your accomplishments fit their scope and focus on those when you talk to their recruiters. <o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Pick which of your traits fit the company best and sell yourself to the company with those traits in mind.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Memorize some questions about the company so the recruiter knows you’ve done some research and you are actually interested in the company. <o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>	
+	
+	<div data-role="page" data-theme="a" id="resume">
+        <div data-role="header" data-position="fixed">
+            <h1>Rules of the Resume</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>How?</h2>
+			
+			<p>
+			Know which companies want to talk with: 
+			</p>
+			<ul>
+				<li><span style="font-size:11.0pt">Have a clean ONE page resume. With very few exceptions, college students have do not have enough experience to fill more than one page.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Do not staple references or a cover page to your resume. You may bring a reference page, but only give it to the employers if they ask.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Since you are not applying for a specific job, you do not need a cover sheet.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">We strongly recommend taking advantage of the resume builder seminars given by Engineering Career Services.<o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>
+	
+	
+	<div data-role="page" data-theme="a" id="dressCode">
+        <div data-role="header" data-position="fixed">
+            <h1>Dress for Success</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+		
+		<div data-role="content">
+			<h2>Dress like your job depends on it!</h2>
+
+			<p>
+			The dress code is business professional.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Students should dress as if they are going to a professional job interview.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Do not wear polos, jeans, shorts, or open toed shoes.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Men should wear a suit and tie.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Women should wear a suit, dress, or knee length skirt.<o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="confidence">
+        <div data-role="header" data-position="fixed">
+            <h1>Confidence</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+		<div data-role="content">
+			<h2>Be confident in yourself</h2>
+
+			<p>
+			Whether you are graduating at the end of the semester or in two years, you are at the career fair trying to get either a job or an internship.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Walk around the entire arena atleast once before you talk to someone. Get the feel for how everyone is acting, 
+				calm yourself down, etc, etc. Plan an exit strategy just in case you get nervous and have a panic attack.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Make yourself stand out – highlight the things you are good at AND enjoy. Pick companies that are looking for just that. If you go to a company and talk about what you know, they are going to know what you are talking about.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Make a small portfolio with some of the work you have done in that area and show it to potential employers.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Have confidence. Know what you are doing.<o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="new'n'">
+        <div data-role="header" data-position="fixed">
+            <h1>Dealing with Bad Grades</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>Generic title placeholder.</h2>
+			
+			<p>
+			HTML is all done. We will add more content as it becomes available.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Bullet 1<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 2<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 3<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 4<o:p></o:p></span></li>
+			</ul>
+			
+			<p>
+				Have a question? Send it to "engineering.careers@mail.missouri.edu" with the subject of "HELP!" and we will be glad to answer it and post it to the webpage!
+			</p>
+		</div>
+    </div>
+	<!--End preparation HTML-->
+	
+	<!--Start Job Hunt HTML-->
+    <div data-role="page" data-theme="a" id="jobHunt">
+        <div data-role="header" data-position="fixed">
+            <h1>My Job Hunt</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+        <div data-role="content">
+        	<h2>LinkedIn : </h2>
+			<?php echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
+<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
+
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li>
+                    <a href="#">Add a Resume</a>
+                </li>
+                <li>
+                    <a id="hireMizzou">Hire Mizzou Tigers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+	<!--End Job Hunt HTML.-->
+	
+	<!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
     	<div data-role="header" data-position="fixed">
             <h1>IBM</h1>
@@ -480,12 +674,10 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         <?php echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
 <script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ?>
         </div>	
-        
-        
-        
     </div>
+	<!--End Testing what we can do for a company-->
 
-
+	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
         <div data-role="header" data-position="fixed">
             <h1>Mizzou Career Fair App Hearnes Map</h1>
@@ -508,8 +700,9 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
+	<!--End map HTML-->
 
-
+	<!--Start old rewrite code-->
     <div data-role="page" data-theme="a" id="events">
         <div data-role="header" data-position="fixed">
             <h1>Career Fair Events</h1>
@@ -553,11 +746,9 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                     <a href="#dress">REWRITE ME Dress for Success</a>
                 </li>
 
-
                 <li>
                     <a href="#standOut">REWRITE ME Standing Out</a>
                 </li>
-
 
                 <li>
                     <a href="#speech">REWRITE ME Making Your Speech Count</a>
@@ -805,10 +996,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         remaining time at
         school!
 	</p>
-     
-    
 		</div>
-
 
         <div data-position="fixed" data-role="footer" data-role="footer">
             <input data-mini="true" id="basic" name="name" placeholder=
@@ -817,6 +1005,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
+	<!--End old rewrite HTML-->
 	
 	<!--Start about ECS HTML-->
 	<div data-role="page" data-theme="a" id="aboutECS">
@@ -867,222 +1056,11 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
 					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
 				</ul>	
-	
+			</div>
 	</div>
 	<!--End about ECS HTML-->
 	
-	<!--Start preparation HTML-->
-	<div data-role="page" data-theme="a" id="preparation">
-        <div data-role="header" data-position="fixed">
-            <h1>Prepare yourself!</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-        <div data-role="content">
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Keys to a successful career fair</li>
-				
-				<li>
-                    <a href="#prepare">Preparation</a>
-                </li>
-				<li>
-                    <a href="#resume">Resume</a>
-                </li>
-				<li>
-                    <a href="#dress">Dress Code</a>
-                </li>
-				<li>
-                    <a href="#confidence">Confidence</a>
-                </li>
-				<li>
-                    <a href="#new'n">Placeholder</a>
-                </li>
-				<li>
-                    <a href="#new'n">Placeholder</a>
-                </li>
-            </ul>
-        </div>
-
-
-        <div data-position="fixed" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-	
-	<div data-role="page" data-theme="a" id="prepare">
-        <div data-role="header" data-position="fixed">
-            <h1>Preparation Steps</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#events">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-		<div data-role="content">
-			<h2>How to prepare</h2>
-			
-			<p>
-			Know which companies want to talk with: 
-			</p>
-			<ul>
-				<li><span style="font-size:11.0pt">The day before the career fair, google each company and learn in a broad sense what they do.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Once you have done this, decide which of your accomplishments fit their scope and focus on those when you talk to their recruiters. <o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Pick which of your traits fit the company best and sell yourself to the company with those traits in mind.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Memorize some questions about the company so the recruiter knows you’ve done some research and you are actually interested in the company. <o:p></o:p></span></li>
-			</ul>
-		</div>
-		
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>	
-	
-	<div data-role="page" data-theme="a" id="resume">
-        <div data-role="header" data-position="fixed">
-            <h1>Rules of the Resume</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#events">Back</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-		<div data-role="content">
-			<h2>How?</h2>
-			
-			<p>
-			Know which companies want to talk with: 
-			</p>
-			<ul>
-				<li><span style="font-size:11.0pt">Have a clean ONE page resume. With very few exceptions, college students have do not have enough experience to fill more than one page.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Do not staple references or a cover page to your resume. You may bring a reference page, but only give it to the employers if they ask.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Since you are not applying for a specific job, you do not need a cover sheet.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">We strongly recommend taking advantage of the resume builder seminars given by Engineering Career Services.<o:p></o:p></span></li>
-			</ul>
-		</div>
-
-
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-	
-	
-	<div data-role="page" data-theme="a" id="dress">
-        <div data-role="header" data-position="fixed">
-            <h1>Dress for Success</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#events">Back</a>  <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-		
-		<div data-role="content">
-			<h2>Dress like your job depends on it!</h2>
-
-			
-			<p>
-			The dress code is business professional.
-			</p>
-			
-			<ul>
-				<li><span style="font-size:11.0pt">Students should dress as if they are going to a professional job interview.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Do not wear polos, jeans, shorts, or open toed shoes.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Men should wear a suit and tie.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Women should wear a suit, dress, or knee length skirt.<o:p></o:p></span></li>
-			</ul>
-		</div>
-
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-	
-	<div data-role="page" data-theme="a" id="confidence">
-        <div data-role="header" data-position="fixed">
-            <h1>Confidence</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#events">Back</a>  <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-		<div data-role="content">
-			<h2>Be confident in yourself</h2>
-
-			
-			<p>
-			Whether you are graduating at the end of the semester or in two years, you are at the career fair trying to get either a job or an internship.
-			</p>
-			
-			<ul>
-				<li><span style="font-size:11.0pt">Walk around the entire arena atleast once before you talk to someone. Get the feel for how everyone is acting, 
-				calm yourself down, etc, etc. Plan an exit strategy just in case you get nervous and have a panic attack.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Make yourself stand out – highlight the things you are good at AND enjoy. Pick companies that are looking for just that. If you go to a company and talk about what you know, they are going to know what you are talking about.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Make a small portfolio with some of the work you have done in that area and show it to potential employers.<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Have confidence. Know what you are doing.<o:p></o:p></span></li>
-			</ul>
-		</div>
-
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-	
-	<div data-role="page" data-theme="a" id="new'n'">
-        <div data-role="header" data-position="fixed">
-            <h1>Dealing with Bad Grades</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#events">Back</a>  <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-		<div data-role="content">
-			<h2>Generic title placeholder.</h2>
-
-			
-			<p>
-			HTML is all done. We will add more content as it becomes available.
-			</p>
-			
-			<ul>
-				<li><span style="font-size:11.0pt">Bullet 1<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Bullet 2<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Bullet 3<o:p></o:p></span></li>
-				<li><span style="font-size:11.0pt">Bullet 4<o:p></o:p></span></li>
-			</ul>
-			
-			<p>
-				Have a question? Send it to "engineering.careers@mail.missouri.edu" with the subject of "HELP!" and we will be glad to answer it and post it to the webpage!
-			</p>
-		</div>
-
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-	<!--End preparation HTML-->
-	
+	<!--Start announcements HTML-->
     <div data-role="page" data-theme="a" id="announcements">
         <div data-role="header" data-position="fixed">
             <h1>Announcements</h1>
@@ -1091,30 +1069,20 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             data-iconpos="notext" data-rel="dialog" data-transition="fade"
             href="../nav.html">Search</a>
         </div>
-
-
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">Career Fair Announcements</li>
-
-
                 <li>
                     <a href="option">New Companies</a>
                 </li>
-
-
                 <li>
                     <a href="option2.html">Changed Booth Locations</a>
                 </li>
-
-
                 <li>
                     <a href="option8.html">Updates</a>
                 </li>
             </ul>
         </div>
-
-
         <div data-position="fixed" data-role="footer" data-role="footer">
             <input data-mini="true" id="basic" name="name" placeholder=
             "Search the Career Fair" type="text" value="">
@@ -1122,34 +1090,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
-    
-    <div data-role="page" data-theme="a" id="jobHunt">
-        <div data-role="header" data-position="fixed">
-            <h1>My Job Hunt</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-
-        <div data-role="content">
-        	<h2>LinkedIn : </h2>
-			<?php echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
-<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
-
-			<ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li>
-                    <a href="#">Add a Resume</a>
-                </li>
-
-
-                <li>
-                    <a id="hireMizzou">Hire Mizzou Tigers</a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
+    <!--End announcements HTML-->
+</div>
 </body>
 </html>
