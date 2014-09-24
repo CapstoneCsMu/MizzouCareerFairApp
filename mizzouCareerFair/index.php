@@ -136,34 +136,40 @@
             <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
 			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filters</a>
         </div>
-	
-		<form class="ui-filterable">
-      		<input id="companyFilter" data-type="search">
-    	</form>
-		
-		<div data-role="tabs">
-			<div data-role="navbar">
-				<ul>
-					<li><a href="#unfiltered">All</a></li>
-					<li><a href="#filtered">Filtered</a></li>
-					<li><a href="#visited">Visited</a></li>
-				</ul>
-			</div>
+				
+		<div data-role="content">
+			<div data-role="tabs">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#unfiltered">All</a></li>
+						<li><a href="#filtered">Filtered</a></li>
+						<li><a href="#visited">Visited</a></li>
+					</ul>
+				</div>
 
-			<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
-			<div id="unfiltered">
-				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
-				<?php include 'displayWithoutFilters.php'; ?>
-			</ul>
-			</div>
-			<div id="filtered">
-				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#FILTERED" data-autodividers="true">
-				<?php include 'displayWithFilters.php'; ?>
-				</ul>
-			</div>
-			
-			<div id="visited">
-				<center><p><b>You haven't visited any companies yet. Once a company scans your QR Code,  they will appear here.</b></p></center>
+				<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
+				<div id="unfiltered">
+					<form class="ui-filterable">
+						<input id="UNFILTERED" data-type="search">
+					</form>
+						<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
+						<?php include 'displayWithoutFilters.php'; ?>
+						</ul>
+				</div>
+				<div id="filtered">
+					<form class="ui-filterable">
+						<input id="FILTERED" data-type="search">
+					</form>
+					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#FILTERED" data-autodividers="true">
+					<?php include 'displayWithFilters.php'; ?>
+					</ul>
+				</div>
+				
+				<div id="visited"></br>
+					<div class="ui-bar ui-bar-a">
+						<center><p><b>You haven't visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>
+					</div>
+				</div>
 			</div>
 		</div>
     </div>
