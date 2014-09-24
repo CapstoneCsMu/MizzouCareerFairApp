@@ -17,16 +17,13 @@
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
 	
-    <link href=
-    "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
-    rel="stylesheet">
+    <link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css" rel="stylesheet">
     
-	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href=="css/themes/scrensize.css"/>
+	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 	
     <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src=
-    "http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
     
     <!-- Include JS file for our JS -->
     <script src="js/index.js"></script>
