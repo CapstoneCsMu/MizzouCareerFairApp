@@ -19,7 +19,6 @@
 <head>
 <title>Filter Companies
 </title> 
-<!--Force the page to refresh-->
 
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -27,15 +26,13 @@
 <!-- Include CSS and JQM CSS -->
 <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
 <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
+<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 
-<link href=
-"http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
-rel="stylesheet">
+<link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"rel="stylesheet">
 
 <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src=
-"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
 
 <!-- Include JS file for our JS -->
 <script src="js/index.js"></script>
@@ -77,7 +74,7 @@ rel="stylesheet">
 			
 			//Filters are Added Statically**************************************** (Maybe add the ability for Admin to be able to add new Filters if we have time?)
 			//OR We may have to find a way to load these dynamically
-			echo '<h3>Select Major(s) <font color="red">*</font></h3>';
+			echo '<div data-role="header"><h3>Select Major(s) <font color="red">*</font></h3></div>';
 			echo '<input type="checkbox" id="filter_0" name="filter_0" value="Computer Science"';
 			if (isset($_SESSION['filters']['filter_0'])) echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_0">Computer Science</label>';
@@ -110,7 +107,7 @@ rel="stylesheet">
 			if (isset($_SESSION['filters']['filter_7'])) echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_7">Information Technology</label>';	
 			
-			echo '<h3>Select a State</h3>';
+			echo '<div data-role="header"><h3>Select a State (optional)</h3></div>';
 			echo '<input type="radio" id="filter_8" name="group_state" value="MO" ';
 			if ($_SESSION['filters']['group_state']== 'MO') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_8">Missouri</label>';
@@ -131,7 +128,7 @@ rel="stylesheet">
 			if ($_SESSION['filters']['group_state']=='CO') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_12">Colorado</label>';
 
-			echo '<h3>Select a Type</h3>';
+			echo '<div data-role="header"><h3>Select a Type (optional)</h3></div>';
 			echo '<input type="radio" id="filter_13" name="group_type" value="Full Time" ';
 			if ($_SESSION['filters']['group_type']== 'Full Time') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_13">Full Time</label>';
@@ -141,8 +138,8 @@ rel="stylesheet">
 			echo '<label for="filter_14">Internship/Coop</label>';
 						
 			echo '</fieldset></form></div>';
-			echo '<li><a data-transition="slide" href="companyFilter.php" onclick="submitFilter();"><center>Submit</center></a></li>';
-			
+			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="submitFilter();">Submit</a>';
+			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="location.reload();">Reset</a>';
 		?>
 	</div>
 </div>
