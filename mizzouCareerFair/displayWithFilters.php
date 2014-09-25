@@ -90,11 +90,17 @@ if($Majorfilters != NULL)
 		}
 	}
 	if ($succesfulFilterCount == 0)
+	{
+		echo '</br><div class="ui-bar ui-bar-a">';
 		echo "</br><center><b>Sorry, you're filters did not return any results. They may be too strict. Try editing them.</b></center>";
+		echo '</div>';
+	}
 	
 }
 else
 {
-	echo "</br><center><b>No Filters have been set. Add them Above.</b></center>";
+	echo '</br><div class="ui-bar ui-bar-a">';
+	echo "<center><b>No Filters have been set. Add them Above.</b></center>";
+	echo '</div>';
 }
 ?>
