@@ -48,14 +48,16 @@ INSERT INTO rssinfo VALUES (default, 'https://rss.myinterfase.com/rss/umcolumbia
 -- Table to hold student information.
 DROP TABLE IF EXISTS careerSchema.students CASCADE;
 CREATE TABLE careerSchema.students (
-	username	varchar(50) PRIMARY KEY,
+	username	varchar(30) PRIMARY KEY,
 	firstName 	varchar(50),
 	lastName	varchar(50),
-	degree		varchar(50),
-	degreeCode	int,
 	email		varchar(50),
+	gradDate	varchar(30),
+	major		varchar(50),
+	resume		varchar(50),
 	phoneNumber	varchar(20),
-	
+	-- What do you want to do with your life???
+	lifePlan	varchar(200),
 	-- Personal Account ID from linkedin login
 	linkedIn	varchar(50)
 );
@@ -72,9 +74,9 @@ INSERT INTO careerSchema.students VALUES ('mcwrmd','Matthew','Weiner','IT',1, 'm
 --    salt          - The salt to use. Expected to be a SHA1 hash of a random input.
 DROP TABLE IF EXISTS careerSchema.studentAuthentication CASCADE;
 CREATE TABLE careerSchema.studentAuthentication (
-	username 		VARCHAR(30) PRIMARY KEY,
-	hash 		VARCHAR(40) NOT NULL,
-	salt 			VARCHAR(50) NOT NULL,
+	username 	varchar(30) PRIMARY KEY,
+	hash 		varchar(40) NOT NULL,
+	salt 		varchar(50) NOT NULL,
 	FOREIGN KEY (username) REFERENCES careerSchema.students(username)
 );
 
