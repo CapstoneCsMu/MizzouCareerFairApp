@@ -134,15 +134,24 @@ CREATE TABLE careerSchema.jobs (
 --Table to hold information on employers about their career fair information
 DROP TABLE IF EXISTS careerSchema.employerInfo CASCADE;
 CREATE TABLE careerSchema.employerInfo (
+	username			varchar(50) PRIMARY KEY,
 	booth		varchar(25),
 	companyID       int,
-        careerFairID    int,
+    careerFairID    int,
 	contact_name	varchar(100),
 	contact_phone	varchar(25),
 	contact_email	varchar(50),
 	check_in	varchar(50),
 	FOREIGN KEY 	(companyID) REFERENCES careerSchema.companies(companyID),
 	FOREIGN KEY (careerFairID) REFERENCES careerSchema.fairs(careerFairID)
+);
+
+DROP TABLE IF EXISTS careerSchema.employerAuthentication CASCADE;
+CREATE TABLE careerSchema.employerAuthentication (
+	username 		VARCHAR(30) PRIMARY KEY,
+	password_hash 		CHAR(40) NOT NULL,
+	salt 			CHAR(40) NOT NULL,
+	FOREIGN KEY (username) REFERENCES careerSchema.employerinfo(username)
 );
 
 -- NOT IMPLEMENTED

@@ -74,7 +74,7 @@
 			
 			//Filters are Added Statically**************************************** (Maybe add the ability for Admin to be able to add new Filters if we have time?)
 			//OR We may have to find a way to load these dynamically
-			echo '<div data-role="header"><h3>Select Major(s) <font color="red">*</font></h3></div>';
+			echo '<div data-role="header"><h3>Major(s) <font color="red">*</font></h3></div>';
 			echo '<input type="checkbox" id="filter_0" name="filter_0" value="Computer Science"';
 			if (isset($_SESSION['filters']['filter_0'])) echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_0">Computer Science</label>';
@@ -107,7 +107,7 @@
 			if (isset($_SESSION['filters']['filter_7'])) echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_7">Information Technology</label>';	
 			
-			echo '<div data-role="header"><h3>Select a State (optional)</h3></div>';
+			echo '<div data-role="header"><h3>State</h3></div>';
 			echo '<input type="radio" id="filter_8" name="group_state" value="MO" ';
 			if ($_SESSION['filters']['group_state']== 'MO') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_8">Missouri</label>';
@@ -128,7 +128,7 @@
 			if ($_SESSION['filters']['group_state']=='CO') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_12">Colorado</label>';
 
-			echo '<div data-role="header"><h3>Select a Type (optional)</h3></div>';
+			echo '<div data-role="header"><h3>Position</h3></div>';
 			echo '<input type="radio" id="filter_13" name="group_type" value="Full Time" ';
 			if ($_SESSION['filters']['group_type']== 'Full Time') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_13">Full Time</label>';
@@ -137,9 +137,9 @@
 			if ($_SESSION['filters']['group_type']=='Internship/Coop') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_14">Internship/Coop</label>';
 						
-			echo '</fieldset></form></div>';
-			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="submitFilter();">Submit</a>';
-			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="location.reload();">Reset</a>';
+			echo '</fieldset></form></div><center>';
+			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="submitFilter();" data-inline="true">Submit</a>';
+			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="location.reload();" data-inline="true">Reset</a>';
 		?>
 	</div>
 </div>

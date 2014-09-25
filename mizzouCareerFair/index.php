@@ -113,14 +113,21 @@
 
 
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Sign In and Reach Out</li>
+				<?php
+					if (!$_SESSION['student_loggedin'])
+					{
+						echo ' <li data-role="list-divider">Sign In</li>';
+						echo'<li><a rel="external" href="tigerspop.php">Sign In!</a></li>';
+					}
+					else
+					{
+						echo '<li data-role="list-divider">Student Tools</li>';
+						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
+					}
+				?>
 
                 <li>
-                    <a href="tigerspop.php">Mizzou Tigers - Sign In!</a>
-                </li>
-                
-                <li>
-                    <a href="#jobHunt">My Job Hunt</a>
+                    <a href="#jobHunt">JobHunt</a>
                 </li>
                 
                 
