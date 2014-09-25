@@ -119,6 +119,10 @@
                     <a href="tigerspop.php">Mizzou Tigers - Sign In!</a>
                 </li>
                 
+				<li>
+                    <a href="registrationpop.php">Register Here!</a>
+                </li>
+				
                 <li>
                     <a href="#jobHunt">My Job Hunt</a>
                 </li>
