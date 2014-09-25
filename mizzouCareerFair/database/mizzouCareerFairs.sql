@@ -48,20 +48,22 @@ INSERT INTO rssinfo VALUES (default, 'https://rss.myinterfase.com/rss/umcolumbia
 -- Table to hold student information.
 DROP TABLE IF EXISTS careerSchema.students CASCADE;
 CREATE TABLE careerSchema.students (
-	username	varchar(50) PRIMARY KEY,
+	username	varchar(30) PRIMARY KEY,
 	firstName 	varchar(50),
 	lastName	varchar(50),
-	degree		varchar(50),
-	degreeCode	int,
 	email		varchar(50),
+	gradDate	varchar(30),
+	major		varchar(50),
+	resume		varchar(50),
 	phoneNumber	varchar(20),
-	
+	-- What do you want to do with your life???
+	lifePlan	varchar(200),
 	-- Personal Account ID from linkedin login
 	linkedIn	varchar(50)
 );
 
 -- test student data
-INSERT INTO careerSchema.students VALUES ('mcwrmd','Matthew','Weiner','IT',1, 'mcwrmd@mail.missouri.edu','3148008151'),('kedxw3','Kristi','Decker','IT', 1,'kedxw3@mail.missouri.edu','6183632676'),('ajlfh7', 'Adam','Lyons', 'IT', 1, 'ajlfh7@mail.missouri.edu','5739344352'),('sosb8d', 'Steven', 'Schroeder', 'CS', 2, 'sosb8d@mail.missouri.edu','7089039113');
+INSERT INTO careerSchema.students VALUES ('dcm53f','Cecilia', 'Martinez','dcm53f@mail.missouri.edu','May-2014','IT','','(573)445-1121','Get a job','');
 
 
 -- NOT IMPLEMENTED 
@@ -72,14 +74,14 @@ INSERT INTO careerSchema.students VALUES ('mcwrmd','Matthew','Weiner','IT',1, 'm
 --    salt          - The salt to use. Expected to be a SHA1 hash of a random input.
 DROP TABLE IF EXISTS careerSchema.studentAuthentication CASCADE;
 CREATE TABLE careerSchema.studentAuthentication (
-	username 		VARCHAR(30) PRIMARY KEY,
-	hash 		VARCHAR(40) NOT NULL,
-	salt 			VARCHAR(50) NOT NULL,
+	username 	varchar(30) PRIMARY KEY,
+	hash 		varchar(40) NOT NULL,
+	salt 		varchar(50) NOT NULL,
 	FOREIGN KEY (username) REFERENCES careerSchema.students(username)
 );
 
 -- test student authentication data
-INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd','826763918','58e06579e9985016bfe35caf52516ffd6038d945'),('kedxw3','826763918','33f42ae9da78e80bbb509a9af75a27b099f5574e'),('dcm53f','826763918','90f4486f60d7154516509713c2a66bc048b44891');
+INSERT INTO careerSchema.studentAuthentication VALUES ('dcm53f','826763918','90f4486f60d7154516509713c2a66bc048b44891');
 
 -- NOT IMPLEMENTED
 DROP TABLE IF EXISTS careerSchema.fairs CASCADE;

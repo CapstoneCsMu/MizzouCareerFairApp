@@ -125,12 +125,9 @@
 						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
 					}
 				?>
-
                 <li>
                     <a href="#jobHunt">JobHunt</a>
                 </li>
-                
-                
             </ul>
             
             <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
