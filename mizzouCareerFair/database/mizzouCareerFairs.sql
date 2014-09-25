@@ -63,7 +63,8 @@ CREATE TABLE careerSchema.students (
 );
 
 -- test student data
-INSERT INTO careerSchema.students VALUES ('dcm53f','Cecilia','Martinez','dcm53f@mail.missouri.edu','May-2014','','5734451121','Get an awesome job','');
+INSERT INTO careerSchema.students VALUES ('mcwrmd','Matthew','Weiner','IT',1, 'mcwrmd@mail.missouri.edu','3148008151'),('kedxw3','Kristi','Decker','IT', 1,'kedxw3@mail.missouri.edu','6183632676'),('ajlfh7', 'Adam','Lyons', 'IT', 1, 'ajlfh7@mail.missouri.edu','5739344352'),('sosb8d', 'Steven', 'Schroeder', 'CS', 2, 'sosb8d@mail.missouri.edu','7089039113');
+
 
 -- NOT IMPLEMENTED 
 -- Table: careerSchema.graduateAuthentication
@@ -80,7 +81,7 @@ CREATE TABLE careerSchema.studentAuthentication (
 );
 
 -- test student authentication data
-INSERT INTO careerSchema.studentAuthentication VALUES ('dcm53f','826763918','90f4486f60d7154516509713c2a66bc048b44891');
+INSERT INTO careerSchema.studentAuthentication VALUES ('mcwrmd','826763918','58e06579e9985016bfe35caf52516ffd6038d945'),('kedxw3','826763918','33f42ae9da78e80bbb509a9af75a27b099f5574e'),('dcm53f','826763918','90f4486f60d7154516509713c2a66bc048b44891');
 
 -- NOT IMPLEMENTED
 DROP TABLE IF EXISTS careerSchema.fairs CASCADE;
