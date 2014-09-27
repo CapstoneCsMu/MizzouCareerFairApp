@@ -10,15 +10,15 @@
     
     <!-- Include CSS and JQM CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
-	
-    <link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css" rel="stylesheet">
+	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
 	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 	
     <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
+	<script src="js/jquery-1.11.1.min.js"></script>
+    <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
 	<script type="text/javascript">
 	function submitStudent()
 	{
@@ -89,16 +89,7 @@
 //Function to Redirect or Force HTTPS on bad guys
 function pre_process()
 {
-	// To access $_SESSION, we have to call session_start()
-	if (!isset($_SESSION))
-	{
-		session_start();
-	}
-	// check https and FORCE https on bad guys
-	if ($_SERVER['HTTPS'] != "on" && $_SERVER['HTTP_HOST'] != 'localhost') 
-	{
-		header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
-	}
+	include('check_https.php');
 	// If logged in, don't let anyone RE-register
 	if (isset($_SESSION['student_loggedin']) )
 	{
@@ -138,39 +129,44 @@ function handleStudentRegistration()
 		$stmt = pg_prepare($conn, "register_0", $query)  or die( pg_last_error() );
 		$result = pg_execute($conn, "register_0" ,array($user) ) ;
 		//Check to see if login user exists, if not do nothing
-		if(pg_num_rows($result) == 1)
+		if(pg_num_rows($result) > 0)
 		{
 			echo "<div class ='alert alert-danger'>";
 			echo "<center>User already exists.</center>";
 			echo "\n\t</div>";
 		}
-		mt_srand(); //Seed number generator
-		$salt = mt_rand(); //generate salt
-		$salt = sha1($salt);
-		$pass = htmlspecialchars($_POST['pass1']);
-		$passHashed = sha1($salt.$pass);
-
-		for ($i=0; $i<10000; $i++) //Slow Hashing
+		else
 		{
-			$passHashed = sha1($passHashed);
-		}
-		//Insert user into the database
-		$query = "INSERT INTO careerschema.students (username,firstname,lastname, degreecode, email) VALUES ($1,$2,$3, $4, $5)";
-		$state = pg_prepare($conn,"insert_0",$query) ;
-		//or die( "Error:". pg_last_error() ); Need a better way to error check. WE may need to error check using Javascript / Ajax XMLHttpRequests first
-		$queryInsert = pg_execute($conn,"insert_0",array($user,$_POST['firstname'],$_POST['lastname'], 1 , $_POST['email']) )  ;
-		//or die( "Error:". pg_last_error() ); Need a better way to error check
-		//Then we can add their authentication information
-		$query = "INSERT INTO careerschema.studentauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
-		$state = pg_prepare($conn,"insert_1",$query) ;
-		//or die( "Error:". pg_last_error() ); Need a better way to error check
-		$queryInsert = pg_execute($conn,"insert_1",array($user,$salt,$passHashed ) )  ;
-		//or die( "Error:". pg_last_error() ); Need a better way to error check
+			mt_srand(); //Seed number generator
+			$salt = mt_rand(); //generate salt
+			$salt = sha1($salt);
+			$pass = htmlspecialchars($_POST['password']);
+			$passHashed = sha1($salt.$pass);
 
-		if ($queryInsert)
-		{
-			$_SESSION['registered'] = TRUE;
-			header("Location: tigerspop.php");
+			for ($i=0; $i<10000; $i++) //Slow Hashing
+			{
+				$passHashed = sha1($passHashed);
+			}
+			
+			//Insert user into the students table
+			$query = "INSERT INTO careerschema.students (username, email) VALUES ($1,$2)";
+			$state = pg_prepare($conn,"insert_0",$query) ;
+			//or die( "Error:". pg_last_error() ); Need a better way to error check. WE may need to error check using Javascript / Ajax XMLHttpRequests first
+			$queryInsert = pg_execute($conn,"insert_0",array($user,$_POST['email']));
+			//or die( "Error:". pg_last_error() ); Need a better way to error check
+			
+			//Then we can add their authentication information
+			$query = "INSERT INTO careerschema.studentauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
+			$state = pg_prepare($conn,"insert_1",$query) ;
+			//or die( "Error:". pg_last_error() ); Need a better way to error check
+			$queryInsert = pg_execute($conn,"insert_1",array($user,$salt,$passHashed ) )  ;
+			//or die( "Error:". pg_last_error() ); Need a better way to error check
+
+			if ($queryInsert)
+			{
+				$_SESSION['registered'] = TRUE;
+				header("Location: tigerspop.php");
+			}
 		}
 	}
 }
