@@ -12,21 +12,15 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1" name="viewport">
 
-<!-- Include CSS and JQM CSS -->
-<link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
-<link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
-
-<link href=
-"http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
-rel="stylesheet">
-
-<!-- Include jQuery and jQuery Mobile CDN, add actual files -->
-<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src=
-"http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
-
-<!-- Include JS file for our JS -->
-<script src="js/index.js"></script>
+    <!-- Include CSS and JQM CSS -->
+    <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
+    <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
+	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
+	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
+	<script src="js/jquery-1.11.1.min.js"></script>
+    <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
 </head>
 
 <div data-role="page" data-theme="a" id="fairs">
