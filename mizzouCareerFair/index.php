@@ -109,7 +109,7 @@
                 </li>
 
 		<li>
-		    <a data-transition="flip" href="support.php">Support</a>
+		    <a data-transition="flip" href="#support">Support</a>
 		</li>
             </ul>
 
@@ -314,7 +314,7 @@
 			<h2>How?</h2>
 			
 			<p>
-			Know which companies want to talk with: 
+			Know which companies you want to talk with: 
 			</p>
 			<ul>
 				<li><span style="font-size:11.0pt">Have a clean ONE page resume. With very few exceptions, college students have do not have enough experience to fill more than one page.<o:p></o:p></span></li>
@@ -406,6 +406,35 @@
     </div>
 	<!--End preparation HTML-->
 	
+	<!--Start Support HTML-->
+<div data-role="page" data-theme="a" id="support">
+        <div data-role="header" data-position="fixed">
+            <h1>Mizzou Career Fairs Help</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+                <div data-role="content">
+                        <h2>Need help? Send us an email with questions or comments.</h2>
+
+                        <p>
+                        Email us at <a href ="mailto:engineering.careers@mail.missouri.edu">careerFairsHelp@mail.missouri.edu</a>.
+                        </p>
+
+                        <ul>
+			Name<br><input name="userName" size="30" type="text"  required><br>
+			Email<br><input name="userEmail" size="30" type="email" required><br>
+			Subject<br><input name="subject" size="30" type="text" required><br>
+			Body<br><input name="body" type="text" required><br><br>
+			 <button type="button">Send email</button>
+                        </ul>
+	       </div>
+    </div>
+                   
+
+	<!--End Support HTML-->	
+
 	<!--Start Job Hunt HTML-->
     <div data-role="page" data-theme="a" id="jobHunt">
         <div data-role="header" data-position="fixed">
