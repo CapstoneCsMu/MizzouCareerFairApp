@@ -42,6 +42,19 @@
 </head>
 
 <body>
+<<<<<<< HEAD
+=======
+
+<!--JavaScript SDK for facebook login button
+    <div id="fb-root"></div>
+	<script>(function(d, s, id) {
+  		var js, fjs = d.getElementsByTagName(s)[0];
+  		if (d.getElementById(id)) return;
+  		js = d.createElement(s); js.id = id;
+  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
+  		fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script> -->
+>>>>>>> origin/master
 
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
@@ -124,9 +137,7 @@
                 
             </ul>
             
-            <a><?php echo "<script type=\"in/Login\">
-Hello, <?js= firstName ?> <?js= lastName ?>.
-</script>" ?></a>
+            <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
 
             
         </div>
