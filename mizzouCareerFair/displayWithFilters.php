@@ -34,8 +34,9 @@ if($Majorfilters != NULL)
 			if ($m != count($Majorfilters))
 				echo ', ';
 		}
-		if (isset($_SESSION['filters']['group_state']))
+		if (isset($_SESSION['filters']['group_state'])){
 			echo ", ".$_SESSION['filters']['group_state'];
+			}
 		if (isset($_SESSION['filters']['group_type']))
 			echo ", ".$_SESSION['filters']['group_type'];
 		echo "</center></br>";
@@ -59,7 +60,9 @@ if($Majorfilters != NULL)
 			{
 				for ($z = 0; $z < count($companyPositions[$key]); $z++)
 				{
-					if ($_SESSION['filters']['group_type'] == $companyPositions[$key][$z])
+					//trim white space from company positions type
+					$companyPosition = trim($companyPositions[$key][$z]);
+					if ($_SESSION['filters']['group_type'] == ($companyPosition));
 						$positionFlag = TRUE;
 				}
 				if (!$positionFlag)
