@@ -35,7 +35,7 @@ for($i = 0; $i<$length; $i++){
 	$dom->preserveWhiteSpace = false;
 	$tables = $dom->getElementsByTagName('table');
 	$rows= $tables->item(0)->getElementsByTagName('tr');
-
+	//Integer for two dimensional Array
 	$j = 0;
 	//Look at this company's cluster of Data
 	foreach($rows as $row)
@@ -48,10 +48,11 @@ for($i = 0; $i<$length; $i++){
 			}
 		if($cols->item(0)->nodeValue == $line['positiontypes']){
 			$company[$i]->PositionTypes = $cols->item(1)->nodeValue;
+			$companyPositions[$i] = explode(", ", $company[$i]->PositionTypes); //Needed for Filtering by Major : Explode parses the line and puts into 2-D Array
 			}
 		if($cols->item(0)->nodeValue == $line['majors']){
 			$company[$i]->Majors = $cols->item(1)->nodeValue;
-			$companyMajor[$i] = explode(", ", $company[$i]->Majors); //Neede for Filtering
+			$companyMajor[$i] = explode(", ", $company[$i]->Majors); //Needed for Filtering by Major : Explode parses the line and puts into 2-D Array
 			}
 		if($cols->item(0)->nodeValue == $line['city']){
 			$company[$i]->City = $cols->item(1)->nodeValue;

@@ -1,8 +1,5 @@
 <?php
-	if (!isset($_SESSION))
-	{
-		session_start();
-	}
+	include('check_https.php');
 	$_SESSION['prevPage'] = 'index.php';
  ?>
 <!DOCTYPE html>
@@ -17,150 +14,39 @@
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
 	
-    <link href=
-    "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
-    rel="stylesheet">
+    <!-- <link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css" rel="stylesheet"> -->
+	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
     
-    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
+	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
+	
+    <!-- Include jQuery and jQuery Mobile CDN, add actual files
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src=
-    "http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
-    
+    <script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script> -->
+	<script src="js/jquery-1.11.1.min.js"></script>
+    <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <!-- Include JS file for our JS -->
     <script src="js/index.js"></script>
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
-    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+	<!-- <script type="text/javascript" src="http://platform.linkedin.com/in.js"> -->
+    <script type="text/javascript" src="js/linkedin.js">
   		api_key: 75a6k7ahbjlrny
   		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
-	
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
-	
-	 <script type="text/javascript">
+	<!-- Include Google Maps API -->
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
 
-			function submitFilter()
-			{
-				document.getElementById("filterForm").submit();
-				window.alert("You're Settings have been saved.");
-			}
+	<script type="text/javascript" src="index.js"></script>
 
-            $(document).on("pageinit", "#map_page", function() {
-                initialize();
-            });
-
-            $(document).on('click', '#submit', function(e) {
-                e.preventDefault();
-                calculateRoute();
-            });
-
-            var directionDisplay,
-                directionsService = new google.maps.DirectionsService(),
-                map;
-
-            function initialize() 
-            {
-                directionsDisplay = new google.maps.DirectionsRenderer();
-                var mapCenter = new google.maps.LatLng(38.9343, -92.3306);
-
-                var myOptions = {
-                    zoom:10,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    center: mapCenter
-                }
-
-                map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-                directionsDisplay.setMap(map);
-                directionsDisplay.setPanel(document.getElementById("directions"));
-
-				
-				
-				navigator.geolocation.getCurrentPosition(showPosition);
-				var latlon;
-				
-				function showPosition(pos) {
-					var latlon = pos.coords.latitude+","+pos.coords.longitude;
-					console.log(latlon);
-					
-					$('#from').val(latlon);
-				};
-            }
-
-			
-			
-			
-            function calculateRoute() 
-            {
-				var x = document.getElementById("map_canvas");
-				
-				navigator.geolocation.getCurrentPosition(showPosition);
-				var latlon;
-				
-				function showPosition(pos) {
-					var latlon = pos.coords.latitude+","+pos.coords.longitude;
-					console.log(latlon);
-					
-				};
-					
-			
-			
-                var selectedMode = $("#mode").val(),
-                    start = $("#from").val(),
-                    end = $("#to").val();
-
-                if(start == '' || end == '')
-                {
-                    // cannot calculate route
-                    $("#results").hide();
-                    return;
-                }
-                else
-                {
-                    var request = {
-                        origin:start, 
-                        destination:end,
-                        travelMode: google.maps.DirectionsTravelMode[selectedMode]
-                    };
-
-                    directionsService.route(request, function(response, status) {
-                        if (status == google.maps.DirectionsStatus.OK) {
-                            directionsDisplay.setDirections(response); 
-                            $("#results").show();
-                            /*
-                                var myRoute = response.routes[0].legs[0];
-                                for (var i = 0; i < myRoute.steps.length; i++) {
-                                    alert(myRoute.steps[i].instructions);
-                                }
-                            */
-                        }
-                        else {
-                            $("#results").hide();
-                        }
-                    });
-
-                }
-            }
-        </script>
-   
 </head>
 
 <body>
-<!--JavaScript SDK for facebook login button-->
-    <div id="fb-root"></div>
-	<script>(function(d, s, id) {
-  		var js, fjs = d.getElementsByTagName(s)[0];
-  		if (d.getElementById(id)) return;
-  		js = d.createElement(s); js.id = id;
-  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
-  		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
 
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
             <h1 class="no-ellipses">Mizzou Careers</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="index.php">Home</a> <a data-icon="search" data-iconpos=
+             <a class="ui-btn-right" data-icon="search" data-iconpos=
             "notext" data-rel="dialog" data-transition="fade" href=
             "search.php">Search</a>
         </div>
@@ -178,32 +64,37 @@
                 <li>
                     <a data-transition="flip" href="#companies">Companies</a>
                 </li>
-
-
-                <li>
-                    <a data-transition="flip" href="#companyTest">Test Company/API's this is Static</a>
+				
+				<li>
+                    <a data-transition="flip" href="employerView.php">Employer View - This is temporary. Will default for employers when they log in.</a>
                 </li>
+
+				<li>
+                    <a data-transition="flip" href="#preparation">Preparation</a>
+                </li>	
                 
                 <li>
                     <a data-transition="flip" href="#map_page">Directions to Fair-In Progress</a>
                 </li>
-
-
+				
                 <li>
                     <a data-transition="flip" href="#map">Fair Map - Coming soon</a>
                 </li>
 
-		<li>
-		    <a data-transition="flip" href="announcements.php">Announcements</a>
-		</li>
-
-
+				<li>
+					<a data-transition="flip" href="announcements.php">Announcements</a>
+				</li>
+				
                 <li>
-                    <a data-transition="flip" href="#events">Events and Preparation</a>
+                    <a data-transition="flip" href="#events">Events</a>
                 </li>
 
                 <li>
                     <a data-transition="flip" href="fairSelection.php">Fairs</a>
+                </li>
+				
+				<li>
+                    <a data-transition="flip" href="#aboutECS">Engineering Career Services</a>
                 </li>
 
 		<li>
@@ -213,14 +104,21 @@
 
 
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Sign In and Reach Out</li>
+				<?php
+					if (!$_SESSION['student_loggedin'])
+					{
+						echo ' <li data-role="list-divider">Sign In</li>';
+						echo'<li><a rel="external" href="tigerspop.php">Sign In!</a></li>';
+					}
+					else
+					{
+						echo '<li data-role="list-divider">Student Tools</li>';
+						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
+					}
+				?>
 
                 <li>
-                    <a href="tigerspop.php">Mizzou Tigers - Sign In!</a>
-                </li>
-                
-                <li>
-                    <a href="#jobHunt">My Job Hunt</a>
+                    <a href="#jobHunt">JobHunt</a>
                 </li>
                 
                 
@@ -230,147 +128,51 @@
 Hello, <?js= firstName ?> <?js= lastName ?>.
 </script>" ?></a>
 
-	    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
             
         </div>
 
     </div>
 	
-    <!-- This page should have a list of all of the companies in the RSS feed 
-    
-    	 The data in RSS must made useful and unique so we know what companies we are using
-    -->
-
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1>Companies</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
 			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filters</a>
         </div>
-	
-		<form class="ui-filterable">
-      		<input id="companyFilter" data-type="search">
-    	</form>
-		
-		
+				
+		<div data-role="content">
 			<div data-role="tabs">
 				<div data-role="navbar">
 					<ul>
-						<li><a href="#companies-1">All</a></li>
+						<li><a href="#unfiltered">All</a></li>
 						<li><a href="#filtered">Filtered</a></li>
-						<li><a href="#following">Following</a></li>
+						<li><a href="#visited">Visited</a></li>
 					</ul>
 				</div>
 
-			<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
-			<div id="companies-1">
-			<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
-			 <?php
-			//Parse the XML File
-			include 'companyParse.php';
-			
-			//If RSS Feed is down
-			if (!$line['rss'])
-			{
-				echo 'The RSS Feed is broken right now, Sorry about that...';
-			}
-			else
-			{
-				//sort names alphabetically and print them as list options
-				asort($companyNames);
-				$i = 1;
-				foreach($companyNames as $companyName => $val)
-				{
-					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-					$i++;
-				}
-			}
-            ?>
-			</ul>
-			</div>
-			<div id="filtered">
-				<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#FILTERED" data-autodividers="true">
-					<?php
-					//Parse the XML File
-					include 'companyParse.php';
-					$succesfulFilterCount = 0;
-					$filters = NULL;
-					// build $filters Array 
-					// NOTE: The value 10 is Static because we will need to possibly implement a dynamic way to load Filter Options
-					$x=0;
-					for ($y=0; $y <  10; $y++)
-					{
-						if($_SESSION['filters']['filter_'.$y] ==NULL)
-							continue;
-						else
-						{
-							$filters[$x] = $_SESSION['filters']['filter_'.$y];
-							$x++;
-						}
-					}
-
-					if($filters != NULL)
-					{
-						//If RSS Feed is down
-						if (!$line['rss'])
-						{
-							echo 'The RSS Feed is broken right now, Sorry about that...';
-						}
-						else
-						{
-							//Display Filters:
-							echo "</br><center><b>Filters: </b>";
-							for($m=1; $m <= count($filters); $m++)
-							{
-								echo $filters[$m-1];
-								if ($m != count($filters))
-									echo ' & ';
-							}
-							echo "</center></br>";
-							//sort names alphabetically and print them as list options
-							//asort RETAINS the previous key, pretty weird, but it helps increase the efficiency.
-							asort($companyNames);
-							$i = 0;
-							foreach($companyNames as $key => $val)
-							{
-								$i++;
-								// Step 1. Exclude companies that didn't list a major
-								if ( $company[$i]->Majors == NULL)
-									continue;
-								else
-								{
-									// Step 2. Look for Computer Science within this company's majors given
-									for ($j=0; $j < count($companyMajor[$i]); $j++)
-									{
-										for($k=0; $k < count($filters); $k++)
-										{
-											//echo $company[$i]->MajorArray[$j];
-											if ($filters[$k] == $companyMajor[$i][$j])
-											{
-												echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
-												$succesfulFilterCount++;
-											}
-											else //Skip Listing of this Company
-												continue;
-										}
-									}
-								}
-							}
-						}
-						if ($succesfulFilterCount == 0)
-							echo "</br><center>Sorry, You're Filters Did Not Return Any Results. Please Try Editing Your Filters.</center>";
-						
-					}
-					else
-					{
-						echo "</br><center><b>No Filters have been set. Add them Above.</b></center>";
-					}
-					?>
-				</ul>
-			</div>
-			
-			<div id="following">
-				<center><p><b>You haven't followed any companies yet.</b></p></center>
+				<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
+				<div id="unfiltered">
+					<form class="ui-filterable">
+						<input id="UNFILTERED" data-type="search">
+					</form>
+						<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
+						<?php include 'displayWithoutFilters.php'; ?>
+						</ul>
+				</div>
+				<div id="filtered">
+					<form class="ui-filterable">
+						<input id="FILTERED" data-type="search">
+					</form>
+					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#FILTERED" data-autodividers="true">
+					<?php include 'displayWithFilters.php'; ?>
+					</ul>
+				</div>
+				
+				<div id="visited"></br>
+					<div class="ui-bar ui-bar-a">
+						<center><p><b>You haven't visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>
+					</div>
+				</div>
 			</div>
 		</div>
     </div>
@@ -391,35 +193,6 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 	//Load a page for each company dynamically
 	include('companyLoad.php');
 	?>
-
-	<!-- Static Data, Just to test what we can do with some APIs-->
-    <div data-role="page" data-theme="a" id="companyTest">
-        <div data-role="header" data-position="fixed">
-            <h1>Companies</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-
-
-        <ul data-dividertheme="b" data-inset="true" data-role="listview">
-            <li data-role="list-divider">Full Time</li>
-
-
-            <li>
-                <a href="#ibm">IBM</a>
-            </li>
-
-        </ul>
-    </div>
-    
-	
-	
-	
-	
-	
-	
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
     <div data-role="page" id="map_page">
@@ -456,8 +229,201 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                 </div>
             </div>
     </div>
+	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->
+	
+	<!--Start preparation HTML-->
+	<div data-role="page" data-theme="a" id="preparation">
+        <div data-role="header" data-position="fixed">
+            <h1>Prepare yourself!</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
 
-    <!-- Testing what we can do for a company -->
+        <div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Keys to a successful career fair</li>
+				
+				<li>
+                    <a href="#prepare">Preparation</a>
+                </li>
+				<li>
+                    <a href="#resume">Resume</a>
+                </li>
+				<li>
+                    <a href="#dressCode">Dress Code</a>
+                </li>
+				<li>
+                    <a href="#confidence">Confidence</a>
+                </li>
+				<!--<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>
+				<li>
+                    <a href="#new'n">Placeholder</a>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="prepare">
+        <div data-role="header" data-position="fixed">
+            <h1>Preparation Steps</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>How to prepare</h2>
+			
+			<p>
+			Know which companies want to talk with: 
+			</p>
+			<ul>
+				<li><span style="font-size:11.0pt">The day before the career fair, google each company and learn in a broad sense what they do.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Once you have done this, decide which of your accomplishments fit their scope and focus on those when you talk to their recruiters. <o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Pick which of your traits fit the company best and sell yourself to the company with those traits in mind.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Memorize some questions about the company so the recruiter knows you’ve done some research and you are actually interested in the company. <o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>	
+	
+	<div data-role="page" data-theme="a" id="resume">
+        <div data-role="header" data-position="fixed">
+            <h1>Rules of the Resume</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>How?</h2>
+			
+			<p>
+			Know which companies want to talk with: 
+			</p>
+			<ul>
+				<li><span style="font-size:11.0pt">Have a clean ONE page resume. With very few exceptions, college students have do not have enough experience to fill more than one page.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Do not staple references or a cover page to your resume. You may bring a reference page, but only give it to the employers if they ask.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Since you are not applying for a specific job, you do not need a cover sheet.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">We strongly recommend taking advantage of the resume builder seminars given by Engineering Career Services.<o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>
+	
+	
+	<div data-role="page" data-theme="a" id="dressCode">
+        <div data-role="header" data-position="fixed">
+            <h1>Dress for Success</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+		
+		<div data-role="content">
+			<h2>Dress like your job depends on it!</h2>
+
+			<p>
+			The dress code is business professional.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Students should dress as if they are going to a professional job interview.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Do not wear polos, jeans, shorts, or open toed shoes.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Men should wear a suit and tie.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Women should wear a suit, dress, or knee length skirt.<o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="confidence">
+        <div data-role="header" data-position="fixed">
+            <h1>Confidence</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+		<div data-role="content">
+			<h2>Be confident in yourself</h2>
+
+			<p>
+			Whether you are graduating at the end of the semester or in two years, you are at the career fair trying to get either a job or an internship.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Walk around the entire arena atleast once before you talk to someone. Get the feel for how everyone is acting, 
+				calm yourself down, etc, etc. Plan an exit strategy just in case you get nervous and have a panic attack.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Make yourself stand out – highlight the things you are good at AND enjoy. Pick companies that are looking for just that. If you go to a company and talk about what you know, they are going to know what you are talking about.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Make a small portfolio with some of the work you have done in that area and show it to potential employers.<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Have confidence. Know what you are doing.<o:p></o:p></span></li>
+			</ul>
+		</div>
+    </div>
+	
+	<div data-role="page" data-theme="a" id="new'n'">
+        <div data-role="header" data-position="fixed">
+            <h1>Dealing with Bad Grades</h1>
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+            data-transition="flip" href="#preparation">Back</a>  <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+		<div data-role="content">
+			<h2>Generic title placeholder.</h2>
+			
+			<p>
+			HTML is all done. We will add more content as it becomes available.
+			</p>
+			
+			<ul>
+				<li><span style="font-size:11.0pt">Bullet 1<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 2<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 3<o:p></o:p></span></li>
+				<li><span style="font-size:11.0pt">Bullet 4<o:p></o:p></span></li>
+			</ul>
+			
+			<p>
+				Have a question? Send it to "engineering.careers@mail.missouri.edu" with the subject of "HELP!" and we will be glad to answer it and post it to the webpage!
+			</p>
+		</div>
+    </div>
+	<!--End preparation HTML-->
+	
+	<!--Start Job Hunt HTML-->
+    <div data-role="page" data-theme="a" id="jobHunt">
+        <div data-role="header" data-position="fixed">
+            <h1>My Job Hunt</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+        <div data-role="content">
+        	<h2>LinkedIn : </h2>
+			<?php echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
+<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
+
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li>
+                    <a href="#">Add a Resume</a>
+                </li>
+                <li>
+                    <a id="hireMizzou">Hire Mizzou Tigers</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+	<!--End Job Hunt HTML.-->
+	
+	<!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
     	<div data-role="header" data-position="fixed">
             <h1>IBM</h1>
@@ -475,12 +441,10 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         <?php echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
 <script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ?>
         </div>	
-        
-        
-        
     </div>
+	<!--End Testing what we can do for a company-->
 
-
+	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
         <div data-role="header" data-position="fixed">
             <h1>Mizzou Career Fair App Hearnes Map</h1>
@@ -503,8 +467,9 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
+	<!--End map HTML-->
 
-
+	<!--Start old rewrite code-->
     <div data-role="page" data-theme="a" id="events">
         <div data-role="header" data-position="fixed">
             <h1>Career Fair Events</h1>
@@ -548,11 +513,9 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
                     <a href="#dress">REWRITE ME Dress for Success</a>
                 </li>
 
-
                 <li>
                     <a href="#standOut">REWRITE ME Standing Out</a>
                 </li>
-
 
                 <li>
                     <a href="#speech">REWRITE ME Making Your Speech Count</a>
@@ -598,8 +561,8 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
 
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
-    </div>
 
+    </div>	
 	
 	<div data-role="page" data-theme="a" id="standOut">
         <div data-role="header" data-position="fixed">
@@ -800,10 +763,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
         remaining time at
         school!
 	</p>
-     
-    
 		</div>
-
 
         <div data-position="fixed" data-role="footer" data-role="footer">
             <input data-mini="true" id="basic" name="name" placeholder=
@@ -812,8 +772,62 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
+	<!--End old rewrite HTML-->
 	
-
+	<!--Start about ECS HTML-->
+	<div data-role="page" data-theme="a" id="aboutECS">
+        <div data-role="header" data-position="fixed">
+            <h1>About Us</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+			<div data-role="content">
+				<p>
+				Engineering Career Services provides information, guidance and resources to empower Mizzou 
+				Engineering students to develop and achieve their career goals.
+				</p>
+				
+				<h2>Typical Career Events</h2>
+				<ul>
+					<li><span style="font-size:11.0pt">Career fairs (2 a year)<o:p></o:p></span></li>
+					<li><span style="font-size:11.0pt">Professional development workshops with employers<o:p></o:p></span></li>
+					<li><span style="font-size:11.0pt">Company visits to Mizzou for on-campus interviews and networking opportunites<o:p></o:p></span></li>
+					<li><span style="font-size:11.0pt">Special targeted events with employers<o:p></o:p></span></li>
+				</ul>
+				
+				<h2>Employer Access to Students</h2>
+				<p>
+				In addition to professional development activities offered to students, 
+				Engineering Career Services also develops corporate partnerships that increase access to students.
+				</p>
+				<p>
+				If you have questions about Engineering Career Services, feel free to contact us.
+				</p>
+				
+				<h3>Mission</h3>
+				<p>In all our work these beliefs and values will guide us:</p>
+				<ul>
+					<li><span style="font-size:11.0pt">Career development is a lifelong learning process consisting of the following components:<o:p></o:p></span></li>
+						<ul>
+							<li><span style="font-size:9.0pt">self-assessment<o:p></o:p></span></li>
+							<li><span style="font-size:9.0pt">occupational exploration<o:p></o:p></span></li>
+							<li><span style="font-size:9.0pt">career decision making<o:p></o:p></span></li>
+							<li><span style="font-size:9.0pt">career planning<o:p></o:p></span></li>
+							<li><span style="font-size:9.0pt">acting on options<o:p></o:p></span></li>
+						</ul>
+					<li><span style="font-size:11.0pt">Each student has diverse experiences, interests and goals, and deserves to be respected as an individual.<o:p></o:p></span></li>
+					<li><span style="font-size:11.0pt">Each student deserves to be assisted with her/his individual needs in a caring manner that also allows the student to develop individual responsibility.<o:p></o:p></span></li>
+					<li><span style="font-size:11.0pt">Services and programs need to be evaluated and redirected as academic environment and employment trends dictate.<o:p></o:p></span></li>
+					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
+					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
+				</ul>	
+		</div>
+	</div>
+	<!--End about ECS HTML-->
+	
+	<!--Start announcements HTML-->
     <div data-role="page" data-theme="a" id="announcements">
         <div data-role="header" data-position="fixed">
             <h1>Announcements</h1>
@@ -822,30 +836,20 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             data-iconpos="notext" data-rel="dialog" data-transition="fade"
             href="../nav.html">Search</a>
         </div>
-
-
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">Career Fair Announcements</li>
-
-
                 <li>
                     <a href="option">New Companies</a>
                 </li>
-
-
                 <li>
                     <a href="option2.html">Changed Booth Locations</a>
                 </li>
-
-
                 <li>
                     <a href="option8.html">Updates</a>
                 </li>
             </ul>
         </div>
-
-
         <div data-position="fixed" data-role="footer" data-role="footer">
             <input data-mini="true" id="basic" name="name" placeholder=
             "Search the Career Fair" type="text" value="">
@@ -853,34 +857,7 @@ Hello, <?js= firstName ?> <?js= lastName ?>.
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
-    
-    <div data-role="page" data-theme="a" id="jobHunt">
-        <div data-role="header" data-position="fixed">
-            <h1>My Job Hunt</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
+    <!--End announcements HTML-->
 
-
-        <div data-role="content">
-        	<h2>LinkedIn : </h2>
-			<?php echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
-<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
-
-			<ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li>
-                    <a href="#">Add a Resume</a>
-                </li>
-
-
-                <li>
-                    <a id="hireMizzou">Hire Mizzou Tigers</a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
 </body>
 </html>
