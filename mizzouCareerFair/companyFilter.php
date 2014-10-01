@@ -48,7 +48,7 @@
 			window.alert("You're Settings have been saved.");
 		}
 		else {
-		alert("ERROR: Please Select a Major");
+		alert("Error: Please Select a Major");
 		}
 	}
 </script>
@@ -57,7 +57,7 @@
 <div data-role="page" data-theme="a">
 	<div data-role="header" data-position="fixed">
 		<h1>Select Filters</h1>
-		<a rel="external" data-direction="reverse" data-icon="home" data-iconpos="notext" href="index.php">Back</a> 
+		<a rel="external" data-direction="reverse" data-icon="arrow-l" data-iconpos="notext" href="index.php#companies">Back</a> 
 	</div>
 
 	<div data-role="content">

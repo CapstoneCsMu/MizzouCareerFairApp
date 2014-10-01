@@ -41,7 +41,9 @@ CREATE TABLE careerSchema.rssinfo(
 
 INSERT INTO rssinfo VALUES (default, 'https://rss.myinterfase.com/rss/umcolumbia_Fall_2014_Engineering_Career_Fair_-_Mobile_App_RSS_Feed.xml', '2014 Fall Engineering Career Fair','Career Event Name:', 'Organization Name:', 'Position Types:', 'Majors (click Add):', 'City:', 'State:', 'Website:', 'Citizenship:', 'Employer Category:', default);
 
-INSERT INTO rssinfo VALUES (default, 'https://rss.myinterfase.com/rss/umcolumbia_Capstone_Project_Fall_2014_Engineering_Career_Fair_-_Copy_-_Copy.xml', '2014 Fall Engineering Career Fair-Copy', 'Career Event Name:', 'Organization Name:', 'Position Types:', 'Majors (click Add):', 'City:', 'State:', 'Website:', 'Citizenship:', 'Employer Category:', default);
+INSERT INTO rssinfo VALUES (default, 'https://rss.myinterfase.com/rss/umcolumbia_Capstone_Project_Fall_2014_Engineering_Career_Fair_-_Copy_-_Copy.xml', '2014 Fall Engineering Career Fair 2!', 'Career Event Name:', 'Organization Name:', 'Position Types:', 'Majors (click Add):', 'City:', 'State:', 'Website:', 'Citizenship:', 'Employer Category:', default);
+
+INSERT INTO rssinfo VALUES (default, 'https://rss.myinterfase.com/rss/umcolumbia_Fall_2014_CAFNR_Career_Fair_-_Mobile_App_RSS_Feed.xml', '2014 Fall CAFNR Career Fair', 'Career Event Name:', 'Organization Name:', 'Position Types:', 'Majors (click Add):', 'City:', 'State:', 'Website:', 'Citizenship:', 'Employer Category:', default);
 
 
 -- NOT IMPLEMENTED
