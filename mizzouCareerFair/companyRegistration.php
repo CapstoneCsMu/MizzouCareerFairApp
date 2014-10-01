@@ -20,82 +20,30 @@
     <!-- Include jQuery and jQuery Mobile CDN, add actual files  -->
 	<script src="js/jquery-1.11.1.min.js"></script>
     <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
-
 	<script type="text/javascript">
-	function submitStudent()
+	function submitEmployer()
 	{
-		document.getElementById("studentForm").submit();
+		document.getElementById("employerForm").submit();
 	}
-	function hideHelp()
-	{
-		var help = document.getElementById('help');
-		help.style.display = "none";
-	}
-	function showHelp()
-	{
-		var help = document.getElementById('help');
-		help.style.display = "block";
-	}
+	//Prevent Page Refresh
+	var submitForm = false;
+	window.onbeforeunload = function() {
+		if (!submitForm)
+			return "If you reload some information may be lost.";
+    }
 	</script>
-
 </head>
-<body>
-
-<div data-role="page" data-dialog="true">
-	<div data-role="header">
-		<h1>Registration</h1>
-	</div>
-	<div data-role="main" class="ui-content ui-grid-a">
-		<div class="ui-block-a">
-			<a data-role="button" data-transition="slidedown" href="#student" data-corners="true">Student</a>
-		</div>
-		<div class="ui-block-b">
-			<a data-role="button" data-transition="slidedown" href="#employer" data-corners="true">Employer</a>
-		</div>
-	</div>
-	<div data-role="footer">
-		</br>
-	</div>	
-</div>	
-
+</body>
 <div data-role="page" id="employer" data-dialog="true">
 	<div data-role="header">
 		<h1>Employer Registration</h1>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
-		<form class="ui-filterable">
-			<input id="pre-rendered-filterable" data-type="search" onblur="hideHelp()" onfocus="showHelp()" placeholder="Which company are you associated with?">
-		</form>
-		<div class="ui-controlgroup ui-controlgroup-vertical ui-corner-all"
-				data-role="controlgroup"
-				data-filter="true"
-				data-input="#pre-rendered-filterable"
-				data-filter-reveal="true"
-				data-enhanced="true"> <!-- enhanced filtering resource: http://api.jquerymobile.com/filterable/ -->
-		
-			<div class="ui-controlgroup-controls">
-			<?php displayCompanies(); ?>
-			</div>
-		</div>
-		<div id="help" style="display:none">
-			<center>
-				<HR><h6>If you do not find your company, please register with <a target="_blank" href="https://www.myinterfase.com/umcolumbia/contactregco.aspx">HireMizzouTigers</a></h6>
-			</center>
-		</div>
-	</div>
-	<div data-role="footer" class="ui-bar">
-		<br>
-	</div>	
-</div>
-
-<div data-role="page" id="student" data-dialog="true">
-	<div data-role="header">
-		<h1>Student Registration</h1>
-	</div>
-	<div data-role="main" class="ui-content ui-grid-a">
-	<?php handleStudentRegistration(); ?>
-		<form id="studentForm" method="post" action="registration.php#student">
-					<label for="email"><b>Email:</label>
+			<?php handleRegistration(); ?>
+		<form id="employerForm" method="post" action="companyRegistration.php" >
+					<label for="company"><b>You are registering for:</label>
+					<input type="text" name="company" id="company" value="<?php print $_GET['company']; ?>" readonly> 
+					<label for="email"><b>Enter your Contact Email:</label>
 					<input type="text" name="email" id="email" placeholder="In case you forget your credentials"> 
 					<label for="username"><b>Choose a Username:</label>
 					<input type="text" name="username" id="username" placeholder="At least 5 characters">       
@@ -103,17 +51,17 @@
 					<input type="password" name="password" id="password" placeholder="At least 5 characters">
 			</form>
 			<center>
-				<a href="tigerspop.php" data-inline="true" data-role="button" value="Submit" onclick="submitStudent()">Submit</a> 
-				<!-- <input type="submit" data-inline="true" value="Submit" OnSubmit="submitStudent();" value="Submit"> -->
+				<!-- <a href="companyRegistration.php" data-inline="true" data-role="button" value="Submit" onclick="submitEmployer()">Submit</a> -->
+				<input type="submit" data-inline="true" value="Submit" onClick="submitForm=true;" OnSubmit="submitEmployer();" value="Submit">
 			</center>
+
 	</div>
-	<div data-role="footer">
-		</br>
-	</div>		
+	<div data-role="footer" class="ui-bar">
+		<br>
+	</div>	
 </div>
 </body>
 </html>
-
 <?php
 //Function to Redirect or Force HTTPS 
 function pre_process()
@@ -123,18 +71,26 @@ function pre_process()
 	if (isset($_SESSION['student_loggedin']) )
 	{
 		header("Location: index.php");
+		exit();
 	}
 	if(isset($_SESSION['admin_loggedin']))
 	{
 		header("Location: index_admin.php");
+		exit();
 	}
 	if(isset($_SESSION['employer_loggedin']))
 	{
 		header("Location: index_employer.php");
+		exit();
+	}
+	if ($_SESSION['registered'])
+	 {
+		header("Location: tigerspop.php");
+		exit();
 	}
 }
-//Function to Handle Student Login
-function handleStudentRegistration()
+//Function to Handle employer Login
+function handleRegistration()
 {
 	if( isset($_POST['username']) )
 	{
@@ -151,10 +107,11 @@ function handleStudentRegistration()
 			echo "\n\t</div>\n</div>";
 			exit();
 		}
+		echo pg_last_error($conn);
 		$user = htmlspecialchars($_POST['username']);
 
-		//Run username against student Database
-		$query = "SELECT * FROM careerschema.students WHERE username =$1" ;
+		//Run username against employer Database
+		$query = "SELECT * FROM careerschema.employerauthentication WHERE username =$1" ;
 		
 		$stmt = pg_prepare($conn, "register_0", $query)  or die( pg_last_error() );
 		$result = pg_execute($conn, "register_0" ,array($user) ) ;
@@ -178,34 +135,25 @@ function handleStudentRegistration()
 			{
 				$passHashed = sha1($passHashed);
 			}
-			
-			//Insert user into the students table
-			$query = "INSERT INTO careerschema.students (username, email) VALUES ($1,$2)";
+			//Insert user into the employerinfo table
+			$query = "INSERT INTO careerschema.employerinfo (username, contact_email) VALUES ($1,$2)";
 			$state = pg_prepare($conn,"insert_0",$query) ;
 			$queryInsert = pg_execute($conn,"insert_0",array($user,$_POST['email']));
 			
 			//Then we can add their authentication information
-			$query = "INSERT INTO careerschema.studentauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
-			$state = pg_prepare($conn,"insert_1",$query) ;
-			$queryInsert = pg_execute($conn,"insert_1",array($user,$salt,$passHashed ) )  ;
+			$query = "INSERT INTO careerschema.employerauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
+			$state = pg_prepare($conn,"insert_employer",$query) ;
+			$queryInsert = pg_execute($conn,"insert_employer",array($user,$salt,$passHashed ) )  ;
 
 			if ($queryInsert)
 			{
 				$_SESSION['registered'] = TRUE;
 				header("Location: tigerspop.php");
+				exit();
 			}
 			else
 				echo pg_last_error($conn);
 		}
-	}
-}
-
-function displayCompanies()
-{
-	foreach($_SESSION['companies'] as $index => $val)
-	{
-		$url = str_replace( '&', "%26", $val);
-		echo '<a rel="external" data-transition="fade" data-role="button" class="ui-screen-hidden" href="companyRegistration.php?company='.htmlentities($url).'">'.$val.'</a>';
 	}
 }
 ?>
