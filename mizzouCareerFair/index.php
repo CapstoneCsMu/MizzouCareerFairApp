@@ -29,7 +29,7 @@
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
 	<!-- <script type="text/javascript" src="http://platform.linkedin.com/in.js"> -->
-    <script type="text/javascript" src="js/linkedin.js">
+   <script type="text/javascript" src="js/linkedin.js">
   		api_key: 75a6k7ahbjlrny
   		onLoad: onLinkedInLoad
   		authorize: true
@@ -42,8 +42,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-=======
 
 <!--JavaScript SDK for facebook login button
     <div id="fb-root"></div>
@@ -54,7 +52,6 @@
   		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
   		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script> -->
->>>>>>> origin/master
 
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
@@ -126,6 +123,7 @@
 					else
 					{
 						echo '<li data-role="list-divider">Student Tools</li>';
+						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
 					}
 				?>
@@ -869,6 +867,5 @@
         </div>
     </div>
     <!--End announcements HTML-->
-
 </body>
 </html>
