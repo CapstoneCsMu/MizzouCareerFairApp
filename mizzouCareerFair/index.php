@@ -28,8 +28,7 @@
     <script src="js/index.js"></script>
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
-	<!-- <script type="text/javascript" src="http://platform.linkedin.com/in.js"> -->
-   <script type="text/javascript" src="js/linkedin.js">
+	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
   		api_key: 75a6k7ahbjlrny
   		onLoad: onLinkedInLoad
   		authorize: true
