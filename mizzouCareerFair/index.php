@@ -42,6 +42,8 @@
 </head>
 
 <body>
+<<<<<<< HEAD
+=======
 
 <!--JavaScript SDK for facebook login button
     <div id="fb-root"></div>
@@ -52,12 +54,12 @@
   		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
   		fjs.parentNode.insertBefore(js, fjs);
 	}(document, 'script', 'facebook-jssdk'));</script> -->
+>>>>>>> origin/master
 
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
             <h1 class="no-ellipses">Mizzou Careers</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="index.php">Home</a> <a data-icon="search" data-iconpos=
+             <a class="ui-btn-right" data-icon="search" data-iconpos=
             "notext" data-rel="dialog" data-transition="fade" href=
             "search.php">Search</a>
         </div>
@@ -137,7 +139,6 @@
             
             <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
 
-	    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
             
         </div>
 
