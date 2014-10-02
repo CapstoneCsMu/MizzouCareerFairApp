@@ -28,11 +28,19 @@
     <script src="js/index.js"></script>
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
-	<script type="text/javascript" src="http://platform.linkedin.com/in.js">
+	<?php if($_SERVER['HTTP_HOST'] == 'localhost'): ?>
+		<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+  		api_key: 750nr1ytn6d9bz
+  		onLoad: onLinkedInLoad
+  		authorize: true
+	</script>
+	<?php else: ?>
+	<script type="text/javascript" src="https://platform.linkedin.com/in.js">
   		api_key: 75a6k7ahbjlrny
   		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
+	<?php endif; ?>
 	<!-- Include Google Maps API -->
 	<script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
 
@@ -41,17 +49,6 @@
 </head>
 
 <body>
-
-<!--JavaScript SDK for facebook login button
-    <div id="fb-root"></div>
-	<script>(function(d, s, id) {
-  		var js, fjs = d.getElementsByTagName(s)[0];
-  		if (d.getElementById(id)) return;
-  		js = d.createElement(s); js.id = id;
-  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
-  		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script> -->
-
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
             <h1 class="no-ellipses">Mizzou Careers</h1>
@@ -59,16 +56,9 @@
             "notext" data-rel="dialog" data-transition="fade" href=
             "search.php">Search</a>
         </div>
-
-		
-
         <div data-role="content">
-            
-            
-            
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">Career Fair</li>
-
 
                 <li>
                     <a data-transition="flip" href="#companies">Companies</a>
@@ -417,8 +407,7 @@
         <div data-role="content">
         	<h2>LinkedIn : </h2>
 			<?php echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
-<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
-
+			<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li>
                     <a href="#">Add a Resume</a>
@@ -446,8 +435,10 @@
         	</h3>
         	The International Business Machines Corporation (IBM) is an American multinational technology and consulting corporation, with headquarters in Armonk, New York, United States. IBM manufactures and markets computer hardware and software, and offers infrastructure, hosting and consulting services in areas ranging from mainframe computers to nanotechnology.
         <br>
-        <?php echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
-<script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ?>
+        <?php 
+			echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script><script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ;
+			include('linkedIn.php');
+		?>
         </div>	
     </div>
 	<!--End Testing what we can do for a company-->
