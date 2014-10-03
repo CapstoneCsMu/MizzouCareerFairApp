@@ -13,15 +13,12 @@
     <!-- Include CSS and JQM CSS -->
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
-	
-    <!-- <link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css" rel="stylesheet"> -->
+
 	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
     
 	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 	
-    <!-- Include jQuery and jQuery Mobile CDN, add actual files
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script> -->
+    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
 	<script src="js/jquery-1.11.1.min.js"></script>
     <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <!-- Include JS file for our JS -->
@@ -107,21 +104,21 @@
             </ul>
 
         </div>
-		<div data-role="footer">
+		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
-					<li><a data-icon="info" href="#aboutECS">About Us</a></li>
+					<li><a rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
 					<li><a data-icon="edit" href="support.php">Contact Us</a></li>
-					<li><a data-icon="user" href="#dev">The Developers</a></li>
 					<li><a data-icon="comment" href="">Anouncements</a></li>
 				</ul>
+				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
 			</div>
 		</div>
     </div>
 	
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
-            <h1>Companies</h1>
+            <h1 onclick="$.mobile.silentScroll(0)">Companies</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
 			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filters</a>
         </div>
@@ -424,8 +421,6 @@
         </div>	
     </div>
 	<!--End Testing what we can do for a company-->
-	
-	<?php include('developers.php'); ?>
 
 	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
@@ -770,90 +765,5 @@
         </div>
     </div>
 	<!--End old rewrite HTML-->
-	
-	<!--Start about ECS HTML-->
-	<div data-role="page" data-theme="a" id="aboutECS">
-        <div data-role="header" data-position="fixed">
-            <h1>About Us</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-			<div data-role="content">
-				<p>
-				Engineering Career Services provides information, guidance and resources to empower Mizzou 
-				Engineering students to develop and achieve their career goals.
-				</p>
-				
-				<h2>Typical Career Events</h2>
-				<ul>
-					<li><span style="font-size:11.0pt">Career fairs (2 a year)<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Professional development workshops with employers<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Company visits to Mizzou for on-campus interviews and networking opportunites<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Special targeted events with employers<o:p></o:p></span></li>
-				</ul>
-				
-				<h2>Employer Access to Students</h2>
-				<p>
-				In addition to professional development activities offered to students, 
-				Engineering Career Services also develops corporate partnerships that increase access to students.
-				</p>
-				<p>
-				If you have questions about Engineering Career Services, feel free to contact us.
-				</p>
-				
-				<h3>Mission</h3>
-				<p>In all our work these beliefs and values will guide us:</p>
-				<ul>
-					<li><span style="font-size:11.0pt">Career development is a lifelong learning process consisting of the following components:<o:p></o:p></span></li>
-						<ul>
-							<li><span style="font-size:9.0pt">self-assessment<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">occupational exploration<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career decision making<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career planning<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">acting on options<o:p></o:p></span></li>
-						</ul>
-					<li><span style="font-size:11.0pt">Each student has diverse experiences, interests and goals, and deserves to be respected as an individual.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Each student deserves to be assisted with her/his individual needs in a caring manner that also allows the student to develop individual responsibility.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Services and programs need to be evaluated and redirected as academic environment and employment trends dictate.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
-				</ul>	
-		</div>
-	</div>
-	<!--End about ECS HTML-->
-	
-	<!--Start announcements HTML-->
-    <div data-role="page" data-theme="a" id="announcements">
-        <div data-role="header" data-position="fixed">
-            <h1>Announcements</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-        <div data-role="content">
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Career Fair Announcements</li>
-                <li>
-                    <a href="option">New Companies</a>
-                </li>
-                <li>
-                    <a href="option2.html">Changed Booth Locations</a>
-                </li>
-                <li>
-                    <a href="option8.html">Updates</a>
-                </li>
-            </ul>
-        </div>
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-    <!--End announcements HTML-->
 </body>
 </html>
