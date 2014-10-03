@@ -21,10 +21,7 @@
 	<script src="js/jquery-1.11.1.min.js"></script>
     <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
 	<script type="text/javascript">
-	function submitEmployer()
-	{
-		document.getElementById("employerForm").submit();
-	}
+
 	//Prevent Page Refresh
 	var submitForm = false;
 	window.onbeforeunload = function() {
@@ -36,23 +33,27 @@
 </body>
 <div data-role="page" id="employer" data-dialog="true">
 	<div data-role="header">
+		<a rel="external" data-icon="arrow-l" data-iconpos="notext" href="registration.php#employer">Back</a> 
+		<a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a> 
 		<h1>Employer Registration</h1>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
 			<?php handleRegistration(); ?>
-		<form id="employerForm" method="post" action="companyRegistration.php" >
+		<form id="employerForm" name="employerForm" method="post" action="companyRegistration.php" >
 					<label for="company"><b>You are registering for:</label>
-					<input type="text" name="company" id="company" value="<?php print $_GET['company']; ?>" readonly> 
-					<label for="email"><b>Enter your Contact Email:</label>
-					<input type="text" name="email" id="email" placeholder="In case you forget your credentials"> 
+					<input type="text" name="company" id="company" value="<?php print $_SESSION['coReg']; ?>" readonly> 
+					<label for="email"><b>Email (<a href="#emailpop" data-rel="popup"><b>?</a>):</label>
+					<div data-role="popup" id="emailpop">
+						<p>This email will be used if you forget your password and can be shared for students to contact you upon request.</p>
+					</div>
+					<input type="text" name="email" id="email" value="<?php print $_SESSION['coEmail']; ?>" > 
 					<label for="username"><b>Choose a Username:</label>
 					<input type="text" name="username" id="username" placeholder="At least 5 characters">       
 					<label for="password"><b>Choose a Password:</label>
 					<input type="password" name="password" id="password" placeholder="At least 5 characters">
 			</form>
 			<center>
-				<!-- <a href="companyRegistration.php" data-inline="true" data-role="button" value="Submit" onclick="submitEmployer()">Submit</a> -->
-				<input type="submit" data-inline="true" value="Submit" onClick="submitForm=true;" OnSubmit="submitEmployer();" value="Submit">
+				<input type="submit" data-inline="true" name="Submit" onClick="submitForm=true;" value="Submit">
 			</center>
 
 	</div>
@@ -67,7 +68,8 @@
 function pre_process()
 {
 	include('check_https.php');
-	// If logged in, don't let anyone RE-register
+	// If logged in, don't let anyone RE-register COMMENTED JUST FOR TESTING PURPOSES, FOR PRODUCTION UNCOMMENT THIS
+	/*
 	if (isset($_SESSION['student_loggedin']) )
 	{
 		header("Location: index.php");
@@ -88,72 +90,93 @@ function pre_process()
 		header("Location: tigerspop.php");
 		exit();
 	}
+	*/
 }
 //Function to Handle employer Login
 function handleRegistration()
 {
-	if( isset($_POST['username']) )
+	$_SESSION['coEmail'] = $_POST['email'];
+	if( $_POST['Submit'])
 	{
-		//Include Database information
-		if($_SERVER['HTTP_HOST'] == 'localhost')
-			include('data_ryanslocal.php');
-		else
-			include ("data.php");
-		$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-		if (!$conn) 
+		if( !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['company']))
 		{
-			echo "\n<div class='container'>\n\t<div class ='alert alert-danger'>";
-			echo "<center>An Error occurred during connection.</center>";
-			echo "\n\t</div>\n</div>";
-			exit();
-		}
-		echo pg_last_error($conn);
-		$user = htmlspecialchars($_POST['username']);
-
-		//Run username against employer Database
-		$query = "SELECT * FROM careerschema.employerauthentication WHERE username =$1" ;
-		
-		$stmt = pg_prepare($conn, "register_0", $query)  or die( pg_last_error() );
-		$result = pg_execute($conn, "register_0" ,array($user) ) ;
-		
-		//Check to see if login user exists, if not do nothing
-		if(pg_num_rows($result) > 0)
-		{
-			echo "<div class ='alert alert-danger'>";
-			echo "<center>User already exists.</center>";
-			echo "\n\t</div>";
-		}
-		else
-		{
-			mt_srand(); //Seed number generator
-			$salt = mt_rand(); //generate salt
-			$salt = sha1($salt);
-			$pass = htmlspecialchars($_POST['password']);
-			$passHashed = sha1($salt.$pass);
-
-			for ($i=0; $i<10000; $i++) //Slow Hashing
+			//Validate Email
+			if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 			{
-				$passHashed = sha1($passHashed);
-			}
-			//Insert user into the employerinfo table
-			$query = "INSERT INTO careerschema.employerinfo (username, contact_email) VALUES ($1,$2)";
-			$state = pg_prepare($conn,"insert_0",$query) ;
-			$queryInsert = pg_execute($conn,"insert_0",array($user,$_POST['email']));
-			
-			//Then we can add their authentication information
-			$query = "INSERT INTO careerschema.employerauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
-			$state = pg_prepare($conn,"insert_employer",$query) ;
-			$queryInsert = pg_execute($conn,"insert_employer",array($user,$salt,$passHashed ) )  ;
-
-			if ($queryInsert)
-			{
-				$_SESSION['registered'] = TRUE;
-				header("Location: tigerspop.php");
-				exit();
+				echo "<div class ='alert alert-danger'>";
+				echo "<center>Invalid Email.</center>";
+				echo "\n\t</div>";	
 			}
 			else
+			{
+				//Include Database information
+				if($_SERVER['HTTP_HOST'] == 'localhost')
+					include('data_ryanslocal.php');
+				else
+					include ("data.php");
+				$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+				if (!$conn) 
+				{
+					echo "<div class ='alert alert-danger'>";
+					echo "<center>An error occured during connection to our server.</center>";
+					echo "\n\t</div>";	
+				}
 				echo pg_last_error($conn);
+				$user = htmlspecialchars($_POST['username']);
+
+				//Run username against employer Database
+				$query = "SELECT * FROM careerschema.employerauthentication WHERE username =$1" ;
+				
+				$stmt = pg_prepare($conn, "register_0", $query)  or die( pg_last_error() );
+				$result = pg_execute($conn, "register_0" ,array($user) ) ;
+				
+				//Check to see if login user exists, if not do nothing
+				if(pg_num_rows($result) > 0)
+				{
+					echo "<div class ='alert alert-danger'>";
+					echo "<center>User already exists.</center>";
+					echo "\n\t</div>";
+				}
+				else
+				{
+					mt_srand(); //Seed number generator
+					$salt = mt_rand(); //generate salt
+					$salt = sha1($salt);
+					$pass = htmlspecialchars($_POST['password']);
+					$passHashed = sha1($salt.$pass);
+
+					for ($i=0; $i<10000; $i++) //Slow Hashing
+					{
+						$passHashed = sha1($passHashed);
+					}
+					//Insert user into the employerinfo table
+					$query = "INSERT INTO careerschema.employerinfo (username, contact_email) VALUES ($1,$2)";
+					$state = pg_prepare($conn,"insert_0",$query) ;
+					$queryInsert = pg_execute($conn,"insert_0",array($user,$_POST['email']));
+					
+					//Then we can add their authentication information
+					$query = "INSERT INTO careerschema.employerauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
+					$state = pg_prepare($conn,"insert_employer",$query) ;
+					$queryInsert = pg_execute($conn,"insert_employer",array($user,$salt,$passHashed ) )  ;
+
+					if ($queryInsert)
+					{
+						$_SESSION['registered'] = TRUE;
+						echo '<script type="text/javascript"> window.location = "tigerspop.php"; </script>';
+					}
+					else
+						echo pg_last_error($conn);
+				}
+			}
+		}
+		else
+		{
+			echo "<div class ='alert alert-danger'>";
+			echo "<center>All Fields must be filled out.</center>";
+			echo "\n\t</div>";	
 		}
 	}
+	else
+		$_SESSION['coReg'] = $_GET['company'];
 }
 ?>

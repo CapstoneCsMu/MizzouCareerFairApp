@@ -48,7 +48,7 @@
 	</script>
 </head>
 <body>
-		<div data-role="page" data-dialog="true" id="index.php">
+		<div data-role="page" data-dialog="true">
 			<div data-role="header">
 				<h1>Login</h1>
 			</div>
@@ -71,7 +71,7 @@
 					</center>
 			</div>
 			<center>
-			<div data-role="footer">
+			<div data-role="footer" data-position="fixed">
 				<p>Don't have an account?</p>
 				<input type="button" value="Register" onclick="redirect();">
 			</div>
@@ -165,7 +165,7 @@ function handle_login()
 				if ($p ==2)
 				{
 					$_SESSION['employer_loggedin'] = htmlspecialchars($_POST['username']);
-					header("Location: employer_home.php");
+					header("Location: employerView.php");
 					exit;
 				}
 			}

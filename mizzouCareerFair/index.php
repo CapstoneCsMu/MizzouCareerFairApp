@@ -48,21 +48,20 @@
 <body>
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" >
-            <h1 class="no-ellipses">Mizzou Careers</h1>
+			</br>
+			<center><?php print ( isset($_POST['fairname']) ? $_POST['fairname'] : '2014 Engineering Career Fair') ; ?></center>
+			</br>
         </div>
+
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider"></li>
                 <li>
-                    <a data-transition="flip" href="fairSelection.php">Select a Career Fair</a>
-                </li>
-                <li>
                     <a data-transition="flip" href="#companies">List of Companies</a>
                 </li>
-
-				<li>
-                    <a data-transition="flip" href="#prep">How to Prepare</a>
-                </li>	
+                <li>
+                    <a data-transition="flip" href="fairSelection.php">Select a Career Fair</a>
+                </li>
      
                 <li>
                     <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
@@ -80,6 +79,9 @@
 			</ul>
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<li data-role="list-divider"></li>
+				<li>
+                    <a data-transition="flip" href="#prep">How to Prepare</a>
+                </li>	
 				<li>
                     <a data-transition="flip" href="employerView.php">Employer View - This is temporary. Will default for employers when they log in.</a>
                 </li>
