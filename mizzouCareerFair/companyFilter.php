@@ -12,8 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Filter Companies
-</title> 
+<title>Filter Companies</title> 
 
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -53,22 +52,21 @@
 	}
 </script>
 </head>
-
+<body>
 <div data-role="page" data-theme="a">
 	<div data-role="header" data-position="fixed">
 		<h1>Select Filters</h1>
 		<a rel="external" data-direction="reverse" data-icon="arrow-l" data-iconpos="notext" href="index.php#companies">Back</a> 
 	</div>
-
 	<div data-role="content">
 		<ul data-dividertheme="b" data-inset="true" data-role="listview">
+		<div class="ui-field-contain">
 		<?php
-			echo '<div class="ui-field-contain">';
 			echo '<form id="filterForm" method="post" action="companyFilter.php">';
 			
 			//Filters are Added Statically**************************************** (Maybe add the ability for Admin to be able to add new Filters if we have time?)
 			//OR We may have to find a way to load these dynamically
-			echo '<div data-role="header"><h3>Major(s) <font color="red">*</font></h3></div>';
+			echo '<div data-role="collapsible"><h3>Major(s) <font color="red">*</font></h3>';
 			echo '<input type="checkbox" id="filter_0" name="filter_0" value="Computer Science"';
 			if (isset($_SESSION['filters']['filter_0'])) echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_0">Computer Science</label>';
@@ -99,9 +97,10 @@
 			
 			echo '<input type="checkbox" id="filter_7" name="filter_7" value="Information Technology"';
 			if (isset($_SESSION['filters']['filter_7'])) echo ' checked/>'; else echo '/>';
-			echo '<label for="filter_7">Information Technology</label>';	
+			echo '<label for="filter_7">Information Technology</label>';
+			echo '</div>';	
 			
-			echo '<div data-role="header"><h3>State</h3></div>';
+			echo '<div data-role="collapsible"><h3>State</h3>';
 			echo '<input type="radio" id="filter_8" name="group_state" value="MO" ';
 			if ($_SESSION['filters']['group_state']== 'MO') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_8">Missouri</label>';
@@ -121,8 +120,9 @@
 			echo '<input type="radio" id="filter_12" name="group_state" value="CO"';
 			if ($_SESSION['filters']['group_state']=='CO') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_12">Colorado</label>';
+			echo '</div>';
 
-			echo '<div data-role="header"><h3>Position</h3></div>';
+			echo '<div data-role="collapsible"><h3>Position</h3>';
 			echo '<input type="radio" id="filter_13" name="group_type" value="Full Time" ';
 			if ($_SESSION['filters']['group_type']== 'Full Time') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_13">Full Time</label>';
@@ -130,10 +130,17 @@
 			echo '<input type="radio" id="filter_14" name="group_type" value="Internship/Coop"';
 			if ($_SESSION['filters']['group_type']=='Internship/Coop') echo ' checked/>'; else echo '/>';
 			echo '<label for="filter_14">Internship/Coop</label>';
-						
-			echo '</fieldset></form></div><center>';
-			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="submitFilter();" data-inline="true">Submit</a>';
-			echo '<a href="companyFilter.php" data-role="button" data-theme="b" onclick="location.reload();" data-inline="true">Reset</a>';
-		?>
+			echo '</div>';
+			echo '</fieldset></form>';
+			?>
+		</div>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<center>
+		<a href="companyFilter.php" data-role="button" data-theme="b" onclick="submitFilter();" data-inline="true">Submit</a>
+		<a href="companyFilter.php" data-role="button" data-theme="b" onclick="location.reload();" data-inline="true">Reset</a>
+        </center><center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
 	</div>
 </div>
+</body>
+</html>

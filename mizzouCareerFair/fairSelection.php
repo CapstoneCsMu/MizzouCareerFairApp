@@ -46,7 +46,7 @@
 			$numOfFeeds=0;
 			while ($fair = pg_fetch_array($result, null, PGSQL_ASSOC))
 			{
-				echo '<li><a data-transition="slide" href="index.php" onclick="submitForm_'.$numOfFeeds.'()">'.$fair['fairname'].'</a></li>';
+				echo '<li><a class="no-ellipses" data-transition="slide" href="index.php" onclick="submitForm_'.$numOfFeeds.'()">'.$fair['fairname'].'</a></li>';
 				$fairForm[$numOfFeeds] = $fair['fairname'];
 				
 				//Javascript to input the info and then submit the User-Specified form

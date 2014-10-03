@@ -43,6 +43,8 @@
 
 <div data-role="page" data-dialog="true">
 	<div data-role="header">
+	<a rel="external" data-icon="arrow-l" data-iconpos="notext" href="tigerspop.php">Back</a> 
+		<a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a> 
 		<h1>Registration</h1>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
@@ -58,13 +60,14 @@
 	</div>	
 </div>	
 
-<div data-role="page" id="employer" data-dialog="true">
+<div data-role="page" id="employer" data-dialog="true"]>
 	<div data-role="header">
-		<h1>Employer Registration</h1>
+		</br><center>Employer Registration</center></br>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
 		<form class="ui-filterable">
-			<input id="pre-rendered-filterable" data-type="search" onblur="hideHelp()" onfocus="showHelp()" placeholder="Which company are you associated with?">
+			Select a Company:
+			<input id="pre-rendered-filterable" data-type="search" placeholder="Which company?">
 		</form>
 		<div class="ui-controlgroup ui-controlgroup-vertical ui-corner-all"
 				data-role="controlgroup"
@@ -77,7 +80,7 @@
 			<?php displayCompanies(); ?>
 			</div>
 		</div>
-		<div id="help" style="display:none">
+		<div id="help" style="display:block">
 			<center>
 				<HR><h6>If you do not find your company, please register with <a target="_blank" href="https://www.myinterfase.com/umcolumbia/contactregco.aspx">HireMizzouTigers</a></h6>
 			</center>
@@ -90,7 +93,9 @@
 
 <div data-role="page" id="student" data-dialog="true">
 	<div data-role="header">
-		<h1>Student Registration</h1>
+	</br>
+		<center>Student Registration</center>
+	</br>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
 	<?php handleStudentRegistration(); ?>
@@ -202,6 +207,7 @@ function handleStudentRegistration()
 
 function displayCompanies()
 {
+	session_start();
 	foreach($_SESSION['companies'] as $index => $val)
 	{
 		$url = str_replace( '&', "%26", $val);
