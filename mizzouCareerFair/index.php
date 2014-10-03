@@ -51,57 +51,42 @@
 <body>
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
-            <h1 class="no-ellipses">Mizzou Careers</h1>
-             <a class="ui-btn-right" data-icon="search" data-iconpos=
-            "notext" data-rel="dialog" data-transition="fade" href=
-            "search.php">Search</a>
+            <h1 class="no-ellipses" onclick="$.mobile.silentScroll(0)">Mizzou Careers</h1>
         </div>
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Career Fair</li>
-
+                <li data-role="list-divider"></li>
                 <li>
-                    <a data-transition="flip" href="#companies">Companies</a>
+                    <a data-transition="flip" href="fairSelection.php">Select a Career Fair</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="#companies">List of Companies</a>
+                </li>
+
+				<li>
+                    <a data-transition="flip" href="#prep">How to Prepare</a>
+                </li>	
+     
+                <li>
+                    <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
+                </li>
+			</ul>
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+				<li data-role="list-divider"></li>
+				<li>
+                    <a data-transition="flip" href="#map_page">Directions to Fair</a>
                 </li>
 				
+                <li>
+                    <a data-transition="flip" href="#map">Map of the Career Fair</a>
+                </li>
+			</ul>
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+				<li data-role="list-divider"></li>
 				<li>
                     <a data-transition="flip" href="employerView.php">Employer View - This is temporary. Will default for employers when they log in.</a>
                 </li>
-
-				<li>
-                    <a data-transition="flip" href="#preparation">Preparation</a>
-                </li>	
-                
-                <li>
-                    <a data-transition="flip" href="#map_page">Directions to Fair-In Progress</a>
-                </li>
-				
-                <li>
-                    <a data-transition="flip" href="#map">Fair Map - Coming soon</a>
-                </li>
-
-				<li>
-					<a data-transition="flip" href="announcements.php">Announcements</a>
-				</li>
-				
-                <li>
-                    <a data-transition="flip" href="#events">Events</a>
-                </li>
-
-                <li>
-                    <a data-transition="flip" href="fairSelection.php">Fairs</a>
-                </li>
-				
-				<li>
-                    <a data-transition="flip" href="#aboutECS">Engineering Career Services</a>
-                </li>
-
-		<li>
-		    <a data-transition="flip" href="support.php">Support</a>
-		</li>
             </ul>
-
-
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<?php
 					if (!$_SESSION['student_loggedin'])
@@ -114,21 +99,24 @@
 						echo '<li data-role="list-divider">Student Tools</li>';
 						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
+						echo '<li><a href="#jobHunt">JobHunt</a></li>';
 					}
 				?>
-
-                <li>
-                    <a href="#jobHunt">JobHunt</a>
-                </li>
-                
-                
             </ul>
             
-            <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
+            <a><script type="in/Login">Hello, <?js= firstName ?> <?js= lastName ?>. Your id is: <?js= id ?></script></a>
 
-            
         </div>
-
+		<div data-role="footer">
+			<div data-role="navbar" data-iconpos="top">
+				<ul>
+					<li><a data-icon="info" href="#aboutECS">About Us</a></li>
+					<li><a data-icon="edit" href="support.php">Contact Us</a></li>
+					<li><a data-icon="user" href="#dev">The Developers</a></li>
+					<li><a data-icon="comment" href="">Anouncements</a></li>
+				</ul>
+			</div>
+		</div>
     </div>
 	
   <div data-role="page" data-theme="a" id="companies">
@@ -255,12 +243,6 @@
 				<li>
                     <a href="#confidence">Confidence</a>
                 </li>
-				<!--<li>
-                    <a href="#new'n">Placeholder</a>
-                </li>
-				<li>
-                    <a href="#new'n">Placeholder</a>
-                </li>-->
             </ul>
         </div>
     </div>
@@ -442,6 +424,8 @@
         </div>	
     </div>
 	<!--End Testing what we can do for a company-->
+	
+	<?php include('developers.php'); ?>
 
 	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
@@ -469,7 +453,7 @@
 	<!--End map HTML-->
 
 	<!--Start old rewrite code-->
-    <div data-role="page" data-theme="a" id="events">
+    <div data-role="page" data-theme="a" id="prep">
         <div data-role="header" data-position="fixed">
             <h1>Career Fair Events</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -524,13 +508,27 @@
                     <a href="#badGrades">REWRITE ME Bad Grades?</a>
                 </li>
             </ul>
+
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Keys to a successful career fair</li>
+				
+				<li>
+                    <a href="#prepare">Preparation</a>
+                </li>
+				<li>
+                    <a href="#resume">Resume</a>
+                </li>
+				<li>
+                    <a href="#dressCode">Dress Code</a>
+                </li>
+				<li>
+                    <a href="#confidence">Confidence</a>
+                </li>
+            </ul>
         </div>
 
 
-        <div data-position="fixed" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
+        <div data-role="footer">
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>

@@ -24,7 +24,7 @@
     <div data-role="page" data-theme="a">
          <div data-role="header">
                <h1>Announcements</h1>
-                                <a href="mobile.php" data-icon="home" data-iconpos="notext" data-direction="reverse" data-transition="flip">Home</a>
+                                <a rel="external" href="index.php" data-icon="home" data-iconpos="notext" data-direction="reverse" data-transition="flip">Home</a>
                 <a href="../nav.html" data-icon="search" data-iconpos="notext" data-rel="dialog" data-transition="fade">Search</a>
          </div>
 
@@ -32,16 +32,13 @@
                <ul data-role="listview" data-inset="true" data-dividertheme="b">
                      <li data-role="list-divider">Career Fair Announcements </li>
                      <li><a href="option">Contact Us</a></li>
-                     <li><a href="option2.html"></a></li>
-                                         <li><a href="option8.html"></a></li>
+                     <li><a href="option2.html">Option2</a></li>
+                      <li><a href="option8.html">Option3</a></li>
                </ul>
          </div>
+		 <div data-role="footer" data-position="fixed">
+			<h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
+		</div>
 	</div>
-<div data-role="footer" data-position="fixed">
-        <div data-role="footer">
-<input type="text" name="name" placeholder="Search the Career Fair"id="basic" value="" data-mini="true" />
-         <h4>&copy; 2014 Team X Mizzou Career Fair Web App</h4>
-        </div>
-</div>
 </body>
 </html>
