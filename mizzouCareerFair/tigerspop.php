@@ -50,7 +50,8 @@
 <body>
 		<div data-role="page" data-dialog="true">
 			<div data-role="header">
-				<h1>Login</h1>
+				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a> 
+				</br><center>Login</center></br>
 			</div>
 			<div>
 			<?php
@@ -58,22 +59,24 @@
 			?>
 			</div>
 			<div data-role="main" class="ui-content">
-				<form id="loginForm" method="post" action="tigerspop.php">
+				<form id="loginForm" method="post" action="tigerspop.php" data-ajax="false">
 					<div class="ui-field-contain">
 						<label for="username">Username:</label>
 							<input type="text" name="username" id="username">       
 						<label for="password">Password:</label>
-							<input type="password" name="password" id="password" onblur="submitLogin()">
+							<input type="password" name="password" id="password">
 					</div>
+					<center><input type="submit" data-inline="true" name="Submit" onClick="submitLogin();" value="Submit"></center>
 					</form>
 					<center>
-						<a href="tigerspop.php" data-inline="true" data-role="button" value="Submit" onclick="submitLogin();">Submit</a>
+						
+						<!-- <a href="tigerspop.php" data-inline="true" data-role="button" value="Submit" onclick="submitLogin();">Submit</a> -->
 					</center>
 			</div>
 			<center>
-			<div data-role="footer" data-position="fixed">
+			<div data-role="footer">
 				<p>Don't have an account?</p>
-				<input type="button" value="Register" onclick="redirect();">
+				<center><a href="registration.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>
 			</div>
 			</center>
 		</div>

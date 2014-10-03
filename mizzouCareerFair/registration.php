@@ -62,6 +62,7 @@
 
 <div data-role="page" id="employer" data-dialog="true"]>
 	<div data-role="header">
+	<a data-icon="delete" data-transition="pop" data-iconpos="notext" href="registration.php">Back</a> 
 		</br><center>Employer Registration</center></br>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
@@ -94,6 +95,7 @@
 <div data-role="page" id="student" data-dialog="true">
 	<div data-role="header">
 	</br>
+		<a data-icon="delete" data-transition="pop" data-iconpos="notext" href="registration.php">Back</a> 
 		<center>Student Registration</center>
 	</br>
 	</div>
