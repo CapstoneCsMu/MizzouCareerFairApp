@@ -47,8 +47,8 @@
 
 <body>
     <div data-role="page" data-theme="a" id="home">
-        <div data-role="header" data-position="fixed">
-            <h1 class="no-ellipses" onclick="$.mobile.silentScroll(0)">Mizzou Careers</h1>
+        <div data-role="header" >
+            <h1 class="no-ellipses">Mizzou Careers</h1>
         </div>
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
@@ -104,12 +104,12 @@
             </ul>
 
         </div>
-		<div data-role="footer" data-position="fixed">
+		<div data-role="footer" data-position="fixed" style="background: linear-gradient(#E6E6E6,#E6E6E6 )">
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
-					<li><a rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
-					<li><a data-icon="edit" href="support.php">Contact Us</a></li>
-					<li><a data-icon="comment" href="">Anouncements</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="support.php">Contact Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="comment" href="">Anouncements</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
 			</div>
