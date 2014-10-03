@@ -101,10 +101,10 @@
 						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
 						echo '<li><a href="#jobHunt">JobHunt</a></li>';
 					}
+					echo '</ul>';
+					echo ' <a><script type="in/Login">Hello, <?js= firstName ?> <?js= lastName ?>. Your id is: <?js= id ?></script></a>';
 				?>
             </ul>
-            
-            <a><script type="in/Login">Hello, <?js= firstName ?> <?js= lastName ?>. Your id is: <?js= id ?></script></a>
 
         </div>
 		<div data-role="footer">
