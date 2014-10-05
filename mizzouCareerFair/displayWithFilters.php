@@ -32,12 +32,13 @@ if($Majorfilters != NULL)
 		{
 			echo $Majorfilters[$m-1];
 			if ($m != count($Majorfilters))
-				echo ' | ';
+				echo ', ';
 		}
-		if (isset($_SESSION['filters']['group_state']))
-			echo " | ".$_SESSION['filters']['group_state'];
+		if (isset($_SESSION['filters']['group_state'])){
+			echo ", ".$_SESSION['filters']['group_state'];
+			}
 		if (isset($_SESSION['filters']['group_type']))
-			echo " | ".$_SESSION['filters']['group_type'];
+			echo ", ".$_SESSION['filters']['group_type'];
 		echo "</center></br>";
 		//sort names alphabetically and print them as list options
 		//asort RETAINS the previous key, it helps increase the efficiency.
@@ -59,7 +60,9 @@ if($Majorfilters != NULL)
 			{
 				for ($z = 0; $z < count($companyPositions[$key]); $z++)
 				{
-					if ($_SESSION['filters']['group_type'] == $companyPositions[$key][$z])
+					//trim white space from company positions type
+					$companyPosition = trim($companyPositions[$key][$z]);
+					if ($_SESSION['filters']['group_type'] == ($companyPosition));
 						$positionFlag = TRUE;
 				}
 				if (!$positionFlag)

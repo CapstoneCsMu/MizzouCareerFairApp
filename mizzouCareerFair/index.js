@@ -15,7 +15,7 @@
 			window.alert("You're Settings have been saved.");
 		}
 		else {
-		alert("ERROR: Please Select a Major");
+		alert("Error: Please Select a Major");
 		}
 	}
 	

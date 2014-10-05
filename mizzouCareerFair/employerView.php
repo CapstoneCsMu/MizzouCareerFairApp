@@ -17,42 +17,33 @@
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
 	
-    <link href=
-    "http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css"
-    rel="stylesheet">
+    <!-- <link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css" rel="stylesheet"> -->
+	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
     
-	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href=="css/themes/scrensize.css"/>
+	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 	
-    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
+    <!-- Include jQuery and jQuery Mobile CDN, add actual files
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src=
-    "http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script>
-    
+    <script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script> -->
+	<script src="js/jquery-1.11.1.min.js"></script>
+    <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <!-- Include JS file for our JS -->
     <script src="js/index.js"></script>
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
-    <script type="text/javascript" src="http://platform.linkedin.com/in.js">
+	<!-- <script type="text/javascript" src="http://platform.linkedin.com/in.js"> -->
+    <script type="text/javascript" src="js/linkedin.js">
   		api_key: 75a6k7ahbjlrny
   		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
-	
-	<script type="text/javascript" src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+	<!-- Include Google Maps API -->
+	<script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
 	<script type="text/javascript" src="index.js"></script>
+
 </head>
 
 <body>
-
-<!--JavaScript SDK for facebook login button-->
-    <div id="fb-root"></div>
-	<script>(function(d, s, id) {
-  		var js, fjs = d.getElementsByTagName(s)[0];
-  		if (d.getElementById(id)) return;
-  		js = d.createElement(s); js.id = id;
-  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
-  		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script>
 
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" data-position="fixed">
@@ -99,6 +90,9 @@
 
 				<li>
 					<a data-transition="flip" href="support.php">Support</a>
+				</li>
+				<li>
+					<a data-transition="flip" href="logout.php">Logout</a>
 				</li>
 			</ul>
             
