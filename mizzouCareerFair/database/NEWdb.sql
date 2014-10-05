@@ -69,7 +69,6 @@ CREATE TABLE careerSchema.students (
         phoneNumber varchar(20),
         resume 		varchar(100),
         gradDate 	varchar(30),
-        resume 		varchar(5),
         lifePlan 	varchar(200),
         linkedin_id varchar(50),
         FOREIGN KEY (email) REFERENCES careerSchema.authorizationTable(email)
