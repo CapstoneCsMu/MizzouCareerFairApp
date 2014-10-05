@@ -10,11 +10,11 @@ CREATE SCHEMA careerSchema;
 -- Change to careerSchema and public schema
 SET search_path = careerSchema, public;
 
-DROP TABLE IF EXISTS careerSchema.authorizationTable
+DROP TABLE IF EXISTS careerSchema.authorizationTable;
 CREATE TABLE careerSchema.authorizationTable(
 	email varchar(50) PRIMARY KEY NOT NULL,
-        	hashed_pass            varchar(40) NOT NULL,
-        	salt                    varchar(50) NOT NULL,
+    hashed_pass varchar(40) NOT NULL,
+    salt                    varchar(50) NOT NULL,
 	ip_address varchar(40),
 	user_type varchar(40),
 	linkedin_id varchar(40)
@@ -59,17 +59,17 @@ INSERT INTO rssinfo VALUES (default, 'https://rss.myinterfase.com/rss/umcolumbia
 -- Table to hold student information.
 DROP TABLE IF EXISTS careerSchema.students CASCADE;
 CREATE TABLE careerSchema.students (
-        email       varchar(50) PRIMARY KEY,
-        firstName       varchar(50),
-        lastName        varchar(50),
-        degree          varchar(50),
-        major		 varchar(50),
-        phoneNumber     varchar(20),
-        resume 		varchar(50),
+        email	varchar(50) PRIMARY KEY,
+        firstName	varchar(50),
+        lastName 	varchar(50),
+        degree   	varchar(50),
+        major		varchar(50),
+        phoneNumber varchar(20),
+        resume 		varchar(100),
         gradDate 	varchar(30),
         resume 		varchar(5),
-        lifePlan 		varchar(200),
-        linkedin_id 	varchar(50),
+        lifePlan 	varchar(200),
+        linkedin_id varchar(50),
         FOREIGN KEY (email) REFERENCES careerSchema.authorizationTable(email)
 
 );
