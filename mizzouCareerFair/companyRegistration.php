@@ -47,8 +47,8 @@
 						<p>This email will be used if you forget your password and can be shared for students to contact you upon request.</p>
 					</div>
 					<input type="text" name="email" id="email" value="<?php print $_SESSION['coEmail']; ?>" > 
-					<label for="username"><b>Choose a Username:</label>
-					<input type="text" name="username" id="username" placeholder="At least 5 characters">       
+					<!--<label for="username"><b>Choose a Username:</label>
+					<input type="text" name="username" id="username" placeholder="At least 5 characters">    --->   
 					<label for="password"><b>Choose a Password:</label>
 					<input type="password" name="password" id="password" placeholder="At least 5 characters">
 			</form>
@@ -122,13 +122,14 @@ function handleRegistration()
 					echo "\n\t</div>";	
 				}
 				echo pg_last_error($conn);
-				$user = htmlspecialchars($_POST['username']);
+				$email = htmlspecialchars($_POST['email']);
+				$company = htmlspecialchars($_POST['company']);
 
 				//Run username against employer Database
-				$query = "SELECT * FROM careerschema.employerauthentication WHERE username =$1" ;
+				$query = "SELECT * FROM careerschema.authorizationTable WHERE email =$1" ;
 				
 				$stmt = pg_prepare($conn, "register_0", $query)  or die( pg_last_error() );
-				$result = pg_execute($conn, "register_0" ,array($user) ) ;
+				$result = pg_execute($conn, "register_0" ,array($email) ) ;
 				
 				//Check to see if login user exists, if not do nothing
 				if(pg_num_rows($result) > 0)
@@ -150,14 +151,14 @@ function handleRegistration()
 						$passHashed = sha1($passHashed);
 					}
 					//Insert user into the employerinfo table
-					$query = "INSERT INTO careerschema.employerinfo (username, contact_email) VALUES ($1,$2)";
+					/*$query = "INSERT INTO careerschema.authorizationTable (email) VALUES ($1)";
 					$state = pg_prepare($conn,"insert_0",$query) ;
-					$queryInsert = pg_execute($conn,"insert_0",array($user,$_POST['email']));
+					$queryInsert = pg_execute($conn,"insert_0",array($_POST['email']));*/
 					
 					//Then we can add their authentication information
-					$query = "INSERT INTO careerschema.employerauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
+					$query = "INSERT INTO careerschema.authorizationTable (email, hashed_pass, salt, user_type) VALUES ($1,$2,$3,$4,$5)";
 					$state = pg_prepare($conn,"insert_employer",$query) ;
-					$queryInsert = pg_execute($conn,"insert_employer",array($user,$salt,$passHashed ) )  ;
+					$queryInsert = pg_execute($conn,"insert_employer",array($email,$passHashed,$salt,"employer",$company) )  ;
 
 					if ($queryInsert)
 					{
