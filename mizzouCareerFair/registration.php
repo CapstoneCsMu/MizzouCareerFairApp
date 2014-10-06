@@ -192,9 +192,9 @@ function handleStudentRegistration()
 			$queryInsert = pg_execute($conn,"insert_0",array($_POST['email']));
 			
 			//Then we can add their authentication information
-			$query = "INSERT INTO careerschema.authorizationTable (email,hashed_pass, salt) VALUES ($1,$2,$3)";
+			$query = "INSERT INTO careerschema.authorizationTable (email,hashed_pass, salt, user_type) VALUES ($1,$2,$3,$4)";
 			$state = pg_prepare($conn,"insert_1",$query) ;
-			$queryInsert = pg_execute($conn,"insert_1",array($email,$passHashed,$salt ) )  ;
+			$queryInsert = pg_execute($conn,"insert_1",array($email,$passHashed,$salt,"student") )  ;
 
 			if ($queryInsert)
 			{
