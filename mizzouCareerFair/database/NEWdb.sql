@@ -17,6 +17,7 @@ CREATE TABLE careerSchema.authorizationTable(
     salt        varchar(50) NOT NULL,
 	ip_address 	varchar(40),
 	user_type 	varchar(40),
+	company 	varchar(100),
 	linkedin_id varchar(40)
 );
 

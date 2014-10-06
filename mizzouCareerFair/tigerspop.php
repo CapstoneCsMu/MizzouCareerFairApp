@@ -61,8 +61,8 @@
 			<div data-role="main" class="ui-content">
 				<form id="loginForm" method="post" action="tigerspop.php" data-ajax="false">
 					<div class="ui-field-contain">
-						<label for="username">Username:</label>
-							<input type="text" name="username" id="username">       
+						<label for="email">Email:</label>
+							<input type="text" name="email" id="email">       
 						<label for="password">Password:</label>
 							<input type="password" name="password" id="password">
 					</div>
@@ -91,7 +91,7 @@ function handle_login()
 		echo "\n\t<center>Thank you for Registering.</center>"; 
 		echo "\n</div>";
 	}
-	if( isset($_POST['username']) )
+	if( isset($_POST['email']) )
 	{
 		if (!isset($_COOKIE['firsttime']))
 		{
@@ -113,9 +113,7 @@ function handle_login()
 
 		//Run variables against dB
 		$query = array(
-						0 =>"SELECT salt, password_hash FROM careerschema.studentauthentication WHERE username =$1",
-						1 =>"SELECT salt, password_hash FROM careerschema.adminauthentication WHERE username =$1",
-						2 =>"SELECT salt, password_hash FROM careerschema.employerauthentication WHERE username =$1"
+						0 =>"SELECT hashed_pass, salt FROM careerschema.authorizationTable WHERE email=$1"
 						);
 
 		//Search the three tables for authentication success
@@ -124,7 +122,7 @@ function handle_login()
 		for ($p=0; $p<count($query);$p++)
 		{
 			$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
-			$result = pg_execute($conn, "check_" .$p,array(htmlspecialchars($_POST['username'])))  or die( "ERROR:". pg_last_error() );
+			$result = pg_execute($conn, "check_" .$p,array(htmlspecialchars($_POST['email'])))  or die( "ERROR:". pg_last_error() );
 			if(pg_num_rows($result) > 0)
 				{
 					$userWasFound = TRUE;
@@ -155,19 +153,19 @@ function handle_login()
 				// Conditional Handling
 				if ($p ==0)
 				{
-					$_SESSION['student_loggedin'] = htmlspecialchars($_POST['username']);
+					$_SESSION['student_loggedin'] = htmlspecialchars($_POST['email']);
 					header("Location: index.php");
 					exit;
 				}
 				if ($p ==1)
 				{
-					$_SESSION['admin_loggedin'] = htmlspecialchars($_POST['username']);
+					$_SESSION['admin_loggedin'] = htmlspecialchars($_POST['email']);
 					header("Location: admin.php");
 					exit;
 				}
 				if ($p ==2)
 				{
-					$_SESSION['employer_loggedin'] = htmlspecialchars($_POST['username']);
+					$_SESSION['employer_loggedin'] = htmlspecialchars($_POST['email']);
 					header("Location: employerView.php");
 					exit;
 				}
