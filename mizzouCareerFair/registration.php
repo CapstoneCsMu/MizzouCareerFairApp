@@ -104,8 +104,8 @@
 		<form id="studentForm" method="post" action="registration.php#student">
 					<label for="email"><b>Email:</label>
 					<input type="text" name="email" id="email" placeholder="In case you forget your credentials"> 
-					<label for="username"><b>Choose a Username:</label>
-					<input type="text" name="username" id="username" placeholder="At least 5 characters">       
+					<!--<label for="username"><b>Choose a Username:</label>
+					<input type="text" name="username" id="username" placeholder="At least 5 characters">   --->    
 					<label for="password"><b>Choose a Password:</label>
 					<input type="password" name="password" id="password" placeholder="At least 5 characters">
 			</form>
@@ -143,7 +143,7 @@ function pre_process()
 //Function to Handle Student Login
 function handleStudentRegistration()
 {
-	if( isset($_POST['username']) )
+	if( isset($_POST['email']) )
 	{
 		//Include Database information
 		if($_SERVER['HTTP_HOST'] == 'localhost')
@@ -158,13 +158,13 @@ function handleStudentRegistration()
 			echo "\n\t</div>\n</div>";
 			exit();
 		}
-		$user = htmlspecialchars($_POST['username']);
+		$email = htmlspecialchars($_POST['email']);
 
-		//Run username against student Database
-		$query = "SELECT * FROM careerschema.students WHERE username =$1" ;
+		//Run email against student Database
+		$query = "SELECT * FROM careerschema.students WHERE email =$1" ;
 		
 		$stmt = pg_prepare($conn, "register_0", $query)  or die( pg_last_error() );
-		$result = pg_execute($conn, "register_0" ,array($user) ) ;
+		$result = pg_execute($conn, "register_0" ,array($email) ) ;
 		
 		//Check to see if login user exists, if not do nothing
 		if(pg_num_rows($result) > 0)
@@ -187,14 +187,14 @@ function handleStudentRegistration()
 			}
 			
 			//Insert user into the students table
-			$query = "INSERT INTO careerschema.students (username, email) VALUES ($1,$2)";
+			$query = "INSERT INTO careerschema.students (email) VALUES ($1)";
 			$state = pg_prepare($conn,"insert_0",$query) ;
-			$queryInsert = pg_execute($conn,"insert_0",array($user,$_POST['email']));
+			$queryInsert = pg_execute($conn,"insert_0",array($_POST['email']));
 			
 			//Then we can add their authentication information
-			$query = "INSERT INTO careerschema.studentauthentication (username,salt,password_hash) VALUES ($1,$2,$3)";
+			$query = "INSERT INTO careerschema.authorizationTable (email,hashed_pass, salt) VALUES ($1,$2,$3)";
 			$state = pg_prepare($conn,"insert_1",$query) ;
-			$queryInsert = pg_execute($conn,"insert_1",array($user,$salt,$passHashed ) )  ;
+			$queryInsert = pg_execute($conn,"insert_1",array($email,$passHashed,$salt ) )  ;
 
 			if ($queryInsert)
 			{
