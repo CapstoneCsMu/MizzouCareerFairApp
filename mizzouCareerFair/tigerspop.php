@@ -3,6 +3,7 @@
 	// If logged in, don't let anyone RE-register
 	if (isset($_SESSION['student_loggedin']) )
 	{
+		session_start();
 		header("Location: index.php");
 	}
 	/*if(isset($_SESSION['admin_loggedin']))
@@ -112,14 +113,16 @@ function handle_login()
 		}
 
 		//Run variables against dB
-		$query = "SELECT hashed_pass, salt FROM careerschema.authorizationTable WHERE email=$1";
+		$query = array( 0 =>"SELECT * FROM careerschema.authorizationTable WHERE email=$1");
 
 		//Search the three tables for authentication success
 		$userWasFound = FALSE;
 		
-		$stmt = pg_prepare($conn, "check_".$p, $query)  or die( "ERROR:". pg_last_error() );
-		$result = pg_execute($conn, "check_" .$p,htmlspecialchars($_POST['email']))  or die( "ERROR:". pg_last_error() );
-		if(pg_num_rows($result) > 0)
+		for ($p=0; $p<count($query);$p++)
+		{
+			$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
+			$result = pg_execute($conn, "check_".$p, array(htmlspecialchars($_POST['email'])))  or die( "ERROR:". pg_last_error() );
+			if(pg_num_rows($result) > 0)
 			{
 				$userWasFound = TRUE;
 				break;
@@ -137,6 +140,7 @@ function handle_login()
 			$salt = $row['salt'];
 			$salty = sha1($salt);
 			$salty = trim($salt);
+			
 			$password = htmlspecialchars($_POST['password']);
 			$localHash = sha1($salty.$password);
 
@@ -144,12 +148,18 @@ function handle_login()
 			{
 				$localHash = sha1($localHash);
 			}
-			if ($localHash === $row['hashed_pass'] ) //if entered password equals stored password
+			if ($localHash == $row['hashed_pass'] ) //if entered password equals stored password
 			{
 				// Conditional Handling
-				$_SESSION['student_loggedin'] = htmlspecialchars($_POST['email']);
-				header("Location: index.php");
-				exit;
+				if ($p == 0)
+				{	
+					echo "Welcome";
+					session_start();
+					$_SESSION['student_loggedin'] = $row['email'];
+					header('Location: index.php');
+					exit();
+				}
+				
 			}
 			else
 			{
