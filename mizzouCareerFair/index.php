@@ -1,6 +1,6 @@
 <?php
-	include('check_https.php');
-	$_SESSION['prevPage'] = 'index.php';
+	session_start();
+	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
  ?>
 <!DOCTYPE html>
 <html>
@@ -90,14 +90,14 @@
 				<?php
 					if (!$_SESSION['student_loggedin'])
 					{
-						echo ' <li data-role="list-divider">Sign In</li>';
+						echo ' <li data-role="list-divider">My Account</li>';
 						echo'<li><a rel="external" href="tigerspop.php">Sign In!</a></li>';
 					}
 					else
 					{
 						echo '<li data-role="list-divider">Student Tools</li>';
 						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
-						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
+						echo '<li><a rel="external" href="updateProfile.php">Edit My Profile</a></li>';
 						echo '<li><a href="#jobHunt">JobHunt</a></li>';
 					}
 					echo '</ul>';

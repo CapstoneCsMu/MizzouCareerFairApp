@@ -5,14 +5,14 @@
 	{
 		header("Location: index.php");
 	}
-	if(isset($_SESSION['admin_loggedin']))
+	/*if(isset($_SESSION['admin_loggedin']))
 	{
 		header("Location: index_admin.php");
 	}
 	if(isset($_SESSION['employer_loggedin']))
 	{
 		header("Location: index_employer.php");
-	}
+	}*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -112,22 +112,18 @@ function handle_login()
 		}
 
 		//Run variables against dB
-		$query = array(
-						0 =>"SELECT hashed_pass, salt FROM careerschema.authorizationTable WHERE email=$1"
-						);
+		$query = "SELECT hashed_pass, salt FROM careerschema.authorizationTable WHERE email=$1";
 
 		//Search the three tables for authentication success
 		$userWasFound = FALSE;
 		
-		for ($p=0; $p<count($query);$p++)
-		{
-			$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
-			$result = pg_execute($conn, "check_" .$p,array(htmlspecialchars($_POST['email'])))  or die( "ERROR:". pg_last_error() );
-			if(pg_num_rows($result) > 0)
-				{
-					$userWasFound = TRUE;
-					break;
-				}
+		$stmt = pg_prepare($conn, "check_".$p, $query)  or die( "ERROR:". pg_last_error() );
+		$result = pg_execute($conn, "check_" .$p,htmlspecialchars($_POST['email']))  or die( "ERROR:". pg_last_error() );
+		if(pg_num_rows($result) > 0)
+			{
+				$userWasFound = TRUE;
+				break;
+			}
 		}
 		if (!$userWasFound)
 		{
@@ -148,27 +144,12 @@ function handle_login()
 			{
 				$localHash = sha1($localHash);
 			}
-			if ($localHash === $row['password_hash'] ) //if entered password equals stored password
+			if ($localHash === $row['hashed_pass'] ) //if entered password equals stored password
 			{
 				// Conditional Handling
-				if ($p ==0)
-				{
-					$_SESSION['student_loggedin'] = htmlspecialchars($_POST['email']);
-					header("Location: index.php");
-					exit;
-				}
-				if ($p ==1)
-				{
-					$_SESSION['admin_loggedin'] = htmlspecialchars($_POST['email']);
-					header("Location: admin.php");
-					exit;
-				}
-				if ($p ==2)
-				{
-					$_SESSION['employer_loggedin'] = htmlspecialchars($_POST['email']);
-					header("Location: employerView.php");
-					exit;
-				}
+				$_SESSION['student_loggedin'] = htmlspecialchars($_POST['email']);
+				header("Location: index.php");
+				exit;
 			}
 			else
 			{

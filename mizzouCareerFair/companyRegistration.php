@@ -69,12 +69,13 @@ function pre_process()
 {
 	include('check_https.php');
 	// If logged in, don't let anyone RE-register COMMENTED JUST FOR TESTING PURPOSES, FOR PRODUCTION UNCOMMENT THIS
-	/*
+
 	if (isset($_SESSION['student_loggedin']) )
 	{
 		header("Location: index.php");
 		exit();
 	}
+		/*
 	if(isset($_SESSION['admin_loggedin']))
 	{
 		header("Location: index_admin.php");
@@ -122,6 +123,7 @@ function handleRegistration()
 					echo "\n\t</div>";	
 				}
 				echo pg_last_error($conn);
+				
 				$email = htmlspecialchars($_POST['email']);
 				$company = htmlspecialchars($_POST['company']);
 
@@ -156,7 +158,7 @@ function handleRegistration()
 					$queryInsert = pg_execute($conn,"insert_0",array($_POST['email']));*/
 					
 					//Then we can add their authentication information
-					$query = "INSERT INTO careerschema.authorizationTable (email, hashed_pass, salt, user_type) VALUES ($1,$2,$3,$4,$5)";
+					$query = "INSERT INTO careerschema.authorizationTable (email, hashed_pass, salt, user_type,company) VALUES ($1,$2,$3,$4,$5)";
 					$state = pg_prepare($conn,"insert_employer",$query) ;
 					$queryInsert = pg_execute($conn,"insert_employer",array($email,$passHashed,$salt,"employer",$company) )  ;
 
