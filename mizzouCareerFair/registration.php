@@ -103,7 +103,7 @@
 	<?php handleStudentRegistration(); ?>
 		<form id="studentForm" method="post" action="registration.php#student">
 					<label for="email"><b>Email:</label>
-					<input type="text" name="email" id="email" placeholder="In case you forget your credentials"> 
+					<input type="text" name="email" id="email"> 
 					<!--<label for="username"><b>Choose a Username:</label>
 					<input type="text" name="username" id="username" placeholder="At least 5 characters">   --->    
 					<label for="password"><b>Choose a Password:</label>
@@ -178,6 +178,7 @@ function handleStudentRegistration()
 			mt_srand(); //Seed number generator
 			$salt = mt_rand(); //generate salt
 			$salt = sha1($salt);
+			$salt = trim($salt);//ceci
 			$pass = htmlspecialchars($_POST['password']);
 			$passHashed = sha1($salt.$pass);
 
@@ -192,7 +193,7 @@ function handleStudentRegistration()
 			$queryInsert = pg_execute($conn,"insert_0",array($_POST['email']));
 			
 			//Then we can add their authentication information
-			$query = "INSERT INTO careerschema.authorizationTable (email,hashed_pass, salt, user_type) VALUES ($1,$2,$3,$4)";
+			$query = "INSERT INTO careerschema.authorizationTable (email, hashed_pass, salt, user_type) VALUES ($1,$2,$3,$4)";
 			$state = pg_prepare($conn,"insert_1",$query) ;
 			$queryInsert = pg_execute($conn,"insert_1",array($email,$passHashed,$salt,"student") )  ;
 
