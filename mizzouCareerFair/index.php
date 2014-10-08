@@ -1,6 +1,6 @@
 <?php
-	include('check_https.php');
-	$_SESSION['prevPage'] = 'index.php';
+	session_start();
+	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
  ?>
 <!DOCTYPE html>
 <html>
@@ -13,27 +13,31 @@
     <!-- Include CSS and JQM CSS -->
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
-	
-    <!-- <link href="http://code.jquery.com/mobile/1.4.1/jquery.mobile.structure-1.4.1.min.css" rel="stylesheet"> -->
+
 	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
     
 	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 	
-    <!-- Include jQuery and jQuery Mobile CDN, add actual files
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://code.jquery.com/mobile/1.4.1/jquery.mobile-1.4.1.min.js"></script> -->
+    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
 	<script src="js/jquery-1.11.1.min.js"></script>
     <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <!-- Include JS file for our JS -->
     <script src="js/index.js"></script>
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
-	<!-- <script type="text/javascript" src="http://platform.linkedin.com/in.js"> -->
-    <script type="text/javascript" src="js/linkedin.js">
+	<?php if($_SERVER['HTTP_HOST'] == 'localhost'): ?>
+		<script type="text/javascript" src="https://platform.linkedin.com/in.js">
+  		api_key: 750nr1ytn6d9bz
+  		onLoad: onLinkedInLoad
+  		authorize: true
+	</script>
+	<?php else: ?>
+	<script type="text/javascript" src="https://platform.linkedin.com/in.js">
   		api_key: 75a6k7ahbjlrny
   		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
+	<?php endif; ?>
 	<!-- Include Google Maps API -->
 	<script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
 
@@ -42,110 +46,81 @@
 </head>
 
 <body>
-
-<!--JavaScript SDK for facebook login button
-    <div id="fb-root"></div>
-	<script>(function(d, s, id) {
-  		var js, fjs = d.getElementsByTagName(s)[0];
-  		if (d.getElementById(id)) return;
-  		js = d.createElement(s); js.id = id;
-  		js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=825175967511735&version=v2.0";
-  		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script> -->
-
     <div data-role="page" data-theme="a" id="home">
-        <div data-role="header" data-position="fixed">
-            <h1 class="no-ellipses">Mizzou Careers</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="index.php">Home</a> <a data-icon="search" data-iconpos=
-            "notext" data-rel="dialog" data-transition="fade" href=
-            "search.php">Search</a>
+        <div data-role="header" >
+			</br>
+			<center><?php print ( isset($_POST['fairname']) ? $_POST['fairname'] : '2014 Engineering Career Fair') ; ?></center>
+			</br>
         </div>
 
-		
-
         <div data-role="content">
-            
-            
-            
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Career Fair</li>
-
-
+                <li data-role="list-divider"></li>
                 <li>
-                    <a data-transition="flip" href="#companies">Companies</a>
+                    <a data-transition="flip" href="#companies">List of Companies</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="fairSelection.php">Select a Career Fair</a>
+                </li>
+     
+                <li>
+                    <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
+                </li>
+			</ul>
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+				<li data-role="list-divider"></li>
+				<li>
+                    <a data-transition="flip" href="#map_page">Directions to Fair</a>
                 </li>
 				
+                <li>
+                    <a data-transition="flip" href="#map">Map of the Career Fair</a>
+                </li>
+			</ul>
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+				<li data-role="list-divider"></li>
+				<li>
+                    <a data-transition="flip" href="#prep">How to Prepare</a>
+                </li>	
 				<li>
                     <a data-transition="flip" href="employerView.php">Employer View - This is temporary. Will default for employers when they log in.</a>
                 </li>
-
-				<li>
-                    <a data-transition="flip" href="#preparation">Preparation</a>
-                </li>	
-                
-                <li>
-                    <a data-transition="flip" href="#map_page">Directions to Fair-In Progress</a>
-                </li>
-				
-                <li>
-                    <a data-transition="flip" href="#map">Fair Map - Coming soon</a>
-                </li>
-
-				<li>
-					<a data-transition="flip" href="announcements.php">Announcements</a>
-				</li>
-				
-                <li>
-                    <a data-transition="flip" href="#events">Events</a>
-                </li>
-
-                <li>
-                    <a data-transition="flip" href="fairSelection.php">Fairs</a>
-                </li>
-				
-				<li>
-                    <a data-transition="flip" href="#aboutECS">Engineering Career Services</a>
-                </li>
-
-		<li>
-		    <a data-transition="flip" href="#support">Support</a>
-		</li>
             </ul>
-
-
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<?php
 					if (!$_SESSION['student_loggedin'])
 					{
-						echo ' <li data-role="list-divider">Sign In</li>';
+						echo ' <li data-role="list-divider">My Account</li>';
 						echo'<li><a rel="external" href="tigerspop.php">Sign In!</a></li>';
 					}
 					else
 					{
 						echo '<li data-role="list-divider">Student Tools</li>';
-						echo '<li><a rel="external" href="registrationpop.php">Edit My Profile</a></li>';
+						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+						echo '<li><a rel="external" href="updateProfile.php">Edit My Profile</a></li>';
+						echo '<li><a href="#jobHunt">JobHunt</a></li>';
 					}
+					echo '</ul>';
+					echo ' <a><script type="in/Login">Hello, <?js= firstName ?> <?js= lastName ?>. Your id is: <?js= id ?></script></a>';
 				?>
-
-                <li>
-                    <a href="#jobHunt">JobHunt</a>
-                </li>
-                
-                
             </ul>
-            
-            <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
 
-	    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
-            
         </div>
-
+		<div data-role="footer" data-position="fixed" style="background: linear-gradient(#E6E6E6,#E6E6E6 )">
+			<div data-role="navbar" data-iconpos="top">
+				<ul>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="support.php">Contact Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="comment" href="">Anouncements</a></li>
+				</ul>
+				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
+			</div>
+		</div>
     </div>
 	
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
-            <h1>Companies</h1>
+            <h1 onclick="$.mobile.silentScroll(0)">Companies</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
 			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filters</a>
         </div>
@@ -267,12 +242,6 @@
 				<li>
                     <a href="#confidence">Confidence</a>
                 </li>
-				<!--<li>
-                    <a href="#new'n">Placeholder</a>
-                </li>
-				<li>
-                    <a href="#new'n">Placeholder</a>
-                </li>-->
             </ul>
         </div>
     </div>
@@ -314,7 +283,7 @@
 			<h2>How?</h2>
 			
 			<p>
-			Know which companies you want to talk with: 
+			Know which companies want to talk with: 
 			</p>
 			<ul>
 				<li><span style="font-size:11.0pt">Have a clean ONE page resume. With very few exceptions, college students have do not have enough experience to fill more than one page.<o:p></o:p></span></li>
@@ -406,35 +375,6 @@
     </div>
 	<!--End preparation HTML-->
 	
-	<!--Start Support HTML-->
-<div data-role="page" data-theme="a" id="support">
-        <div data-role="header" data-position="fixed">
-            <h1>Mizzou Career Fairs Help</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-                <div data-role="content">
-                        <h2>Need help? Send us an email with questions or comments.</h2>
-
-                        <p>
-                        Email us at <a href ="mailto:engineering.careers@mail.missouri.edu">careerFairsHelp@mail.missouri.edu</a>.
-                        </p>
-
-                        <ul>
-			Name<br><input name="userName" size="30" type="text"  required><br>
-			Email<br><input name="userEmail" size="30" type="email" required><br>
-			Subject<br><input name="subject" size="30" type="text" required><br>
-			Body<br><input name="body" type="text" required><br><br>
-			 <button type="button">Send email</button>
-                        </ul>
-	       </div>
-    </div>
-                   
-
-	<!--End Support HTML-->	
-
 	<!--Start Job Hunt HTML-->
     <div data-role="page" data-theme="a" id="jobHunt">
         <div data-role="header" data-position="fixed">
@@ -448,8 +388,7 @@
         <div data-role="content">
         	<h2>LinkedIn : </h2>
 			<?php echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
-<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
-
+			<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li>
                     <a href="#">Add a Resume</a>
@@ -477,8 +416,10 @@
         	</h3>
         	The International Business Machines Corporation (IBM) is an American multinational technology and consulting corporation, with headquarters in Armonk, New York, United States. IBM manufactures and markets computer hardware and software, and offers infrastructure, hosting and consulting services in areas ranging from mainframe computers to nanotechnology.
         <br>
-        <?php echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
-<script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ?>
+        <?php 
+			echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script><script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ;
+			include('linkedIn.php');
+		?>
         </div>	
     </div>
 	<!--End Testing what we can do for a company-->
@@ -509,7 +450,7 @@
 	<!--End map HTML-->
 
 	<!--Start old rewrite code-->
-    <div data-role="page" data-theme="a" id="events">
+    <div data-role="page" data-theme="a" id="prep">
         <div data-role="header" data-position="fixed">
             <h1>Career Fair Events</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -564,13 +505,27 @@
                     <a href="#badGrades">REWRITE ME Bad Grades?</a>
                 </li>
             </ul>
+
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Keys to a successful career fair</li>
+				
+				<li>
+                    <a href="#prepare">Preparation</a>
+                </li>
+				<li>
+                    <a href="#resume">Resume</a>
+                </li>
+				<li>
+                    <a href="#dressCode">Dress Code</a>
+                </li>
+				<li>
+                    <a href="#confidence">Confidence</a>
+                </li>
+            </ul>
         </div>
 
 
-        <div data-position="fixed" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
+        <div data-role="footer">
             <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
         </div>
     </div>
@@ -812,91 +767,5 @@
         </div>
     </div>
 	<!--End old rewrite HTML-->
-	
-	<!--Start about ECS HTML-->
-	<div data-role="page" data-theme="a" id="aboutECS">
-        <div data-role="header" data-position="fixed">
-            <h1>About Us</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-			<div data-role="content">
-				<p>
-				Engineering Career Services provides information, guidance and resources to empower Mizzou 
-				Engineering students to develop and achieve their career goals.
-				</p>
-				
-				<h2>Typical Career Events</h2>
-				<ul>
-					<li><span style="font-size:11.0pt">Career fairs (2 a year)<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Professional development workshops with employers<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Company visits to Mizzou for on-campus interviews and networking opportunites<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Special targeted events with employers<o:p></o:p></span></li>
-				</ul>
-				
-				<h2>Employer Access to Students</h2>
-				<p>
-				In addition to professional development activities offered to students, 
-				Engineering Career Services also develops corporate partnerships that increase access to students.
-				</p>
-				<p>
-				If you have questions about Engineering Career Services, feel free to contact us.
-				</p>
-				
-				<h3>Mission</h3>
-				<p>In all our work these beliefs and values will guide us:</p>
-				<ul>
-					<li><span style="font-size:11.0pt">Career development is a lifelong learning process consisting of the following components:<o:p></o:p></span></li>
-						<ul>
-							<li><span style="font-size:9.0pt">self-assessment<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">occupational exploration<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career decision making<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career planning<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">acting on options<o:p></o:p></span></li>
-						</ul>
-					<li><span style="font-size:11.0pt">Each student has diverse experiences, interests and goals, and deserves to be respected as an individual.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Each student deserves to be assisted with her/his individual needs in a caring manner that also allows the student to develop individual responsibility.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Services and programs need to be evaluated and redirected as academic environment and employment trends dictate.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
-				</ul>	
-		</div>
-	</div>
-	<!--End about ECS HTML-->
-	
-	<!--Start announcements HTML-->
-    <div data-role="page" data-theme="a" id="announcements">
-        <div data-role="header" data-position="fixed">
-            <h1>Announcements</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-        <div data-role="content">
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Career Fair Announcements</li>
-                <li>
-                    <a href="option">New Companies</a>
-                </li>
-                <li>
-                    <a href="option2.html">Changed Booth Locations</a>
-                </li>
-                <li>
-                    <a href="option8.html">Updates</a>
-                </li>
-            </ul>
-        </div>
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-    <!--End announcements HTML-->
-
 </body>
 </html>
