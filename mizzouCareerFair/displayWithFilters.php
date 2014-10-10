@@ -1,6 +1,5 @@
 <?php
-//Parse the XML File
-include 'companyParse.php';
+
 $succesfulFilterCount = 0;
 $Majorfilters = NULL;
 // build $Majorfilters Array 
@@ -34,9 +33,8 @@ if($Majorfilters != NULL)
 			if ($m != count($Majorfilters))
 				echo ', ';
 		}
-		if (isset($_SESSION['filters']['group_state'])){
+		if (isset($_SESSION['filters']['group_state']))
 			echo ", ".$_SESSION['filters']['group_state'];
-			}
 		if (isset($_SESSION['filters']['group_type']))
 			echo ", ".$_SESSION['filters']['group_type'];
 		echo "</center></br>";
@@ -60,9 +58,7 @@ if($Majorfilters != NULL)
 			{
 				for ($z = 0; $z < count($companyPositions[$key]); $z++)
 				{
-					//trim white space from company positions type
-					$companyPosition = trim($companyPositions[$key][$z]);
-					if ($_SESSION['filters']['group_type'] == ($companyPosition));
+					if ($_SESSION['filters']['group_type'] == $companyPositions[$key][$z])
 						$positionFlag = TRUE;
 				}
 				if (!$positionFlag)
