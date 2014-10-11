@@ -57,10 +57,10 @@
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider"></li>
                 <li>
-                    <a data-transition="flip" href="#companies">List of Companies</a>
+                    <a data-transition="slideup" href="#companies">List of Companies</a>
                 </li>
                 <li>
-                    <a data-transition="flip" href="fairSelection.php">Select a Career Fair</a>
+                    <a data-transition="slide" data-direction="reverse" href="#fairSelect">Select a Career Fair</a>
                 </li>
      
                 <li>
@@ -110,7 +110,7 @@
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
-					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="support.php">Contact Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:kristi.decker347@gmail.com?Subject=TEST">Contact Us</a></li>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="comment" href="">Anouncements</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
@@ -118,10 +118,12 @@
 		</div>
     </div>
 	
+	<?php include('fairSelection.php');?>
+	
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1 onclick="$.mobile.silentScroll(0)">Companies</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext" href="#home">Home</a> 
+            <a data-transition="slidedown" data-icon="arrow-l" data-iconpos="notext" href="#home">Home</a> 
 			<a data-transition="slide" data-icon="bullets" href="companyFilter.php">Filters</a>
         </div>
 				
@@ -136,6 +138,7 @@
 				</div>
 
 				<!-- List all of the companies, each company can be accessed as an individual page via companyLoad.php down below-->
+				<?php include 'companyParse.php' ?>
 				<div id="unfiltered">
 					<form class="ui-filterable">
 						<input id="UNFILTERED" data-type="search">

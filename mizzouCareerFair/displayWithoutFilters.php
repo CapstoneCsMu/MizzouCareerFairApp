@@ -1,6 +1,4 @@
  <?php
-//Parse the XML File
-include 'companyParse.php';
 
 //If RSS Feed is down
 if (!$line['rss'])
