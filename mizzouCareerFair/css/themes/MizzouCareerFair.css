@@ -741,4 +741,18 @@ button[disabled],
 	outline-style: auto;
 }
 
-			
+.submitBtn
+{
+margin: 0 auto;
+width: 100px;  
+height: 2px;
+!important
+}	
+
+.chooseFile
+{
+margin: 0 auto;
+width: 500px;
+height: 2px;
+!important
+}		

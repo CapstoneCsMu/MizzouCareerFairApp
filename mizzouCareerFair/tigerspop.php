@@ -3,16 +3,17 @@
 	// If logged in, don't let anyone RE-register
 	if (isset($_SESSION['student_loggedin']) )
 	{
+		session_start();
 		header("Location: index.php");
 	}
-	if(isset($_SESSION['admin_loggedin']))
+	/*if(isset($_SESSION['admin_loggedin']))
 	{
 		header("Location: index_admin.php");
 	}
 	if(isset($_SESSION['employer_loggedin']))
 	{
 		header("Location: index_employer.php");
-	}
+	}*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -48,9 +49,10 @@
 	</script>
 </head>
 <body>
-		<div data-role="page" data-dialog="true" id="index.php">
+		<div data-role="page" data-dialog="true">
 			<div data-role="header">
-				<h1>Login</h1>
+				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a> 
+				</br><center>Login</center></br>
 			</div>
 			<div>
 			<?php
@@ -58,22 +60,24 @@
 			?>
 			</div>
 			<div data-role="main" class="ui-content">
-				<form id="loginForm" method="post" action="tigerspop.php">
+				<form id="loginForm" method="post" action="tigerspop.php" data-ajax="false">
 					<div class="ui-field-contain">
-						<label for="username">Username:</label>
-							<input type="text" name="username" id="username">       
+						<label for="email">Email:</label>
+							<input type="text" name="email" id="email">       
 						<label for="password">Password:</label>
-							<input type="password" name="password" id="password" onblur="submitLogin()">
+							<input type="password" name="password" id="password">
 					</div>
+					<center><input type="submit" data-inline="true" name="Submit" onClick="submitLogin();" value="Submit"></center>
 					</form>
 					<center>
-						<a href="tigerspop.php" data-inline="true" data-role="button" value="Submit" onclick="submitLogin();">Submit</a>
+						
+						<!-- <a href="tigerspop.php" data-inline="true" data-role="button" value="Submit" onclick="submitLogin();">Submit</a> -->
 					</center>
 			</div>
 			<center>
 			<div data-role="footer">
 				<p>Don't have an account?</p>
-				<input type="button" value="Register" onclick="redirect();">
+				<center><a href="registration.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>
 			</div>
 			</center>
 		</div>
@@ -88,7 +92,7 @@ function handle_login()
 		echo "\n\t<center>Thank you for Registering.</center>"; 
 		echo "\n</div>";
 	}
-	if( isset($_POST['username']) )
+	if( isset($_POST['email']) )
 	{
 		if (!isset($_COOKIE['firsttime']))
 		{
@@ -109,11 +113,7 @@ function handle_login()
 		}
 
 		//Run variables against dB
-		$query = array(
-						0 =>"SELECT salt, password_hash FROM careerschema.studentauthentication WHERE username =$1",
-						1 =>"SELECT salt, password_hash FROM careerschema.adminauthentication WHERE username =$1",
-						2 =>"SELECT salt, password_hash FROM careerschema.employerauthentication WHERE username =$1"
-						);
+		$query = array( 0 =>"SELECT * FROM careerschema.authorizationTable WHERE email=$1");
 
 		//Search the three tables for authentication success
 		$userWasFound = FALSE;
@@ -121,12 +121,12 @@ function handle_login()
 		for ($p=0; $p<count($query);$p++)
 		{
 			$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
-			$result = pg_execute($conn, "check_" .$p,array(htmlspecialchars($_POST['username'])))  or die( "ERROR:". pg_last_error() );
+			$result = pg_execute($conn, "check_".$p, array(htmlspecialchars($_POST['email'])))  or die( "ERROR:". pg_last_error() );
 			if(pg_num_rows($result) > 0)
-				{
-					$userWasFound = TRUE;
-					break;
-				}
+			{
+				$userWasFound = TRUE;
+				break;
+			}
 		}
 		if (!$userWasFound)
 		{
@@ -140,6 +140,7 @@ function handle_login()
 			$salt = $row['salt'];
 			$salty = sha1($salt);
 			$salty = trim($salt);
+			
 			$password = htmlspecialchars($_POST['password']);
 			$localHash = sha1($salty.$password);
 
@@ -147,27 +148,18 @@ function handle_login()
 			{
 				$localHash = sha1($localHash);
 			}
-			if ($localHash === $row['password_hash'] ) //if entered password equals stored password
+			if ($localHash == $row['hashed_pass'] ) //if entered password equals stored password
 			{
 				// Conditional Handling
-				if ($p ==0)
-				{
-					$_SESSION['student_loggedin'] = htmlspecialchars($_POST['username']);
-					header("Location: index.php");
-					exit;
+				if ($p == 0)
+				{	
+					echo "Welcome";
+					session_start();
+					$_SESSION['student_loggedin'] = $row['email'];
+					header('Location: index.php');
+					exit();
 				}
-				if ($p ==1)
-				{
-					$_SESSION['admin_loggedin'] = htmlspecialchars($_POST['username']);
-					header("Location: admin.php");
-					exit;
-				}
-				if ($p ==2)
-				{
-					$_SESSION['employer_loggedin'] = htmlspecialchars($_POST['username']);
-					header("Location: employer_home.php");
-					exit;
-				}
+				
 			}
 			else
 			{

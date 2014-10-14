@@ -1,6 +1,4 @@
  <?php
-//Parse the XML File
-include 'companyParse.php';
 
 //If RSS Feed is down
 if (!$line['rss'])
@@ -11,6 +9,7 @@ else
 {
 	//sort names alphabetically and print them as list options
 	asort($companyNames);
+	$_SESSION['companies'] = $companyNames;
 	$i = 1;
 	foreach($companyNames as $companyName => $val)
 	{
