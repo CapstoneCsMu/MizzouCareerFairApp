@@ -162,9 +162,8 @@ function handle_login()
 						header('Location: admin.php');
 					}
 					else{
-						header('Location: index.php');
 						$_SESSION['student_loggedin'] = $row['email'];
-					
+						header('Location: index.php');
 					}
 					exit();
 				}
