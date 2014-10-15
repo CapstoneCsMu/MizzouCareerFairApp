@@ -1,3 +1,4 @@
+
 //Javascript for Index
 	function submitFilter()
 	{
@@ -21,11 +22,39 @@
 	
 	$(document).on("pageinit", "#map_page", function() {
 		initialize();
+		
+		
+		$("#map_canvas").hide();
+		
+		
+		$('#toggleMap').change(function() {
+    		var myswitch = $(this);
+    		var show = myswitch[0].selectedIndex == 1 ? true:false;
+    
+    		if(show) {
+        
+        		$('#map_canvas').fadeIn('slow');
+        		//$('#first-me').fadeOut();
+    		} else {
+        
+       			//$('#first-me').fadeIn('slow');
+        	$('#map_canvas').fadeOut();
+    		}
+		});
+		
 	});
 
-	$(document).on('click', '#submit', function(e) {
+	$(document).on('click', '#submitDirections', function(e) {
 		e.preventDefault();
 		calculateRoute();
+		$("#dirSpecs").hide()
+		$("#toDirection").hide()
+		$("#fromDirection").hide()
+		$("#submitDirections").hide()
+	});
+	
+	$(document).on('click', '#resetSearch', function(e) {
+		window.location.reload();
 	});
 
 	var directionDisplay,
