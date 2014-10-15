@@ -9,7 +9,7 @@
 		
 		$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'.pg_last_error());
 		
-		$query='SELECT * FROM careersschema.studentAuthentication WHERE username = $1 ';
+		$query='SELECT * FROM careerSchema.authorizationTable WHERE username = $1 ';
 		$result=pg_prepare($dbconn,'query1',$query);
 		$result=pg_execute($dbconn,'query1',array($username));
 		
@@ -27,8 +27,10 @@
 					insert_db($row['username'],$ip);//function to feed the log table
 					$_SESSION['username']=$row['username'];
 					$_SESSION['password']=$row['password_hash'];
-				
-					header('Location: index.php');
+					
+					//if user is an admin, direct them to admin page
+					
+					echo $row["user_type"];
 					exit();
 				}
 				if($localhash != $row['hash'])
@@ -47,7 +49,7 @@
 {
     $dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die ('Could not connect:'.pg_last_error());
 	    
-    $query_insert='INSERT INTO careerschema.log (ip_address,log_date,action,username) VALUES($1,DEFAULT,$2,$3)';
+    $query_insert='INSERT INTO careerSchema.log (ip_address,log_date,action,username) VALUES($1,DEFAULT,$2,$3)';
 //inserts login info	
     pg_prepare($dbconn,'insert3',$query_insert)or die ('Could not connect 5:'.pg_last_error());
     pg_execute($dbconn,'insert3',array($ip,"login",$username))or die ('Could not connect 6:'.pg_last_error());

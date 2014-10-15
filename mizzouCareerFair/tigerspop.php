@@ -6,10 +6,12 @@
 		session_start();
 		header("Location: index.php");
 	}
-	/*if(isset($_SESSION['admin_loggedin']))
+	if(isset($_SESSION['admin_loggedin']))
 	{
-		header("Location: index_admin.php");
+		session_start();
+		header("Location: admin.php");
 	}
+	/*
 	if(isset($_SESSION['employer_loggedin']))
 	{
 		header("Location: index_employer.php");
@@ -155,8 +157,15 @@ function handle_login()
 				{	
 					echo "Welcome";
 					session_start();
-					$_SESSION['student_loggedin'] = $row['email'];
-					header('Location: index.php');
+					if($row["user_type"] == "admin"){
+						$_SESSION['admin_loggedin'] = $row['email'];
+						header('Location: admin.php');
+					}
+					else{
+						header('Location: index.php');
+						$_SESSION['student_loggedin'] = $row['email'];
+					
+					}
 					exit();
 				}
 				

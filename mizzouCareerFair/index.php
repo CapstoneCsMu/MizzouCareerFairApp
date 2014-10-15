@@ -88,10 +88,14 @@
             </ul>
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<?php
-					if (!$_SESSION['student_loggedin'])
+					if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
 					{
 						echo ' <li data-role="list-divider">My Account</li>';
 						echo'<li><a rel="external" href="tigerspop.php">Sign In!</a></li>';
+					}
+					else if($_SESSION['admin_loggedin']){
+						echo ' <li data-role="list-divider">My Account</li>';
+						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 					}
 					else
 					{
