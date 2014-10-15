@@ -1,5 +1,9 @@
 <?php
 	session_start();
+	if(!$_SESSION['admin_loggedin']){
+		$_SESSION['admin_attempt'] = "yes";
+		header('Location: tigerspop.php');
+	}
  ?>
 <!DOCTYPE html>
 <html>
