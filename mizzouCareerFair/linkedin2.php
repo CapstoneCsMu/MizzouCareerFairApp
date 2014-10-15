@@ -10,10 +10,16 @@
 /* We then receive an authentication token back from LinkedIn. If it's successful then we can make requests to LinkedIn's Resource Server (and grab their info)
 */
 
+if($_SERVER['HTTP_HOST'] == 'localhost'):
+	define('API_KEY',      '750nr1ytn6d9bz');
+	define('API_SECRET',   '77nk3oD0VXhEhphp');
+	define('REDIRECT_URI', 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME']);
+else:
+	define('API_KEY',      '75a6k7ahbjlrny');
+	define('API_SECRET',   'PlIszxO8R5FeiFaz');
+	define('REDIRECT_URI', 'https://' . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME']);
+endif;
 
-define('API_KEY',      '750nr1ytn6d9bz');
-define('API_SECRET',   '77nk3oD0VXhEhphp');
-define('REDIRECT_URI', 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_NAME']);
 define('SCOPE',        'r_basicprofile r_emailaddress');
  
 // We may store the tokens in a database (it'll be safer)
@@ -48,7 +54,7 @@ if (isset($_GET['error'])) {
  
 // Congratulations! You have a valid token. Now fetch your profile ...(firstName and lastName) is field selector notation
 // https://developer.linkedin.com/documents/profile-api#
-$user = fetch('GET', '/v1/people/~ HTTP/1.1');
+$user = fetch('GET', '/v1/people/~');
 // $user = fetch('GET', '/v1/people/~ HTTP/1.1');
 
 print "</br>Hello".$user->firstName.$user->lastName."!";
@@ -121,7 +127,7 @@ function fetch($method, $resource, $body = '') {
         'Authorization' => 'Bearer ' . $_SESSION['access_token'],
         'x-li-format' => 'json' // Comment out to use XML
     );
-	var_dump($headers);
+	//var_dump($headers);
  
     $params = array(
 		// 'param1' => 'Ryan',
@@ -130,13 +136,11 @@ function fetch($method, $resource, $body = '') {
 	 
     // Need to use HTTPS
     $url = 'https://api.linkedin.com' . $resource;
-	echo $url;
  
     // Append query parameters (if there are any)
     if (isset($params)) 
 	{ 
 		$url .= '?' . http_build_query($params); 
-		echo $url;
 	} 
  
 
@@ -149,9 +153,25 @@ function fetch($method, $resource, $body = '') {
             )
         )
     );
+	echo "</br>";
+	var_dump($context);
  
     // Send the request to LinkedIn's resource using the HTTP headers set above
-    $response = file_get_contents($url, false, $context);
+	
+	// cURL example is used for testing purposes
+	$url = "http://api.linkedin.com/v1/people/~?oauth_consumer_key=75a6k7ahbjlrny&oauth_nonce=1234&oauth_signature=66CayRWJINr4y3isA5IHuayjklY%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1412976594&oauth_token=414459df-3979-44ca-91e6-6e906d46559c&oauth_version=2";
+	echo "</br>".$url;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $url);
+
+    $response = curl_exec($ch);
+    curl_close($ch);
+   
+	// using file_get_contents
+	// $response = file_get_contents($url, false, $context);
+	echo "</br>";
 	var_dump($response);
  
     // Native PHP object, please
