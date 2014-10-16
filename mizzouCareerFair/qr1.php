@@ -40,7 +40,9 @@ if(isset($_POST['submit'])) {
 ?>
 
 <img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=http%3A%2F%2Fwww.google.com%2F&choe=UTF-8" title="Link to Google.com" />
-<!--<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=<?php echo $result; ?>&choe=UTF-8" title="<?php echo $name; ?>'s QR Code" />-->
+<br>
+</br>
+<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=<?php echo $result; ?>&choe=UTF-8" title="<?php echo $name; ?>'s QR Code" />
 </body>
 </html>
 
