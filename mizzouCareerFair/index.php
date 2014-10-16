@@ -448,6 +448,16 @@
 
 	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
+        <?
+        include ("data.php");
+        $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+
+        $query = "SELECT * FROM careerSchema.mapUploads ORDER BY entryTime LIMIT 1";
+        $result =  pg_query($query) or die('Query failed: ' . pg_last_error());
+        $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+        $filePath = $line["filepath"];
+        ?>
+
         <div data-role="header" data-position="fixed">
             <h1>Mizzou Career Fair App Hearnes Map</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -457,7 +467,7 @@
         </div>
 
 
-        <div data-role="content"><img alt="Fair Map" src="images/fairmap.jpg"
+        <div data-role="content"><img alt="Fair Map" src="<?php echo $filePath;?>"
         style="width:100%">
         </div>
 

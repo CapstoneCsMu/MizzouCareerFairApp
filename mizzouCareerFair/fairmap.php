@@ -20,7 +20,7 @@
  
  
  </head> 
- <body> 
+ <body>
     <div data-role="page" data-theme="a"> 
          <div data-role="header"> 
                <h1>Mizzou Career Fair App Hearnes Map</h1>
