@@ -97,6 +97,7 @@
 					else if($_SESSION['admin_loggedin']){
 						echo ' <li data-role="list-divider">My Account</li>';
 						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+                        echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
 					}
 					else
 					{
