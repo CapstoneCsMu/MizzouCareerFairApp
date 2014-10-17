@@ -41,6 +41,7 @@
 	<!-- Include Google Maps API -->
 	<script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
 
+	<!-- Includes directions functionality -->
 	<script type="text/javascript" src="index.js"></script>
 
 </head>
@@ -88,10 +89,15 @@
             </ul>
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<?php
-					if (!$_SESSION['student_loggedin'])
+					if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
 					{
 						echo ' <li data-role="list-divider">My Account</li>';
 						echo'<li><a rel="external" href="tigerspop.php">Sign In!</a></li>';
+					}
+					else if($_SESSION['admin_loggedin']){
+						echo ' <li data-role="list-divider">My Account</li>';
+						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+                        echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
 					}
 					else
 					{
@@ -194,15 +200,15 @@
             <div data-role="content">
                 <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
                     <div id="map_canvas" style="height:300px;"></div>
-                    <div data-role="fieldcontain">
+                    <div id="fromDirection" data-role="fieldcontain">
                         <label for="from">From</label> 
                         <input type="text" id="from"/>
                     </div>
-                    <div data-role="fieldcontain">
+                    <div id="toDirection" data-role="fieldcontain">
                         <label for="to">To</label> 
                         <input type="text" id="to" value="Hearnes Center 600 E Stadium Blvd, Columbia, MO 65203"/>
                     </div>
-                    <div data-role="fieldcontain">
+                    <div id="dirSpecs" data-role="fieldcontain">
                         <label for="mode" class="select">Transportation method:</label>
                         <select name="select-choice-0" id="mode">
                             <option value="DRIVING">Driving</option>
@@ -210,8 +216,22 @@
                             <option value="BICYCLING">Bicycling</option>
                         </select>
                     </div>
-                    <a data-icon="navigation" data-role="button" href="#" id="submit">Get directions</a>
+                    <a data-icon="navigation" data-role="button" href="#" id="submitDirections">Get Directions</a>
+                    
+                    <div data-role="fieldcontain">
+						<label for="flip-2">Display Map : </label>
+						<select id="toggleMap" data-role="slider">
+							<option value="off">Off</option>
+							<option value="on">On</option>
+						</select> 
+						
+						<a id="resetSearch" style="float:right;" data-icon="navigation" href="#" data-role="button" data-inline="true" data-theme="b">Reset Search</a>
+						
+					</div>
+                    
+                    
                 </div>
+                
                 <div id="results" style="display:none;">
                     <div id="directions"></div>
                 </div>
@@ -429,6 +449,16 @@
 
 	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
+        <?
+        include ("data.php");
+        $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+
+        $query = "SELECT * FROM careerSchema.mapUploads ORDER BY entryTime LIMIT 1";
+        $result =  pg_query($query) or die('Query failed: ' . pg_last_error());
+        $line = pg_fetch_array($result, null, PGSQL_ASSOC);
+        $filePath = $line["filepath"];
+        ?>
+
         <div data-role="header" data-position="fixed">
             <h1>Mizzou Career Fair App Hearnes Map</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -438,7 +468,7 @@
         </div>
 
 
-        <div data-role="content"><img alt="Fair Map" src="images/fairmap.jpg"
+        <div data-role="content"><img alt="Fair Map" src="<?php echo $filePath;?>"
         style="width:100%">
         </div>
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- mizzouCareerFair.sql for Mizzou Career Fair Application
 -- creates tables in database for careerSchema
 
@@ -74,3 +75,16 @@ CREATE TABLE careerSchema.students (
         FOREIGN KEY (email) REFERENCES careerSchema.authorizationTable(email)
 
 );
+
+-- Table to hold admin upload info
+DROP TABLE IF EXISTS careerSchema.mapUploads CASCADE;
+CREATE TABLE careerSchema.mapUploads (
+    filePath varchar(100) PRIMARY KEY NOT NULL,
+		imgName varchar(50),
+		entryTime timestamp NOT NULL default CURRENT_TIMESTAMP
+);
+
+
+
+
+
