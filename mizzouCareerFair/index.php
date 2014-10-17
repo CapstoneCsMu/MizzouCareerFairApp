@@ -103,7 +103,7 @@
 					{
 						echo '<li data-role="list-divider">Student Tools</li>';
 						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
-						echo '<li><a rel="external" href="updateProfile.php">Edit My Profile</a></li>';
+						echo '<li><a rel="external" href="addResume.php">Edit My Profile</a></li>';
 						echo '<li><a href="#jobHunt">JobHunt</a></li>';
 					}
 					echo '</ul>';
