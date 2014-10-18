@@ -1,4 +1,10 @@
+
 <?php
+/*
+File: input.php
+Parent: adminCompanies.php
+Purpose:This inputs the rss information into the database. 
+*/
 include ("data.php");
 $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 

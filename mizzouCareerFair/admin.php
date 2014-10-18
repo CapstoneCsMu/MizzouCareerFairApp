@@ -1,11 +1,10 @@
 <?php
+	/*
+	File: admin.php
+    Parent: tigerspop.php at line 165; index.php at line 102
+    Purpose: The purpose of this file is to add additional RSS feeds into the database. It will be implemented into admin.php
+	*/
 	session_start();
-	if(!$_SESSION['admin_loggedin']){
-		$_SESSION['admin_attempt'] = "yes";
-		header('Location: tigerspop.php');
-	}
-    include ("data.php");
-    $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
  ?>
 <!DOCTYPE html>
 <html>
@@ -85,7 +84,7 @@
             href="../nav.html">Search</a>
         </div><br><br>
 	<div>
-		<form action="" method="post" enctype="multipart/form-data" data-ajax="false">
+		<form action="upload_file.php" method="post" enctype="multipart/form-data">
 			<div class="chooseFile">
 				<input type="file" name="file" id="file"><br>
 			</div><br><br><br>
@@ -94,34 +93,6 @@
 			</div>
 		</form>
 	</div>
-	<?if(isset($_POST['submit'])){
-
-		//check for file type
-		$allowedExts = array("gif", "jpeg", "jpg", "png");
-		$temp = explode(".", $_FILES["file"]["name"]);
-		$extension = end($temp);
-
-        //get filename and set path
-        $fileName =  $_FILES["file"]["name"];
-        $path = "images/Maps/".$_FILES["file"]["name"];
-
-		//check for errors and correct file type
-		if($_FILES["file"]["error"] != 0)
-			echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
-		else if (!in_array($extension, $allowedExts))
-			echo"<script>alert(\"Invalid File\")</script>";
-		else if(file_exists("images/Maps" . $_FILES["file"]["name"]))
-			$path = "images/Maps/".$fileName;
-		else {
-            //save file and insert path into database
-            move_uploaded_file($_FILES["file"]["tmp_name"], $path);
-            $query = 'INSERT INTO careerSchema.mapUploads(imgName, filePath) VALUES ($1, $2)';
-            $statement = pg_prepare("myQuery", $query) or die (pg_last_error());
-            $result = pg_execute("myQuery", array($fileName, $path)) or die(pg_last_error());
-        }
-
-
-}?>
 </body>
 </html>
 

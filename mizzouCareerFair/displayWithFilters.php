@@ -1,5 +1,9 @@
 <?php
-
+/*
+File: displayWithFilters.php
+Parent: index.php (approx. line 163)
+Purpose: To filter the company list with the user's chosen filters.
+*/
 $succesfulFilterCount = 0;
 $Majorfilters = NULL;
 // build $Majorfilters Array 

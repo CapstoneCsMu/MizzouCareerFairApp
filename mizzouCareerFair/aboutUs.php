@@ -1,4 +1,9 @@
 <?php
+	/*
+	File: aboutUs.php (Called approx. line 123)
+	Parent: index.php
+	Purpose: This is the "About Us" page. It simply displays information about Career Services and displays our linkedin info.
+	*/
 	include('check_https.php');
  ?>
 <!DOCTYPE html>

@@ -1,4 +1,8 @@
 <?php
+/* File: tigerspop.php
+Parent: index.php (approx. line 97)
+Purpose: This file handles the login for students, employers and admin.
+*/
 include('check_https.php');
 // If logged in, don't let anyone RE-register
 if (isset($_SESSION['student_loggedin']) )
@@ -11,11 +15,11 @@ if(isset($_SESSION['admin_loggedin']))
     session_start();
     header("Location: admin.php");
 }
-/*
+
 if(isset($_SESSION['employer_loggedin']))
 {
-    header("Location: index_employer.php");
-}*/
+    header("Location: employerView.php");
+}
 ?>
     <!DOCTYPE html>
     <html>
@@ -155,16 +159,29 @@ function handle_login()
                 // Conditional Handling
                 if ($p == 0)
                 {
-                    echo "Welcome";
                     session_start();
                     if($row["user_type"] == "admin"){
                         $_SESSION['admin_loggedin'] = $row['email'];
                         header('Location: admin.php');
                     }
-                    else{
+					if($row["user_type"] == "employer"){
+                        $_SESSION['employer_loggedin'] = $row['email'];
+                        header('Location: employerView.php');
+			   
+					   $query = "INSERT INTO careerschema.authorizationtable(ip_address) WHERE email =($1) VALUES ($2)";
+						$stmt = pg_prepare($conn, "log", $query);
+						//sends query to database
+						$result = pg_execute($conn, "log", array($row['email'], $_SERVER['REMOTE_ADDR']));
+						//if database doesnt return results print this
+						if(!$result) {
+								die("Unable to execute: " . pg_last_error($conn));
+						}
+					}	
+					else{
                         $_SESSION['student_loggedin'] = $row['email'];
                         header('Location: index.php');
                     }
+					
                     exit();
                 }
 

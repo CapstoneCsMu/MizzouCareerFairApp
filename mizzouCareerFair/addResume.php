@@ -1,5 +1,11 @@
 <?php
-	include('check_https.php');
+	/*
+	File: addResume.php 
+	Parent: index.php
+	Purpose: Form to upload resume. Calls updateProfile.php when Upload button is pressed.
+	*/
+
+include('check_https.php');
 	session_start();
 	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
 	$email = $_POST['student_loggedin'];

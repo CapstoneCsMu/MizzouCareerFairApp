@@ -1,4 +1,9 @@
 <?php
+	/*
+	File: index.php
+	Parent: None
+	Function: Home Page. Pretty much everything is called from here.
+	*/
 	session_start();
 	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
  ?>
@@ -63,7 +68,6 @@
                 <li>
                     <a data-transition="slide" data-direction="reverse" href="#fairSelect">Select a Career Fair</a>
                 </li>
-     
                 <li>
                     <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
                 </li>
@@ -73,7 +77,6 @@
 				<li>
                     <a data-transition="flip" href="#map_page">Directions to Fair</a>
                 </li>
-				
                 <li>
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
                 </li>
@@ -83,12 +86,10 @@
 				<li>
                     <a data-transition="flip" href="#prep">How to Prepare</a>
                 </li>	
-				<li>
-                    <a data-transition="flip" href="employerView.php">Employer View - This is temporary. Will default for employers when they log in.</a>
-                </li>
             </ul>
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<?php
+					
 					if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
 					{
 						echo ' <li data-role="list-divider">My Account</li>';
@@ -102,15 +103,15 @@
 					else
 					{
 						echo '<li data-role="list-divider">Student Tools</li>';
-						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+						echo '<li><a href="#qrCode">My QR Code</a></li>';
 						echo '<li><a rel="external" href="addResume.php">Edit My Profile</a></li>';
-						echo '<li><a href="#jobHunt">JobHunt</a></li>';
+						echo '<li><a href="#jobHunt">Job Hunt</a></li>';
+						echo '<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 					}
 					echo '</ul>';
 					echo ' <a><script type="in/Login">Hello, <?js= firstName ?> <?js= lastName ?>. Your id is: <?js= id ?></script></a>';
 				?>
             </ul>
-
         </div>
 		<div data-role="footer" data-position="fixed" style="background: linear-gradient(#E6E6E6,#E6E6E6 )">
 			<div data-role="navbar" data-iconpos="top">
@@ -170,18 +171,6 @@
 			</div>
 		</div>
     </div>
-
-	<div data-role="page" data-theme="a" id="companyDetails">
-        <div data-role="header" data-position="fixed">
-            <h1>Company Details</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-	
-		<div data-role="content"></div>
-	</div>
 
 	<?php
 	//Load a page for each company dynamically
@@ -423,6 +412,25 @@
         </div>
     </div>
 	<!--End Job Hunt HTML.-->
+	
+	<!--Start QR Code HTML-->
+    <div data-role="page" data-theme="a" id="qrCode">
+        <div data-role="header" data-position="fixed">
+            <h1>My QR Code</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+        <div data-role="content">
+        	<h2>DAS CODE!</h2>
+			<?php
+			echo '<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/CodeScanned.php?email='.$_SESSION['student_loggedin'].'"&choe=UTF-8"/>';
+			?>
+        </div>
+    </div>
+	<!--End QR Code HTML.-->
 	
 	<!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">

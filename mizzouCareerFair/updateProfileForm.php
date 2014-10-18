@@ -1,5 +1,11 @@
 <?php
-	include('check_https.php');
+	/*
+	File: updateProfileForm.php 
+	Parent: addResume.php
+	Purpose: Form for student to update profile (not resume). Displays info from the student in session gathered from db.
+	*/
+
+include('check_https.php');
 	session_start();
 	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
 	$email = $_POST['student_loggedin'];

@@ -1,4 +1,10 @@
 <?php
+	/*File:  employerView.php 
+	Parent:  tigerspop.php 
+	Function:  Employer view form, default view when employer logs in.*/
+?>
+
+<?php
 	if (!isset($_SESSION))
 	{
 		session_start();

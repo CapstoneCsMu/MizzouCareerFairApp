@@ -1,4 +1,9 @@
 <?php
+	/*
+	File: companyLoad.php
+	Parent: Index.php (approx. line 190)
+	Purpose: This file acts as multiple standalone pages. Each company gets a single page which is dynamically created.
+	*/
 	$i=1;
 	foreach($companyNames as $keyZ => $val)
 	{

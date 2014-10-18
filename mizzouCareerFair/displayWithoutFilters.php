@@ -1,5 +1,9 @@
  <?php
-
+/*
+File: displayWithoutFilters.php
+Parent: index.php (approx. line 155)
+Purpose: To display the company list without any filters.
+*/
 //If RSS Feed is down
 if (!$line['rss'])
 {

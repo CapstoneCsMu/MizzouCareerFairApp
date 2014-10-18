@@ -1,3 +1,8 @@
+<!--
+File: fairSelection.php
+Parent: index.php (approx line 129)
+Purpose: This file is a standalone page which allows the user to select a career fair: Either Egr, or Business, or CAFNR, etc.
+-->
 <div data-role="page" data-theme="a" id="fairSelect">
 	<div data-role="header" data-position="fixed">
 		<h1>Fairs</h1>

@@ -1,4 +1,10 @@
 <?php
+/*
+	File: updateProfile.php
+	Parent: addResume.php , updateProfileForm.php
+	Purpose: the forms inside parents files post to this page, to upload resume and insert or update student info.
+	*/
+
 include('check_https.php');
 	//session_start();
 	//$_POST['student_loggedin'] = $_SESSION['student_loggedin'];

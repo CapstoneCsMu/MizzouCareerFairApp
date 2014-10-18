@@ -1,4 +1,9 @@
 <?php
+/*
+File: companyParse.php
+Parent: Index.php (approx. line 149)
+Purpose: This file is used to parse rss data and is included in index
+*/
 //Grab the correct fair's rss Feed (could be Engineering, or Business Career Fair, etc.)
 if (isset($_POST['fairname']))
 	$fairName = $_POST['fairname'];

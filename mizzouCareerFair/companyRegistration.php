@@ -1,4 +1,7 @@
 <?php
+	/*File:  companyRegistration.php 
+	Parent:  Registration.php (calls companyRegistration at line 223)
+	Function:  Employer Registration form, register employer company, email and password*/
 	pre_process();
 ?>
 

@@ -1,4 +1,8 @@
 <?php
+	/*
+	File: check_https.php
+	Parent: This file is called multiple times in order to prevent users from accessing our page without HTTPS
+	*/
 	// To access $_SESSION, we have to call session_start()
 	if (!isset($_SESSION))
 	{

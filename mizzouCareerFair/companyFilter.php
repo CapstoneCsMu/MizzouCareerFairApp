@@ -1,4 +1,9 @@
 <?php
+	/*
+	File: companyFilter.php
+	Parent: index.php (approx line 135)
+	Purpose: This file is a landing page for users to be able to select Filters when viewing the list of Companies.
+	*/
 	include('check_https.php');
 	
 	//Reset Session to Accept POST Variables from this form.

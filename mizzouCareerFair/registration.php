@@ -1,5 +1,11 @@
 <?php
-	pre_process();
+/*
+	File: registration.php
+	Parent: index.php
+	Purpose: Register a new student or employer. Employer registration call function to display employers
+	*/
+	
+pre_process();
 ?>
 
 <!DOCTYPE html>

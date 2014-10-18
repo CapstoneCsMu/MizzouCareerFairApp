@@ -1,8 +1,11 @@
+<!--
+File: AdminCompanies.php
+Parent: None yet
+Purpose: The purpose of this file is to add additional RSS feeds into the database. It will be implemented into admin.php (I think)
+-->
 <!DOCTYPE html> 
 <html> 
 <head> 
-
- 
  </head> 
  <body>
  <center>In order to populate a new RSS field, please enter the URL to the RSS field and click submit.</center></br>
