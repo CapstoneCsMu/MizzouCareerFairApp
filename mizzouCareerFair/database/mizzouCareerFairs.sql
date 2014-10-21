@@ -154,6 +154,11 @@ CREATE TABLE careerSchema.employerAuthentication (
 	email varchar(50),
 	ip_address varchar(40)
 );
+
+DROP TABLE IF EXISTS careerSchema.employerScannedStudents CASCADE;
+CREATE TABLE careerSchema.employerScannedStudents (
+	email		varchar(50) PRIMARY KEY
+	
 --INSERT INTO careerSchema.employerAuthentication VALUES ('a
 -- NOT IMPLEMENTED
 -- Table to hold admin account data
