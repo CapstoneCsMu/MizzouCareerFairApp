@@ -16,7 +16,7 @@ include('check_https.php');
 			include('data_ryanslocal.php');
 		else
 			include ("data.php");
-		$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not emaiconnect:'. pg_last_error());
+		$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 		if (!$conn) 
 		{
 			echo "<br/>An error occurred with connecting to the server.<br/>";
@@ -38,17 +38,12 @@ include('check_https.php');
 				$userWasFound = TRUE;
 				break;
 			}
-		}
-		if (!$userWasFound)
-		{
-			//code here 
-			//header("Location: index.php");
-		}
-		else
+		}		
+		if ($userWasFound == TRUE)
 		{	
 			$row = pg_fetch_assoc($result);
 			
-			$firstname = $row['firstame'];
+			$firstname = $row['firstname'];
 			$lastname = $row['lastname'];
 			$email = $row['email'];
 			$gradDate = $row['graddate'];
@@ -56,11 +51,11 @@ include('check_https.php');
 			if (($row['resume']) != ""){
 				$resume = "Resume on file";
 			}
-			$phone = $row['phone'];
-			$goals = $row['lifeplan'];
+			$phone = $row['phonenumber'];
+			$lifeplan = $row['lifeplan'];
 			$linkedin = $row['linkedin_id'];
-		}
-		
+		}	
+		pg_close($conn);
  ?>
 <!DOCTYPE html>
 <html>
@@ -114,7 +109,7 @@ include('check_https.php');
 			
 			<div data-role="main" class="ui-content">
 					<div class="ui-field-contain">
-				<form id="updateInfoForm" method="post" enctype ="multipart/form-data" action="updateProfile.php" data-ajax="false">
+				<form data-ajax="false" id="updateInfoForm" method="post" action="updateProfile.php" >
 						
 						<div data-role="fieldcontain">
 							<label for="firstname">Firstname:</label>
@@ -142,17 +137,18 @@ include('check_https.php');
 						</div>
 						<div data-role="fieldcontain">	
 							<label for="lifePlan">Career Goals:</label>
-							<textarea rows="5" name="lifePlan" wrap="physical" maxlength="200" data-mini="true"id ="textarea"value="<?php echo $goals; ?>"></textarea>
+							<textarea rows="5" name="lifePlan" wrap="physical" maxlength="200" data-mini="true" value="<?php echo $lifeplan; ?>"></textarea>
 						</div>
 						<div data-role="fieldcontain">
 							<label for="linkedIn">LinkedIn Email:</label>
 							<input type="text" name="linkedIn" id="linkedIn" value="<?php echo $linkedin; ?>" data-mini="true">
 						</div>	
-					</div>
-					<input type="hidden" name="student_loggedin" value="<? echo $email;?>">
-					<center><input type="submit" data-inline="true" value="Update" name="Update"></center>
+					
+						<input type="hidden" name="student_loggedin" value="<? echo $email;?>">
+						<center><input type="submit" data-inline="true" value="Submit" name="Update"></center>
 					
 				</form>
+				</div>
 			</div>
 	</div>
 </body>

@@ -6,13 +6,14 @@
 	*/
 
 include('check_https.php');
-	//session_start();
-	//$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
 	
+if($_SERVER['HTTP_HOST'] == 'localhost')
+	include('data_ryanslocal.php');
+else
+	include ("data.php");
+		
 if (isset($_POST['Upload'])){
-	//print_r($_POST);
-	//print_r($_FILES['resume']['tmp_name']);
-	//exit();
+	
 	$email = $_POST['email'];
 	if (is_uploaded_file($_FILES['resume']['tmp_name']) )
 	{
@@ -57,8 +58,62 @@ if (isset($_POST['Upload'])){
 					move_uploaded_file($_FILES['resume']['tmp_name'], $destination);
 					//might want to add the "http://babbage.cs.missouri.edu/~cs4970grp..." 
 					//to insert the entire path to the db but for now the path is uploads/[filename]
-					echo $destination;
-					
+					//echo $destination;
+					$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+					if (!$conn) 
+					{
+						echo "<br/>An error occurred with connecting to the server.<br/>";
+						die();
+					}
+
+					//Run variables against dB
+					$query = array( 0 =>"SELECT * FROM careerschema.students WHERE email=$1");
+					//Search the three tables for authentication success
+					$userWasFound = FALSE;
+							
+					for ($p = 0 ; $p < count($query) ; $p++)
+					{
+						$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
+						$result = pg_execute($conn, "check_".$p, array($email))  or die( "ERROR:". pg_last_error() );
+						
+						if(pg_num_rows($result) > 0)
+						{
+							$userWasFound = TRUE;
+							$row = pg_fetch_assoc($result);
+							//update_student($conn);
+							$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+							if (!$dbconn) 
+							{
+								echo "<br/>An error occurred with connecting to the server.<br/>";
+								die();
+							}
+							$query1 ="UPDATE careerschema.students SET resume = $1 WHERE email = $2";
+							
+							$stmt1 = pg_prepare($dbconn, "update", $query1)  or die( "ERROR:". pg_last_error());
+							$result1 = pg_execute($dbconn, "update", array($destination, $email))  or die( "ERROR:". pg_last_error() );	
+							pg_close($dbconn);
+							echo "nice update resume";
+							
+						}
+						else
+						{
+							echo "yeallo";
+							//insert_student($firstname, $lastname, $gradDate, $major, $phone, $lifePlan, $linkedIn, $email);
+							$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+							if (!$dbconn) 
+							{
+								echo "<br/>An error occurred with connecting to the server.<br/>";
+								die();
+							}
+							$query1 ="INSERT INTO careerschema.students (email, resume) VALUES($1, $2)";
+							
+							$stmt1 = pg_prepare($dbconn, "insert", $query1)  or die( "ERROR:". pg_last_error());
+							$result1 = pg_execute($dbconn, "insert", array($resume, $email))  or die( "ERROR:". pg_last_error() );	
+
+							pg_close($dbconn);
+						}		
+					}
+					pg_close($conn);
 									
 					header("Location: updateProfileForm.php");
 					exit();
@@ -82,20 +137,81 @@ if (isset($_POST['Upload'])){
 	header("Location: updateProfileForm.php");
 }
 
+if(isset($_POST['Next'])){
+	header ("Location: updateProfileForm.php");
+}
+
 if(isset($_POST['Update'])){
-	print_r($_POST);
-	exit();
-	$firstname = $_POST['firstname'];
-	$lastname = $_POST['lastname'];
-	$email = $_POST['email'];
-	$gradDate = $_POST['gradDate'];
-	$major = $_POST['major'];
-	$resume =  $_POST['resume'];
-	$phone = $_POST['phone'];
-	$lifePlan = $_POST['lifePlan'];
-	$linkedIn = $_POST['linkedIn'];
+	
+	$firstname = htmlspecialchars($_POST['firstname']);
+	$lastname = htmlspecialchars($_POST['lastname']);
+	$email = htmlspecialchars($_POST['email']);
+	$gradDate = htmlspecialchars($_POST['gradDate']);
+	$major = htmlspecialchars($_POST['major']);
+	$resume =  htmlspecialchars($_POST['resume']);
+	$phone = htmlspecialchars($_POST['phone']);
+	$lifePlan = htmlspecialchars($_POST['lifePlan']);
+	$linkedIn = htmlspecialchars($_POST['linkedIn']);
 	$student_loggedin = $_POST['student_loggedin'];
 	
+	
+	$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+	if (!$conn) 
+	{
+		echo "<br/>An error occurred with connecting to the server.<br/>";
+		die();
+	}
+
+	//Run variables against dB
+	$query = array( 0 =>"SELECT * FROM careerschema.students WHERE email=$1");
+	//Search the three tables for authentication success
+	$userWasFound = FALSE;
+			
+	for ($p = 0 ; $p < count($query) ; $p++)
+	{
+		$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
+		$result = pg_execute($conn, "check_".$p, array($email))  or die( "ERROR:". pg_last_error() );
+		
+		if(pg_num_rows($result) > 0)
+		{
+			$userWasFound = TRUE;
+			$row = pg_fetch_assoc($result);
+			//update_student($conn);
+			$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+			if (!$dbconn) 
+			{
+				echo "<br/>An error occurred with connecting to the server.<br/>";
+				die();
+			}
+			$query1 ="UPDATE careerschema.students SET firstname = $1, lastname = $2, graddate = $3, major = $4, phonenumber = $5, lifeplan = $6, linkedin_id = $7 WHERE email = $8";
+			
+			$stmt1 = pg_prepare($dbconn, "update", $query1)  or die( "ERROR:". pg_last_error());
+			$result1 = pg_execute($dbconn, "update", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
+				$linkedIn, $email))  or die( "ERROR:". pg_last_error() );	
+			pg_close($dbconn);
+			echo "nice update";
+			
+		}
+		else
+		{
+			//insert_student($firstname, $lastname, $gradDate, $major, $phone, $lifePlan, $linkedIn, $email);
+			$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+			if (!$dbconn) 
+			{
+				echo "<br/>An error occurred with connecting to the server.<br/>";
+				die();
+			}
+			$query1 ="INSERT INTO careerschema.students (email, firstname, lastname,  graddate, major, phonenumber, lifeplan, linkedin_id) VALUES($8, $1, $2, $3, $4, $5, $6, $7)";
+			
+			$stmt1 = pg_prepare($dbconn, "insert", $query1)  or die( "ERROR:". pg_last_error());
+			$result1 = pg_execute($dbconn, "insert", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
+				$linkedIn, $email))  or die( "ERROR:". pg_last_error() );	
+
+			pg_close($dbconn);
+		}		
+	}
+	pg_close($conn);
+	header("Location: index.php");
 }
 
 ?>
