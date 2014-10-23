@@ -164,7 +164,7 @@ function handle_login()
                         $_SESSION['admin_loggedin'] = $row['email'];
                         header('Location: admin.php');
                     }
-					if($row["user_type"] == "employer"){
+					else if($row["user_type"] == "employer"){
                         $_SESSION['employer_loggedin'] = $row['email'];
                         header('Location: employerView.php');
 			   
