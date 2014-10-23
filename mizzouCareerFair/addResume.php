@@ -9,8 +9,9 @@ include('check_https.php');
 	session_start();
 	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
 	$email = $_POST['student_loggedin'];
-	//print_r($_POST);
-	//exit();
+	
+function check_resume()
+{
 		//Include Database information
 		if($_SERVER['HTTP_HOST'] == 'localhost')
 			include('data_ryanslocal.php');
@@ -36,23 +37,17 @@ include('check_https.php');
 			if(pg_num_rows($result) > 0)
 			{
 				$userWasFound = TRUE;
-				break;
+				$row = pg_fetch_assoc($result);
+				if (($row['resume']) != ""){
+					//$resume = "Resume on file";
+					echo "<div class ='alert alert-danger'>";
+					echo "<center>Resume on file!</center>";
+					echo "\n\t</div>";
+				}
 			}
 		}
-		if (!$userWasFound)
-		{
-			//code here 
-			//header("Location: index.php");
-		}
-		else
-		{	
-			$row = pg_fetch_assoc($result);
-			if (($row['resume']) != ""){
-				$resume = "Resume on file";
-			}
-		}
-		
-		
+		pg_close($conn);	
+	}	
  ?>
  <!DOCTYPE html>
 <html>
@@ -99,25 +94,32 @@ include('check_https.php');
 
 <body>
 	<div data-role="page" data-dialog="true">
-			<div data-role="header">
+		<div data-role="header">
 				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a> 
-				<h1>Update Resume</h1>
-			</div>
+				<h1>Add your Resume</h1>
+				
+		</div>
 			
-			<div data-role="main" class="ui-content">
-					<div class="ui-field-contain">
+		<div data-role="main" class="ui-content">
+		
+			<div class="ui-field-contain">
+			<?php check_resume(); ?>
 				<form id="uploadResume" method="post" enctype ="multipart/form-data" action="updateProfile.php" data-ajax="false">
 					
-						<div data-role="fieldcontain">	
-						
-							<label for="resume">Resume:</label>
-							<input type="file" name="resume" id="resume" value="<?php echo $resume; ?>"data-mini="true">
-							<input type="hidden" name="email" id ="email" value="<?php echo $email; ?>">
+					<div data-role="fieldcontain">	
 							
-							<input type="submit" data-inline="true" data-mini="true" data-icon="plus" name="Upload" value="Upload">
-						</div>
+						<label for="resume">Resume:</label>
+						<input type="file" name="resume" id="resume" value="<?php echo $resume; ?>"data-mini="true">
+						<input type="hidden" name="email" id ="email" value="<?php echo $email; ?>">
+					</div>
+					<div data-role="fieldcontain">		
+						<center><input type="submit" data-inline="true" data-mini="true" data-icon="plus" name="Upload" value="Upload Resume">
+									
+						<input type="submit" data-inline="true" data-mini="true" data-icon="arrow-r" name="Next" value="Update Profile"></center>
+					</div>
 				</form>
 			</div>
+		</div>
 	</div>
 </body>
 </html>
