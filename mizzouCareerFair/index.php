@@ -536,7 +536,7 @@
         include ("data.php");
         $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 
-        $query = "SELECT * FROM careerSchema.mapUploads ORDER BY entryTime DESC LIMIT 1";
+        $query = "SELECT * FROM careerSchema.mapUploads WHERE inUse = TRUE";
         $result =  pg_query($query) or die('Query failed: ' . pg_last_error());
         $line = pg_fetch_array($result, null, PGSQL_ASSOC);
         $filePath = $line["filepath"];

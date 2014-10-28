@@ -81,14 +81,14 @@ DROP TABLE IF EXISTS careerSchema.mapUploads CASCADE;
 CREATE TABLE careerSchema.mapUploads (
     filePath varchar(100) PRIMARY KEY NOT NULL,
 		imgName varchar(50),
-		entryTime timestamp NOT NULL default CURRENT_TIMESTAMP
+		inUse boolean
 );
 
 --Table populates when employers scan qr code
 DROP TABLE IF EXISTS careerSchema.employerScannedStudents CASCADE;
 CREATE TABLE careerSchema.employerScannedStudents (
 	email				varchar(50) PRIMARY KEY,
-	employerEmail		varchar(50) 
+	employerEmail		varchar(50)
 );
 
 
