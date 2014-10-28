@@ -6,19 +6,23 @@
 				echo "<br/>An error occurred with connecting to the server.<br/>";
 				die();
 			}
-				
-			//use pg_num_rows to get amount of rows. Print that many pages with info.	
-			//$query = 'SELECT email, COUNT(*) FROM careerSchema.employerScannedStudents';
-			$query = 'SELECT * FROM careerSchema.students';
+			echo 'i hate this';
+			//if ($_SESSION['employer_loggedin'])
+			//{	
+				//use pg_num_rows to get amount of rows. Print that many pages with info.	
+				//$query = 'SELECT email, COUNT(*) FROM careerSchema.employerScannedStudents';
+				$query = 'SELECT * FROM careerSchema.employerScannedStudents';
 
-			//function call to print results of query
-			displayResults($query);
-			
+				//function call to print results of query
+				displayResults($query);
+			//}
 				
 		function displayResults($query){
 
 			//gathers query data assigns to result
-			$result = pg_query($query) or die("Query failed: " . pg_last_error());
+			$stmt = pg_prepare($conn, "store_info", $query);
+			$result = pg_execute($conn, "store_info", $query);
+		
 			//prints amount of rows returned
 			echo "There were <em>" . pg_num_rows($result) . "</em> rows returned\n";
 			echo "<br /><br />\n";

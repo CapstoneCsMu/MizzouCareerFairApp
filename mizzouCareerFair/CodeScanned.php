@@ -29,15 +29,16 @@
             echo "<br/>An error occurred with connecting to the server.<br/>";
             die();
         }
-	
+		echo "before loop";
+		
 		if ($_SESSION['employer_loggedin'])
 		{
-			
+			echo "after loop";
 			//add email into employer table first
-			$query = "INSERT INTO careerschema.employerScannedStudents(email) VALUES=($1)";
+			$query = "INSERT INTO careerschema.employerScannedStudents(email, employerEmail) VALUES=($1,$2)";
 			$stmt = pg_prepare($conn, "store_info", $query);
 			//sends query to database
-			$result = pg_execute($conn, "store_info", array($_GET['email']));
+			$result = pg_execute($conn, "store_info", array($_GET['email'], $_SESSION['employer_loggedin']));
 			//if database doesnt return results print this
 			if(!$result) {
 					die("Unable to execute: " . pg_last_error($conn));
