@@ -1,11 +1,11 @@
 <?php
 /*File:  admin.php
-Parent:  tigerspop.php (redirects here upon admin logging in)
+Parent:  login.php (redirects here upon admin logging in)
 Function:  administrative dashboard to configure application*/
 session_start();
 if(!$_SESSION['admin_loggedin']){
     $_SESSION['admin_attempt'] = "yes";
-    header('Location: tigerspop.php');
+    header('Location: login.php');
 }
 include ("data.php");
 $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());

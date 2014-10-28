@@ -93,7 +93,7 @@
 					if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
 					{
 						echo ' <li data-role="list-divider">My Account</li>';
-						echo'<li><a rel="external" href="tigerspop.php">Sign In!</a></li>';
+						echo'<li><a rel="external" href="login.php">Sign In!</a></li>';
 					}
 					else if($_SESSION['admin_loggedin']){
 						echo ' <li data-role="list-divider">My Account</li>';
@@ -104,7 +104,7 @@
 					{
 						echo '<li data-role="list-divider">Student Tools</li>';
 						echo '<li><a href="#qrCode">My QR Code</a></li>';
-						echo '<li><a rel="external" href="addResume.php">Edit My Profile</a></li>';
+						echo '<li><a rel="external" href="updateProfileForm.php">Edit My Profile</a></li>';
 						echo '<li><a href="#jobHunt">Job Hunt</a></li>';
 						echo '<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 					}
@@ -403,7 +403,7 @@
 			<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li>
-                    <a href="#">Add a Resume</a>
+                    <a href="addResume.php">Add a Resume</a>
                 </li>
                 <li>
                     <a id="hireMizzou">Hire Mizzou Tigers</a>
@@ -431,6 +431,81 @@
         </div>
     </div>
 	<!--End QR Code HTML.-->
+	
+	<!--Start Success Resume HTML-->
+    <div data-role="page" data-theme="a" id="successResume">
+        <div data-role="header" data-position="fixed">
+            <h1>Success</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+			<h3>Your Resume has been saved!</h3>
+        </div>
+    </div>
+	<!--End Success Resume HTML.-->
+	
+	<!--Start Success Profile HTML-->
+    <div data-role="page" data-theme="a" id="successProfile">
+        <div data-role="header" data-position="fixed">
+            <h1>Success</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+			<h3>Your Profile has been saved!</h3>
+        </div>
+    </div>
+	<!--End Success Profile HTML.-->
+	
+	<!--Start Failure file large Resume HTML-->
+    <div data-role="page" data-theme="a" id="failureResumeLarge">
+        <div data-role="header" data-position="fixed">
+            <h1>Failure</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+			<h3>Your file is too large.  Please try again!</h3>
+        </div>
+    </div>
+	<!--End Failure file large Resume HTML.-->
+	
+	<!--Start Failure file type Resume HTML-->
+    <div data-role="page" data-theme="a" id="failureResumeType">
+        <div data-role="header" data-position="fixed">
+            <h1>Failure</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+			<h3>Your file should be a PDF or DOC.  Please try again!</h3>
+        </div>
+    </div>
+	<!--End Failure file type Resume HTML.-->
+	
+	<!--Start Failure student registration HTML-->
+    <div data-role="page" data-theme="a" id="failureRegistration">
+        <div data-role="header" data-position="fixed">
+            <h1>Failure</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+			<h3>You must be a University of Missouri student to register for the Mizzou Career Fair App!</h3>
+        </div>
+    </div>
+	<!--End Failure file type Resume HTML.-->
 	
 	<!-- Testing what we can do for a company -->
     <div data-role="page" data-theme="a" id="ibm">
