@@ -1,9 +1,11 @@
 <?php
 /* File: tigerspop.php
-Parent: index.php (approx. line 97)
-Purpose: This file handles the login for students, employers and admin.
+Parent: registration.php (approx. line 58)
+Purpose: This file is used to verify the user is actually a Mizzou Student.
+
 */
 include('check_https.php');
+include('ldap.php');
 // If logged in, don't let anyone RE-register
 if (isset($_SESSION['student_loggedin']) )
 {
@@ -62,18 +64,20 @@ if(isset($_SESSION['employer_loggedin']))
         </div>
         <div>
             <?php
-            handle_login();
+           // handle_login();
             ?>
         </div>
         <div data-role="main" class="ui-content">
             <form id="loginForm" method="post" action="tigerspop.php" data-ajax="false">
                 <div class="ui-field-contain">
-                    <label for="email">Email:</label>
-                    <input type="text" name="email" id="email">
+				Disclaimer:  We ask you to enter your pawprint and password to check if you are a current University of Missouri student.  We will not store this information at all!<br><br>
+				
+                    <label for="pawprint">Pawprint:</label>
+                    <input type="text" name="pawprint" id="pawprint">
                     <label for="password">Password:</label>
                     <input type="password" name="password" id="password">
                 </div>
-                <center><input type="submit" data-inline="true" name="Submit" onClick="submitLogin();" value="Submit"></center>
+                <center><input type="submit" data-inline="true" name="Submit" value="Submit"></center>
             </form>
             <center>
 
@@ -83,122 +87,40 @@ if(isset($_SESSION['employer_loggedin']))
         <center>
             <div data-role="footer">
                 <p>Don't have an account?</p>
-                <center><a href="registration.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>
+                <!--<center><a href="registration.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>-->
+				<center><a href="tigerspop.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>
+          
             </div>
         </center>
     </div>
     </body>
     </html>
 <?php
-function handle_login()
+
+if(isset($_POST['Submit']))
 {
-    if ($_SESSION['registered'])
-    {
-        echo "\n<div class ='alert alert-success alert-dismissable'>";
-        echo "\n\t<center>Thank you for Registering.</center>";
-        echo "\n</div>";
-    }
-    if( isset($_POST['email']) )
-    {
-        if (!isset($_COOKIE['firsttime']))
-        {
-            setcookie("firsttime", "no", 0 );// Set Cookie to expire at close of browser
-            $_SESSION['login_attempts'] == 0; //keep Track of Visits
-        }
-
-        //Include Database information
-        if($_SERVER['HTTP_HOST'] == 'localhost')
-            include('data_ryanslocal.php');
-        else
-            include ("data.php");
-        $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-        if (!$conn)
-        {
-            echo "<br/>An error occurred with connecting to the server.<br/>";
-            die();
-        }
-
-        //Run variables against dB
-        $query = array( 0 =>"SELECT * FROM careerschema.authorizationTable WHERE email=$1");
-
-        //Search the three tables for authentication success
-        $userWasFound = FALSE;
-
-        for ($p=0; $p<count($query);$p++)
-        {
-            $stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
-            $result = pg_execute($conn, "check_".$p, array(htmlspecialchars($_POST['email'])))  or die( "ERROR:". pg_last_error() );
-            if(pg_num_rows($result) > 0)
-            {
-                $userWasFound = TRUE;
-                break;
-            }
-        }
-        if (!$userWasFound)
-        {
-            echo "\n<div class ='alert alert-danger alert-dismissable'>";
-            echo "\n\t<center>User does not exist.</center>";
-            echo "\n</div>";
-        }
-        else
-        {
-            $row = pg_fetch_assoc($result);
-            $salt = $row['salt'];
-            $salty = sha1($salt);
-            $salty = trim($salt);
-
-            $password = htmlspecialchars($_POST['password']);
-            $localHash = sha1($salty.$password);
-
-            for ($i=0; $i<10000; $i++) //Slow Hashing
-            {
-                $localHash = sha1($localHash);
-            }
-            if ($localHash == $row['hashed_pass'] ) //if entered password equals stored password
-            {
-                // Conditional Handling
-                if ($p == 0)
-                {
-                    session_start();
-                    if($row["user_type"] == "admin"){
-                        $_SESSION['admin_loggedin'] = $row['email'];
-                        header('Location: admin.php');
-                    }
-					else if($row["user_type"] == "employer"){
-                        $_SESSION['employer_loggedin'] = $row['email'];
-                        header('Location: employerView.php');
-			   
-					   $query = "INSERT INTO careerschema.authorizationtable(ip_address) WHERE email =($1) VALUES ($2)";
-						$stmt = pg_prepare($conn, "log", $query);
-						//sends query to database
-						$result = pg_execute($conn, "log", array($row['email'], $_SERVER['REMOTE_ADDR']));
-						//if database doesnt return results print this
-						if(!$result) {
-								die("Unable to execute: " . pg_last_error($conn));
-						}
-					}	
-					else{
-                        $_SESSION['student_loggedin'] = $row['email'];
-                        header('Location: index.php');
-                    }
-					
-                    exit();
-                }
-
-            }
-            else
-            {
-                $_SESSION['login_attempts']++;
-                echo "\n<div class ='alert alert-danger alert-dismissable'>";
-                if ($_SESSION['login_attempts'] > 4)
-                {
-                    echo '<center>Have you forgotten your password?';
-                    echo '</br><input type="button" data-inline="true" value="Click to reset" onclick="notify();"></center>';
-                }
-                else
-                    echo"\n\t<center>Incorrect Password</center>";
-                echo "\n</div>";
-            }
-        }
-    }
+	 $pawprint = htmlspecialchars($_POST['pawprint']);
+	 $password = htmlspecialchars($_POST['password']);
+	 $identified = true;
+	 $identified = authenticateToUMLDAP($pawprint, $password);
+	if($identified !== true){
+		
+		if($identified == false){
+			header("Location: index.php#failureRegistration");
+			//might be good to add a session variable to avoid registration of non-student in db due to 
+			//hardtyped URL (.../registration.php#student).  I'll do it later - Cecilia
+			//$_SESSION['active_student'] = "no";
+			exit();	
+		}
+		else{		
+			header("Location: registration.php#student");
+			//$_SESSION['active_student'] = "yes";
+			exit();	
+		}
+	}
+	else 
+	{
+		echo "Your code doesn't work";
+		exit();
+	}
 }

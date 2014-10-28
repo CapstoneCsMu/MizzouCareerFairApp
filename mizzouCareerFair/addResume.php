@@ -20,7 +20,7 @@ function check_resume()
 		$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not emaiconnect:'. pg_last_error());
 		if (!$conn) 
 		{
-			echo "<br/>An error occurred with connecting to the server.<br/>";
+			echo "<br/>An error occurred connecting to the server.<br/>";
 			die();
 		}
 

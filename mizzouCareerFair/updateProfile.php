@@ -114,21 +114,23 @@ if (isset($_POST['Upload'])){
 						}		
 					}
 					pg_close($conn);
-									
-					header("Location: updateProfileForm.php");
+					//Shows message "Your resume has been saved"	
+					header("Location: index.php#successResume");
 					exit();
 				}
 				else
 				{
+					//Show message "Your file is too large.  Please try again!"	
 					echo "Your file is too large.  Please try again!";
-					header("Location: addResume.php");
+					header("Location: index.php#failureResumeLarge");
 					exit();				
 				}		
 			}
 			else
 			{
-				echo "Please submit a .pdf or .doc";	
-				header("Location: updateForm.php");
+				
+				//Show message "Your file should be a  PDF or DOC.  Please try again!"
+				header("Location: index.php#failureResumeType");
 				exit();					
 			}	
 		}
@@ -188,9 +190,9 @@ if(isset($_POST['Update'])){
 			$stmt1 = pg_prepare($dbconn, "update", $query1)  or die( "ERROR:". pg_last_error());
 			$result1 = pg_execute($dbconn, "update", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
 				$linkedIn, $email))  or die( "ERROR:". pg_last_error() );	
+				
 			pg_close($dbconn);
-			echo "nice update";
-			
+			header("Location: index.php#successProfile");		
 		}
 		else
 		{
@@ -205,13 +207,14 @@ if(isset($_POST['Update'])){
 			
 			$stmt1 = pg_prepare($dbconn, "insert", $query1)  or die( "ERROR:". pg_last_error());
 			$result1 = pg_execute($dbconn, "insert", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
-				$linkedIn, $email))  or die( "ERROR:". pg_last_error() );	
+			$linkedIn, $email))  or die( "ERROR:". pg_last_error() );	
 
 			pg_close($dbconn);
+			header("Location: index.php#successProfile");
 		}		
 	}
 	pg_close($conn);
-	header("Location: index.php");
+	//header("Location: index.php");
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 	/*File:  employerView.php 
-	Parent:  tigerspop.php 
+	Parent:  login.php 
 	Function:  Employer view form, default view when employer logs in.*/
 ?>
 

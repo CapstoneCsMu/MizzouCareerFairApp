@@ -49,13 +49,13 @@ pre_process();
 
 <div data-role="page" data-dialog="true">
 	<div data-role="header">
-	<a rel="external" data-icon="arrow-l" data-iconpos="notext" href="tigerspop.php">Back</a> 
+	<a rel="external" data-icon="arrow-l" data-iconpos="notext" href="login.php">Back</a> 
 		<a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a> 
 		<h1>Registration</h1>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
 		<div class="ui-block-a">
-			<a data-role="button" data-transition="slidedown" href="#student" data-corners="true">Student</a>
+			<a data-role="button" data-transition="slidedown" href="tigerspop.php" data-corners="true">Student</a>
 		</div>
 		<div class="ui-block-b">
 			<a data-role="button" data-transition="slidedown" href="#employer" data-corners="true">Employer</a>
@@ -114,9 +114,9 @@ pre_process();
 					<input type="text" name="username" id="username" placeholder="At least 5 characters">   --->    
 					<label for="password"><b>Choose a Password:</label>
 					<input type="password" name="password" id="password" placeholder="At least 5 characters">
-			</form>
+		</form>
 			<center>
-				<a href="tigerspop.php" data-inline="true" data-role="button" value="Submit" onclick="submitStudent()">Submit</a> 
+				<a href="login.php" data-inline="true" data-role="button" value="Submit" onclick="submitStudent()">Submit</a> 
 				<!-- <input type="submit" data-inline="true" value="Submit" OnSubmit="submitStudent();" value="Submit"> -->
 			</center>
 	</div>
@@ -146,9 +146,11 @@ function pre_process()
 		header("Location: index_employer.php");
 	}
 }
+
 //Function to Handle Student Login
 function handleStudentRegistration()
 {
+	
 	if( isset($_POST['email']) )
 	{
 		//Include Database information
@@ -184,7 +186,7 @@ function handleStudentRegistration()
 			mt_srand(); //Seed number generator
 			$salt = mt_rand(); //generate salt
 			$salt = sha1($salt);
-			$salt = trim($salt);//ceci
+			$salt = trim($salt);
 			$pass = htmlspecialchars($_POST['password']);
 			$passHashed = sha1($salt.$pass);
 
@@ -206,7 +208,7 @@ function handleStudentRegistration()
 			if ($queryInsert)
 			{
 				$_SESSION['registered'] = TRUE;
-				header("Location: tigerspop.php");
+				header("Location: login.php");
 			}
 			else
 				echo pg_last_error($conn);

@@ -168,7 +168,7 @@ function handleRegistration()
 					if ($queryInsert)
 					{
 						$_SESSION['registered'] = TRUE;
-						echo '<script type="text/javascript"> window.location = "tigerspop.php"; </script>';
+						echo '<script type="text/javascript"> window.location = "login.php"; </script>';
 					}
 					else
 						echo pg_last_error($conn);
