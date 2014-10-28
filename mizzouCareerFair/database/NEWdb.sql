@@ -76,6 +76,7 @@ CREATE TABLE careerSchema.students (
 
 );
 
+
 -- Table to hold admin upload info
 DROP TABLE IF EXISTS careerSchema.mapUploads CASCADE;
 CREATE TABLE careerSchema.mapUploads (
@@ -87,8 +88,8 @@ CREATE TABLE careerSchema.mapUploads (
 --Table populates when employers scan qr code
 DROP TABLE IF EXISTS careerSchema.employerScannedStudents CASCADE;
 CREATE TABLE careerSchema.employerScannedStudents (
-	email				varchar(50) PRIMARY KEY,
-	employerEmail		varchar(50) 
+	email				varchar(50),
+	employerEmail		varchar(50),
 );
 
 

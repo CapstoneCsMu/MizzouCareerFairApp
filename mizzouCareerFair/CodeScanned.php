@@ -1,3 +1,11 @@
+<?php
+	if (!isset($_SESSION))
+	{
+		session_start();
+	}
+	$_SESSION['prevPage'] = 'employerView.php';
+ ?>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +30,10 @@
 </head>
 <body>
 	<?php
+		$empEmail = $_SESSION['employer_loggedin'];
+		
+		echo $empEmail;
+		echo '</br>';
 	    include ("data.php");
         $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
         if (!$conn)
@@ -29,22 +41,20 @@
             echo "<br/>An error occurred with connecting to the server.<br/>";
             die();
         }
-		echo "before loop";
 		
 		if ($_SESSION['employer_loggedin'])
 		{
-			echo "after loop";
-			//add email into employer table first
-			$query = "INSERT INTO careerschema.employerScannedStudents(email, employerEmail) VALUES=($1,$2)";
-			$stmt = pg_prepare($conn, "store_info", $query);
+			//add student email and employer email into employer
+			$query = "INSERT INTO careerschema.employerScannedStudents(email, employerEmail) VALUES($1,$2)";
+			$stmt = pg_prepare($conn, "insert_email", $query) or die(pg_last_error());
 			//sends query to database
-			$result = pg_execute($conn, "store_info", array($_GET['email'], $_SESSION['employer_loggedin']));
+			$result = pg_execute($conn, "insert_email", array($_GET['email'], $empEmail)) or die(pg_last_error());
 			//if database doesnt return results print this
 			if(!$result) {
 					die("Unable to execute: " . pg_last_error($conn));
 			}
 			
-			echo "Thank you for scanning this students QR code. Their email is now stored on your page." 
+			echo "Thank you for scanning this students QR code. Their information is now stored on your page."; 
 		}
 	?>
 </body>
