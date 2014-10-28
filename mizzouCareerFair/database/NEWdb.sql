@@ -84,7 +84,10 @@ CREATE TABLE careerSchema.mapUploads (
 		entryTime timestamp NOT NULL default CURRENT_TIMESTAMP
 );
 
-
+--Table populates when employers scan qr code
+DROP TABLE IF EXISTS careerSchema.employerScannedStudents CASCADE;
+CREATE TABLE careerSchema.employerScannedStudents (
+	email		varchar(50) PRIMARY KEY
 
 
 
