@@ -113,14 +113,22 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
             echo "Return Code: " . $_FILES["file"]["error"] . "<br>";
         else if (!in_array($extension, $allowedExts))
             echo"<script>alert(\"Invalid File\")</script>";
-        else if(file_exists("images/Maps/" . $_FILES["file"]["name"]))
-            echo"<script>alert(\"File already exists\")</script>";
+        //If file already exists, update it to be in use without posting to database
+        else if(file_exists("images/Maps/" . $_FILES["file"]["name"])) {
+            $upQuery = 'UPDATE careerSchema.mapUploads SET inUse = CASE WHEN filePath = $1 THEN TRUE ELSE FALSE END';
+            $statement = pg_prepare("uQuery", $upQuery) or die (pg_last_error());
+            $upResult = pg_execute("uQuery", array($path)) or die(pg_last_error());
+        }
         else {
+            //set all images to not be in use
+            $upQuery = 'UPDATE careerSchema.mapUploads SET inUse = FALSE';
+            $upResult = pg_query($conn, $upQuery);
+
             //save file and insert path into database
             move_uploaded_file($_FILES["file"]["tmp_name"], $path);
-            $query = 'INSERT INTO careerSchema.mapUploads(imgName, filePath) VALUES ($1, $2)';
+            $query = 'INSERT INTO careerSchema.mapUploads(imgName, filePath, inUse) VALUES ($1, $2, $3)';
             $statement = pg_prepare("myQuery", $query) or die (pg_last_error());
-            $result = pg_execute("myQuery", array($fileName, $path)) or die(pg_last_error());
+            $result = pg_execute("myQuery", array($fileName, $path, 'true')) or die(pg_last_error());
         }
 
 
