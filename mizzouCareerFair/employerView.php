@@ -169,8 +169,6 @@
 				die();
 			}
 		
-		//use pg_num_rows to get amount of rows. Print that many pages with info.
-		
 		?> 
 					
 				
@@ -191,13 +189,9 @@
 			
 		if ($_SESSION['employer_loggedin'])
 		{	
-				
-			//for ($i=0, i<num_){
 			
 			//use pg_num_rows to get amount of rows. Print that many pages with info.	
-			$query1 = "SELECT email FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
-			//SELECT firstNAME, lastName FROM careerSchema.students WHERE email = 'email';
-			
+			$query1 = "SELECT DISTINCT ON(email) * FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
 			$result = pg_query($query1) or die("Query failed: " . pg_last_error());
 			$num_rows = pg_num_rows($result);
 
@@ -206,17 +200,12 @@
                 <li data-role="list-divider">Students you have scanned</li>';
 			
 			$i=0;
-			while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+			while ($line = pg_fetch_assoc($result)) {
 					//prints data by the line
-					foreach ($line as $col_value) {
-							$emailList[$i] = $col_value;
-						echo'<li>
-							<a href="employerView.php#student'.$i.'">'.$col_value.'</a>
-							</li>';	
-							
-					}
+					echo'<li><a href="employerView.php#student'.$i.'">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
+					$emailList[$i] = $line['email'];
+					$namesList[$i] = $line['firstname']." ".$line['lastname'];
 					$i++;
-			
 			}
 			echo '</ul>';
 			echo '</div></div>';
@@ -227,7 +216,7 @@
 			
 					echo '<div data-role="page" data-theme="a" id="student'.$j.'">
 					<div data-role="header" data-position="fixed">
-					<h1>Blanks Information</h1>
+					<h1>'.$namesList[$j].'</h1>
 					<a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
 					data-transition="flip" href="employerview.php#scannedStudents">Home</a> <a data-icon="search"
 					data-iconpos="notext" data-rel="dialog" data-transition="fade"
@@ -243,13 +232,49 @@
 				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
 				
 				//Grab each individual field
+				$k=0;
 				foreach ($line as $col_value) {
-					echo 'Email Address:'
+					switch($k){
 					
-					case
+						case 0:
+							echo 'Email Address: ';
+							echo $col_value."</br>";
+							break;
+						case 1:
+							echo 'First Name: ';
+							echo $col_value."</br>";
+							break;
+						case 2:
+							echo 'Last Name: ';
+							echo $col_value."</br>";
+							break;
+						case 3:
+							echo 'Graduation Date: ';
+							echo $col_value."</br>";
+							break;
+						case 4:
+							echo 'Major: ';
+							echo $col_value."</br>";
+							break;
+						case 5:
+							echo 'Resume: ';
+							echo $col_value."</br>";
+							break;
+						case 6:
+							echo 'Phone Number: ';
+							echo $col_value."</br>";
+							break;
+						case 7:
+							echo 'Life Plan: ';
+							echo $col_value."</br>";
+							break;
+						case 8:
+							echo 'LinkedIn ID: ';
+							echo $col_value."</br>";
+							break;
 					
-					echo $col_value;
-						
+					}
+					$k++;
 				}
 				echo '</div>';
 				echo '</div>';	
