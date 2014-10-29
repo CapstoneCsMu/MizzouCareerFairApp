@@ -44,17 +44,30 @@
 		
 		if ($_SESSION['employer_loggedin'])
 		{
+			//Grab first and last name of the email
+			$query = "select firstname, lastname from careerschema.students where email =$1";
+			$stmt = pg_prepare($conn, "grab_student_info", $query) or die(pg_last_error());
+			$result = pg_execute($conn, "grab_student_info", array($_GET['email'])) or die(pg_last_error());
+			$row = pg_fetch_assoc($result);
+			echo "firstname: ".$row['firstname'];
+			echo "</br>";
+			echo "lastname: ".$row['lastname'];
+			
 			//add student email and employer email into employer
-			$query = "INSERT INTO careerschema.employerScannedStudents(email, employerEmail) VALUES($1,$2)";
+			$query = "INSERT INTO careerschema.employerScannedStudents(email, employerEmail, firstname, lastname) VALUES($1,$2, $3, $4)";
 			$stmt = pg_prepare($conn, "insert_email", $query) or die(pg_last_error());
 			//sends query to database
-			$result = pg_execute($conn, "insert_email", array($_GET['email'], $empEmail)) or die(pg_last_error());
+			$result = pg_execute($conn, "insert_email", array($_GET['email'], $empEmail, $row['firstname'], $row['lastname'])) or die(pg_last_error());
 			//if database doesnt return results print this
 			if(!$result) {
 					die("Unable to execute: " . pg_last_error($conn));
 			}
-			
-			echo "Thank you for scanning this students QR code. Their information is now stored on your page."; 
+			else
+			{
+				echo "<script type=\"text/javascript\">";
+				echo "window.location='employerView.php'";
+				echo "</script>";
+			}
 		}
 	?>
 </body>

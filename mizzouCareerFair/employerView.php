@@ -202,7 +202,10 @@
 			$i=0;
 			while ($line = pg_fetch_assoc($result)) {
 					//prints data by the line
-					echo'<li><a href="employerView.php#student'.$i.'">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
+					// if favorited 
+					// echo'<li><a href="employerView.php#student'.$i.'" class="ui-btn ui-icon-star ui-btn-icon-left">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
+					// else if not favorited
+					echo '<li><a href="employerView.php#student'.$i.'">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
 					$emailList[$i] = $line['email'];
 					$namesList[$i] = $line['firstname']." ".$line['lastname'];
 					$i++;
