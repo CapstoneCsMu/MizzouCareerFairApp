@@ -171,20 +171,16 @@
 		
 		//use pg_num_rows to get amount of rows. Print that many pages with info.
 		
-		?>
-        
-		<div data-role="content">
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Students you have scanned</li>
-				
-				
+		?> 
+					
 				
 	<?php
-				
+		
 		$empEmail = $_SESSION['employer_loggedin'];
 		
 		echo $empEmail;
-		
+		echo '</br></br>';
+
 		include ("data.php");
 			$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 			if (!$conn)
@@ -195,173 +191,73 @@
 			
 		if ($_SESSION['employer_loggedin'])
 		{	
-			//use pg_num_rows to get amount of rows. Print that many pages with info.	
-			//$query = 'SELECT email, COUNT(*) FROM careerSchema.employerScannedStudents';
-			$query = "SELECT email FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
-			//$query = 'SELECT * FROM careerSchema.employerScannedStudents';
-
-
-			//function call to print results of query
-			displayResults($query);
-		}
 				
-		function displayResults($query){
-
-			//gathers query data assigns to result
-			//$stmt = pg_prepare($conn, "store_info", $query);
-			//$result = pg_execute($conn, "store_info", array('$empEmail'));
-			$result = pg_query($query) or die("Query failed: " . pg_last_error());
-			//prints amount of rows returned
-			echo "<br /><br />\n";
-			echo "<table border=\"1\"\n>";
-
-			//variables for columns and rows
-			$num_fields = pg_num_fields($result);
+			//for ($i=0, i<num_){
+			
+			//use pg_num_rows to get amount of rows. Print that many pages with info.	
+			$query1 = "SELECT email FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
+			//SELECT firstNAME, lastName FROM careerSchema.students WHERE email = 'email';
+			
+			$result = pg_query($query1) or die("Query failed: " . pg_last_error());
 			$num_rows = pg_num_rows($result);
 
-			echo "<tr>\n";
-			for($i=0;$i<$num_fields;$i++)
-			{
-					//prints column headings
-					$fieldname = pg_field_name($result,$i);
-					echo "<th>$fieldname</th>\n";
-
-			}
-			echo "</tr>";
-			//loop gathers query data and stores it in result
+			echo '<div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Students you have scanned</li>';
+			
+			$i=0;
 			while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-					echo "<tr>\n";
 					//prints data by the line
 					foreach ($line as $col_value) {
-							echo "<td>$col_value</td>\n";
+							$emailList[$i] = $col_value;
+						echo'<li>
+							<a href="employerView.php#student'.$i.'">'.$col_value.'</a>
+							</li>';	
+							
 					}
-					echo "</tr>\n";
+					$i++;
+			
 			}
-			echo "</table>\n";
+			echo '</ul>';
+			echo '</div></div>';
+			
+				
+			
+			for ($j=0; $j<$i; $j++){
+			
+					echo '<div data-role="page" data-theme="a" id="student'.$j.'">
+					<div data-role="header" data-position="fixed">
+					<h1>Blanks Information</h1>
+					<a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+					data-transition="flip" href="employerview.php#scannedStudents">Home</a> <a data-icon="search"
+					data-iconpos="notext" data-rel="dialog" data-transition="fade"
+					href="../nav.html">Search</a>
+					</div>
+
+					<div data-role="content">';
+					
+				
+				$query2 = "SELECT * FROM careerSchema.students WHERE email = '$emailList[$j]'";
+				$result = pg_query($query2) or die("Query failed: " . pg_last_error());
+				
+				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
+				
+				//Grab each individual field
+				foreach ($line as $col_value) {
+					echo 'Email Address:'
+					
+					case
+					
+					echo $col_value;
+						
+				}
+				echo '</div>';
+				echo '</div>';	
+			}
+			
 		}
+	/*?>	
 				
-	?>
-				
-				
-				
-				
-				
-				<!--<li>
-                    <a href="#one">Fred Bird</a>
-                </li>
-				<li>
-                    <a href="#two">Bernie Brewer</a>
-                </li>
-				<li>
-                    <a href="#three">DJ Kitty</a>
-                </li>
-				<li>
-                    <a href="#four">Rosie Red</a>
-                </li>
-				<li>
-					<a href="#five">T.C. Bear</a>
-                </li>
-				<li>
-                    <a href="#six">Pirate Parrot</a>
-                </li>-->
-            </ul>
-        </div>
-    </div>
-	
-	<div data-role="page" data-theme="a" id="one">
-        <div data-role="header" data-position="fixed">
-            <h1>Blanks Information</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#scannedStudents.php">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-		<div data-role="content">
-			<p>
-			He is a good employee. 
-			</p>
-		</div>	
-    </div>	
-	
-	<div data-role="page" data-theme="a" id="two">
-        <div data-role="header" data-position="fixed">
-            <h1>Blanks Information</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#scannedStudents.php">Back</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-		<div data-role="content">
-			<p>
-			He is a good employee. 
-			</p>
-		</div>
-    </div>
-	
-	
-	<div data-role="page" data-theme="a" id="three">
-        <div data-role="header" data-position="fixed">
-            <h1>Blanks Information</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#scannedStudents.php">Back</a>  <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-		
-		<div data-role="content">
-			<p>
-			He is a good employee. 
-			</p>
-		</div>
-    </div>
-	
-	<div data-role="page" data-theme="a" id="four">
-        <div data-role="header" data-position="fixed">
-            <h1>Blanks Information</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#scannedStudents.php">Back</a>  <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-		<div data-role="content">
-			<p>
-			He is a good employee. 
-			</p>
-		</div>
-    </div>
-	
-	<div data-role="page" data-theme="a" id="five">
-        <div data-role="header" data-position="fixed">
-            <h1>Blanks Information</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#scannedStudents.php">Back</a>  <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-		<div data-role="content">
-			<p>
-			He is a good employee. 
-			</p>
-		</div>
-    </div>
-	<div data-role="page" data-theme="a" id="#five">
-		<div data-role="header" data-position="fixed">
-			<h1>Blanks Information</h1>
-			<a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-			data-transition="flip" href="#scannedStudents.php">Back</a>  <a data-icon="search"
-			data-iconpos="notext" data-rel="dialog" data-transition="fade"
-			href="../nav.html">Search</a>
-		</div>
-
-		<div data-role="content">
-			<p>
-			He is a good employee. 
-			</p>
-		</div>
-    </div>
 	<!--End scanned students HTML-->
 
 	<!--Start map HTML-->

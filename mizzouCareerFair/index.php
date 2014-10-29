@@ -424,9 +424,9 @@
         </div>
 
         <div data-role="content">
-        	<h2>DAS CODE!</h2>
+        	<h2><center>Have employers scan your QR Code and they will have your information!<center></h2>
 			<?php
-			echo '<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/CodeScanned.php?email='.$_SESSION['student_loggedin'].'"&choe=UTF-8"/>';
+			echo '<center><img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/CodeScanned.php?email='.$_SESSION['student_loggedin'].'"&choe=UTF-8"/><center>';
 			?>
         </div>
     </div>
@@ -457,7 +457,8 @@
             href="../nav.html">Search</a>
         </div>
         <div data-role="content">
-			<h3>Your Profile has been saved!</h3>
+			<h3><center>Your Profile has been saved!<center></h3>
+			<a href="index.php" data-role="button">Return to Home Page</a>
         </div>
     </div>
 	<!--End Success Profile HTML.-->
