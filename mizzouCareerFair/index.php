@@ -29,6 +29,10 @@
     <!-- Include JS file for our JS -->
     <script src="js/index.js"></script>
     
+    <!-- Add this even JS -->
+    <!-- AddThisEvent -->
+<script type="text/javascript" src="https://addthisevent.com/libs/1.5.8/ate.min.js"></script>
+    
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
 	<?php if($_SERVER['HTTP_HOST'] == 'localhost'): ?>
 		<script type="text/javascript" src="https://platform.linkedin.com/in.js">
@@ -72,6 +76,19 @@
                     <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
                 </li>
 			</ul>
+			<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
+    			Add to Calendar
+    <span class="_start">02-10-2015 10:00:00</span>
+    <span class="_end">02-10-2015 15:30:00</span>
+    <span class="_zonecode">11</span>
+    <span class="_summary">Engineering Career Fair</span>
+    <span class="_description">Spring 2015 Engineering Career Fair</span>
+   	<span class="_location">Hearnes Center Columbia, MO</span>
+    <span class="_organizer">College of Engineering</span>
+    <span class="_facebook_event">https://www.facebook.com/MUEngineering</span>
+    <span class="_all_day_event">false</span>
+    <span class="_date_format">MM/DD/YYYY</span>
+			</a>
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<li data-role="list-divider"></li>
 				<li>
