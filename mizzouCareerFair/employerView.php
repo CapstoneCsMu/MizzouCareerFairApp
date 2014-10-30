@@ -240,7 +240,7 @@
 					switch($k){
 					
 						case 0:
-							echo 'Email Address: ';
+							echo '<b>Email Address: <b>';
 							echo $col_value."</br>";
 							break;
 						case 1:
