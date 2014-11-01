@@ -4,7 +4,7 @@
 	Parent: None
 	Function: Home Page. Pretty much everything is called from here.
 	*/
-	session_start();
+	include('check_https.php');
 	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
  ?>
 <!DOCTYPE html>
@@ -15,19 +15,20 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     
-    <!-- Include CSS and JQM CSS -->
+    <!--CSS-->
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
-
 	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
-    
 	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 	
-    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
+    <!--jQuery and jQM JavaScript -->
 	<script src="js/jquery-1.11.1.min.js"></script>
     <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <!-- Include JS file for our JS -->
     <script src="js/index.js"></script>
+    
+    <!-- AddThisEvent -->
+<script type="text/javascript" src="https://addthisevent.com/libs/1.5.8/ate.min.js"></script>
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
 	<?php if($_SERVER['HTTP_HOST'] == 'localhost'): ?>
@@ -44,14 +45,14 @@
 	</script>
 	<?php endif; ?>
 	<!-- Include Google Maps API -->
-	<script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+	 <script src="https://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
 
 	<!-- Includes directions functionality -->
 	<script type="text/javascript" src="index.js"></script>
 
 </head>
 
-<body>
+<body style="width: 100%; height: 100%;">
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" >
 			</br>
@@ -66,12 +67,25 @@
                     <a data-transition="slideup" href="#companies">List of Companies</a>
                 </li>
                 <li>
-                    <a data-transition="slide" data-direction="reverse" href="#fairSelect">Select a Career Fair</a>
+                    <a  class="ui-btn ui-icon-action ui-btn-icon-right" href="#fairSelect">Select a Career Fair</a>
                 </li>
                 <li>
                     <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
                 </li>
 			</ul>
+			<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
+    			Add to Calendar
+    <span class="_start">02-10-2015 10:00:00</span>
+    <span class="_end">02-10-2015 15:30:00</span>
+    <span class="_zonecode">11</span>
+    <span class="_summary">Engineering Career Fair</span>
+    <span class="_description">Spring 2015 Engineering Career Fair</span>
+   	<span class="_location">Hearnes Center Columbia, MO</span>
+    <span class="_organizer">College of Engineering</span>
+    <span class="_facebook_event">https://www.facebook.com/MUEngineering</span>
+    <span class="_all_day_event">false</span>
+    <span class="_date_format">MM/DD/YYYY</span>
+			</a>
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
 				<li data-role="list-divider"></li>
 				<li>
@@ -123,10 +137,8 @@
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
 			</div>
 		</div>
-    </div>
-	
 	<?php include('fairSelection.php');?>
-	
+	</div>
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1 onclick="$.mobile.silentScroll(0)">Companies</h1>
@@ -178,17 +190,18 @@
 	?>
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
-    <div data-role="page" id="map_page">
+	<div data-role="page" id="map_page" style="height: 50% width: 50%">
+	
             <div data-role="header" data-position="fixed">
-            <h1>Directions</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-            <div data-role="content">
-                <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
-                    <div id="map_canvas" style="height:300px;"></div>
+				<h1>Directions</h1>
+				<a data-direction="reverse" data-icon="home" data-iconpos="notext"
+				href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
+				data-rel="dialog" data-transition="fade" href=
+				"../nav.html">Search</a>
+			</div>
+			</br>
+            <div data-role="content" style="height: 100% width: 100%" class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
+                   <div id="map_canvas" style="height:400px; width: 100%"></div>
                     <div id="fromDirection" data-role="fieldcontain">
                         <label for="from">From</label> 
                         <input type="text" id="from"/>
@@ -207,23 +220,23 @@
                     </div>
                     <a data-icon="navigation" data-role="button" href="#" id="submitDirections">Get Directions</a>
                     
-                    <div data-role="fieldcontain">
+			    <div id="results" style="display:none;">
+                    <div id="directions"></div>
+                </div>
+				
+                    <div id="mapOptions" data-role="fieldcontain" style="display:none;">
 						<label for="flip-2">Display Map : </label>
 						<select id="toggleMap" data-role="slider">
 							<option value="off">Off</option>
 							<option value="on">On</option>
-						</select> 
-						
+						</select>
 						<a id="resetSearch" style="float:right;" data-icon="navigation" href="#" data-role="button" data-inline="true" data-theme="b">Reset Search</a>
-						
 					</div>
-                    
-                    
-                </div>
-                
-                <div id="results" style="display:none;">
-                    <div id="directions"></div>
-                </div>
+                </br>
+				 <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;"><center>
+				<a style="background: linear-gradient(#FFCC00,#E6E6E6 )" data-inline="true" data-iconpos="top" data-role="button" href="http://maps.apple.com/maps?daddr=38.933294,-92.330062&saddr=Current%20Location" target="_blank" style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="audio">	Open in Apple Maps App	</a>
+				<a style="background: linear-gradient(#FFD119,#E6E6E6 )" data-inline="true" data-iconpos="top" data-role="button" href="http://maps.google.com/maps?daddr=38.933294,-92.330062&saddr=Current%20Location" target="_blank" style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="audio">	Open in Google Maps App	</a>
+				</center></div>
             </div>
     </div>
 	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->

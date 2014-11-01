@@ -22,8 +22,6 @@
 	
 	$(document).on("pageinit", "#map_page", function() {
 		initialize();
-		
-		
 		$("#map_canvas").hide();
 		
 		
@@ -32,9 +30,12 @@
     		var show = myswitch[0].selectedIndex == 1 ? true:false;
     
     		if(show) {
-        
-        		$('#map_canvas').fadeIn('slow');
-        		//$('#first-me').fadeOut();
+				$('#map_canvas').fadeIn('slow');
+				google.maps.event.trigger(map, "resize");
+				map.setCenter(mapCenter); 
+				map.setZoom(12);
+				// mapCenter = map.getCenter();
+				// map.setCenter(mapCenter);
     		} else {
         
        			//$('#first-me').fadeIn('slow');
@@ -44,6 +45,7 @@
 		
 	});
 
+
 	$(document).on('click', '#submitDirections', function(e) {
 		e.preventDefault();
 		calculateRoute();
@@ -51,6 +53,7 @@
 		$("#toDirection").hide()
 		$("#fromDirection").hide()
 		$("#submitDirections").hide()
+		$("#mapOptions").show()
 	});
 	
 	$(document).on('click', '#resetSearch', function(e) {
@@ -59,12 +62,13 @@
 
 	var directionDisplay,
 		directionsService = new google.maps.DirectionsService(),
-		map;
+		map,
+		mapCenter;
 
 	function initialize() 
 	{
 		directionsDisplay = new google.maps.DirectionsRenderer();
-		var mapCenter = new google.maps.LatLng(38.9343, -92.3306);
+		mapCenter = new google.maps.LatLng(38.9343, -92.3306);
 
 		var myOptions = {
 			zoom:10,
@@ -87,8 +91,13 @@
 			
 			$('#from').val(latlon);
 		};
+	google.maps.event.addDomListener(window, "resize", function() {
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(mapCenter); 
+	});
 	}
 	
+	calculateRoute();
 	function calculateRoute() 
 	{
 		var x = document.getElementById("map_canvas");
