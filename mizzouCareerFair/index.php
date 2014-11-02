@@ -45,10 +45,10 @@
 	</script>
 	<?php endif; ?>
 	<!-- Include Google Maps API -->
-	 <script src="https://maps.google.com/maps/api/js?sensor=false&libraries=places"></script>
+	 <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
 	<!-- Includes directions functionality -->
-	<script type="text/javascript" src="index.js"></script>
+	
 
 </head>
 
@@ -195,9 +195,7 @@
             <div data-role="header" data-position="fixed">
 				<h1>Directions</h1>
 				<a data-direction="reverse" data-icon="home" data-iconpos="notext"
-				href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-				data-rel="dialog" data-transition="fade" href=
-				"../nav.html">Search</a>
+				href="#home">Home</a>
 			</div>
 			</br>
             <div data-role="content" style="height: 100% width: 100%" class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
@@ -218,12 +216,13 @@
                             <option value="BICYCLING">Bicycling</option>
                         </select>
                     </div>
-                    <a data-icon="navigation" data-role="button" href="#" id="submitDirections">Get Directions</a>
-                    
+                    <a data-icon="navigation" data-role="button" href="" id="submitDirections">Get Directions</a>
+                <div id ="directions" style="height: 100%"></div> 
+				<!--
 			    <div id="results" style="display:none;">
                     <div id="directions"></div>
                 </div>
-				
+				-->
                     <div id="mapOptions" data-role="fieldcontain" style="display:none;">
 						<label for="flip-2">Display Map : </label>
 						<select id="toggleMap" data-role="slider">
@@ -897,5 +896,6 @@
         </div>
     </div>
 	<!--End old rewrite HTML-->
+	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>

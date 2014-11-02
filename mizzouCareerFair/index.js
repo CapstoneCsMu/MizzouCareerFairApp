@@ -20,7 +20,9 @@
 		}
 	}
 	
-	$(document).on("pageinit", "#map_page", function() {
+	// $(document).on("pageinit", "#map_page", function() {
+	
+	function nowRun(){
 		initialize();
 		$("#map_canvas").hide();
 		
@@ -43,8 +45,8 @@
     		}
 		});
 		
-	});
-
+	}
+	window.onload = nowRun;
 
 	$(document).on('click', '#submitDirections', function(e) {
 		e.preventDefault();
@@ -100,6 +102,7 @@
 	calculateRoute();
 	function calculateRoute() 
 	{
+		/*
 		var x = document.getElementById("map_canvas");
 		
 		navigator.geolocation.getCurrentPosition(showPosition);
@@ -110,7 +113,7 @@
 			console.log(latlon);
 			
 		};
-			
+		*/
 	
 	
 		var selectedMode = $("#mode").val(),
@@ -120,7 +123,6 @@
 		if(start == '' || end == '')
 		{
 			// cannot calculate route
-			$("#results").hide();
 			return;
 		}
 		else
@@ -134,7 +136,6 @@
 			directionsService.route(request, function(response, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(response); 
-					$("#results").show();
 					/*
 						var myRoute = response.routes[0].legs[0];
 						for (var i = 0; i < myRoute.steps.length; i++) {
@@ -143,7 +144,6 @@
 					*/
 				}
 				else {
-					$("#results").hide();
 				}
 			});
 
