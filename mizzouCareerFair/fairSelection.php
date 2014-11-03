@@ -3,12 +3,8 @@ File: fairSelection.php
 Parent: index.php (approx line 129)
 Purpose: This file is a standalone page which allows the user to select a career fair: Either Egr, or Business, or CAFNR, etc.
 -->
-<div data-role="page" data-theme="a" id="fairSelect">
-	<div data-role="header" data-position="fixed">
-		<h1>Fairs</h1>
-		<a data-transition="slide" data-icon="arrow-l" data-iconpos="notext" href="index.php">Home</a> 
-	</div>
-	<div data-role="content">
+
+<div class="panel left" data-role="panel" id="fairSelect" data-position="left" data-display="overlay">
 		<ul data-dividertheme="b" data-inset="true" data-role="listview">
 		<li data-role="list-divider">Select a Career Fair</li>
 		<?php
@@ -26,11 +22,11 @@ Purpose: This file is a standalone page which allows the user to select a career
 			$numOfFeeds=0;
 			while ($fair = pg_fetch_array($result, null, PGSQL_ASSOC))
 			{
-				echo '<li><a data-transition="flip" href="index.php" onclick="submitForm_'.$numOfFeeds.'()">'.$fair['fairname'].'</a></li>';
+				echo '<li><a style="text-overflow: ellipsis; overflow: visible; white-space: normal" href="index.php" onclick="submitForm_'.$numOfFeeds.'()">'.$fair['fairname'].'</a></li>';
 				// echo '<li id="form_'.$numOfFeeds.'"><a data-transition="slidedown" href="">'.$fair['fairname'].'</a></li>';
 				$fairForm[$numOfFeeds] = $fair['fairname'];
 				
-
+			
 				//Javascript to input the info and then submit the User-Specified form
 				echo'<script type="text/javascript">
 							function submitForm_'.$numOfFeeds.'(){
@@ -54,7 +50,6 @@ Purpose: This file is a standalone page which allows the user to select a career
 					});
 					</script>";
 				*/
-				
 				$numOfFeeds++;
 			}
 
@@ -65,6 +60,6 @@ Purpose: This file is a standalone page which allows the user to select a career
 				echo '<input type="hidden" name="fairname" value="'.$fairForm[$j].'">';
 				echo '</form>';
 			}
+			
 		?>
 	</div>
-</div>
