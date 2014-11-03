@@ -83,7 +83,7 @@ CREATE TABLE careerSchema.mapUploads (
     filePath varchar(100) PRIMARY KEY NOT NULL,
 		imgName varchar(50),
 		entryTime timestamp NOT NULL default 
-		CURRENT_TIMESTAMP
+		CURRENT_TIMESTAMP,
 		inUse boolean
 );
 
