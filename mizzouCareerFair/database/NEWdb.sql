@@ -16,6 +16,8 @@ CREATE TABLE careerSchema.authorizationTable(
 	email 		varchar(50) PRIMARY KEY NOT NULL,
     hashed_pass varchar(40) NOT NULL,
     salt        varchar(50) NOT NULL,
+	firsname 	varchar(30),
+	lastname 	varchar(30)
 	ip_address 	varchar(40),
 	user_type 	varchar(40),
 	company 	varchar(100),
@@ -91,7 +93,9 @@ CREATE TABLE careerSchema.mapUploads (
 DROP TABLE IF EXISTS careerSchema.employerScannedStudents CASCADE;
 CREATE TABLE careerSchema.employerScannedStudents (
 	email				varchar(50),
-	employerEmail		varchar(50)
+	employerEmail		varchar(50),
+	firstname			varchar(30),
+	lastname			varchar(30)
 );
 
 
