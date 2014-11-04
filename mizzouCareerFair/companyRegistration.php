@@ -159,11 +159,11 @@ function handleRegistration()
 					/*$query = "INSERT INTO careerschema.authorizationTable (email) VALUES ($1)";
 					$state = pg_prepare($conn,"insert_0",$query) ;
 					$queryInsert = pg_execute($conn,"insert_0",array($_POST['email']));*/
-					
+					$ip = $_SERVER['REMOTE_ADDR'];
 					//Then we can add their authentication information
-					$query = "INSERT INTO careerschema.authorizationTable (email, hashed_pass, salt, user_type,company) VALUES ($1,$2,$3,$4,$5)";
+					$query = "INSERT INTO careerschema.authorizationTable (ip_address, email, hashed_pass, salt, user_type, company) VALUES ($1,$2,$3,$4,$5,$6)";
 					$state = pg_prepare($conn,"insert_employer",$query) ;
-					$queryInsert = pg_execute($conn,"insert_employer",array($email,$passHashed,$salt,"employer",$company) )  ;
+					$queryInsert = pg_execute($conn,"insert_employer",array($ip,$email,$passHashed,$salt,"employer",$company) )  ;
 
 					if ($queryInsert)
 					{
