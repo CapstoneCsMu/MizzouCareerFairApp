@@ -94,8 +94,8 @@ DROP TABLE IF EXISTS careerSchema.employerScannedStudents CASCADE;
 CREATE TABLE careerSchema.employerScannedStudents (
 	email				varchar(50),
 	employerEmail		varchar(50),
-	firstname			varchar(30),
-	lastname			varchar(30)
+	firstname 			varchar(50),
+	lastname			varchar(50)
 );
 
 

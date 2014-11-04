@@ -30,6 +30,37 @@
 </head>
 <body>
 	<?php
+		//query db for ip address
+		$query = "SELECT ip_address FROM careerschema.authorizationTable WHERE ip_address=($1)";
+		$stmt = pg_prepare($conn, "grab_ip", $query);
+		//sends query to database
+		$result = pg_execute($conn, "grab_ip", array($_SERVER['REMOTE_ADDR']));
+
+		//if database doesnt return results make them log in
+		if(!$result) {
+			
+			echo "<script type=\"text/javascript\">";
+			echo "window.location='login.php'";
+			echo "</script>";
+		}
+		//if there is a result, log them in with that ip address
+		if($_SERVER['REMOTE_ADDR'] == $result){
+                                
+			$ip_address = $result;
+			
+			$query = "SELECT email FROM careerschema.authorizationTable(email) WHERE ip_address=($1)";
+			$stmt = pg_prepare($conn, "grab_email", $query);
+			//sends query to database
+			$result = pg_execute($conn, "grab_email", array($ip_address));
+			//if database doesnt return results print this
+			if(!$result) {
+				die("Unable to execute: here" . pg_last_error($conn));
+				
+			}
+			
+		$_SESSION['employer_loggedin'] == $result;
+		};
+		
 		$empEmail = $_SESSION['employer_loggedin'];
 		
 		echo $empEmail;
