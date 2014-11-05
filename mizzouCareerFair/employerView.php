@@ -194,24 +194,30 @@
 			$query1 = "SELECT DISTINCT ON(email) * FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
 			$result = pg_query($query1) or die("Query failed: " . pg_last_error());
 			$num_rows = pg_num_rows($result);
-
+			
 			echo '<div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">Students you have scanned</li>';
 			
 			$i=0;
 			while ($line = pg_fetch_assoc($result)) {
+					
 					//prints data by the line
-					// if favorited 
-					// echo'<li><a href="employerView.php#student'.$i.'" class="ui-btn ui-icon-star ui-btn-icon-left">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
-					// else if not favorited
-					echo '<li><a href="employerView.php#student'.$i.'">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
+					if ($line['favorite'] == '1'){ 
+						echo'<li><a href="employerView.php#student'.$i.'" class="ui-btn ui-icon-star ui-btn-icon-left">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
+					}
+					else{
+						echo '<li><a href="employerView.php#student'.$i.'">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
+					}
+					
 					$emailList[$i] = $line['email'];
 					$namesList[$i] = $line['firstname']." ".$line['lastname'];
 					$i++;
 			}
 			echo '</ul>';
 			echo '</div></div>';
+			
+				
 			
 				
 			
@@ -234,6 +240,11 @@
 				
 				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
 				
+				echo '<form name="favorite_student" method="post"> 
+				<input type="submit" data-icon="star" value="Favorite This Student!" name="submit" />
+				</form>';
+			
+			
 				//Grab each individual field
 				$k=0;
 				foreach ($line as $col_value) {
@@ -242,6 +253,7 @@
 						case 0:
 							echo '<b>Email Address: <b>';
 							echo $col_value."</br>";
+							$email = $col_value;
 							break;
 						case 1:
 							echo 'First Name: ';
@@ -274,139 +286,32 @@
 						case 8:
 							echo 'LinkedIn ID: ';
 							echo $col_value."</br>";
-							break;
-					
+							break;	
 					}
 					$k++;
 				}
+				
+			
+				
 				echo '</div>';
-				echo '</div>';	
+				echo '</div>';
+			
+			
+			
 			}
 			
+			echo $line['email'];
+			echo $emailList[$j];
+			
+			$email = $line['email'];
+			if(!empty($_POST['submit'])){
+			
+			$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$email'";
+			$result = pg_query($query3) or die("Query failed: " . pg_last_error());
+		
+			}	
 		}
-	/*?>	
-				
-	<!--End scanned students HTML-->
-
-	<!--Start map HTML-->
-    <div data-role="page" data-theme="a" id="map">
-        <?
-        include ("data.php");
-        $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-
-        $query = "SELECT * FROM careerSchema.mapUploads ORDER BY entryTime LIMIT 1";
-        $result =  pg_query($query) or die('Query failed: ' . pg_last_error());
-        $line = pg_fetch_array($result, null, PGSQL_ASSOC);
-        $filePath = $line["filepath"];
-        ?>
-
-        <div data-role="header" data-position="fixed">
-            <h1>Mizzou Career Fair App Hearnes Map</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-
-
-        <div data-role="content"><img alt="Fair Map" src="<?php echo $filePath;?>"
-        style="width:100%">
-        </div>
-
-
-        <div data-position="fixed" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-	<!--End map HTML-->
-
-	<!--Start about ECS HTML-->
-	<div data-role="page" data-theme="a" id="aboutECS">
-        <div data-role="header" data-position="fixed">
-            <h1>About Us</h1>
-            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#employerView.php">Back</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-			<div data-role="content">
-				<p>
-				Engineering Career Services provides information, guidance and resources to empower Mizzou 
-				Engineering students to develop and achieve their career goals.
-				</p>
-				
-				<h2>Typical Career Events</h2>
-				<ul>
-					<li><span style="font-size:11.0pt">Career fairs (2 a year)<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Professional development workshops with employers<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Company visits to Mizzou for on-campus interviews and networking opportunites<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Special targeted events with employers<o:p></o:p></span></li>
-				</ul>
-				
-				<h2>Employer Access to Students</h2>
-				<p>
-				In addition to professional development activities offered to students, 
-				Engineering Career Services also develops corporate partnerships that increase access to students.
-				</p>
-				<p>
-				If you have questions about Engineering Career Services, feel free to contact us.
-				</p>
-				
-				<h3>Mission</h3>
-				<p>In all our work these beliefs and values will guide us:</p>
-				<ul>
-					<li><span style="font-size:11.0pt">Career development is a lifelong learning process consisting of the following components:<o:p></o:p></span></li>
-						<ul>
-							<li><span style="font-size:9.0pt">self-assessment<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">occupational exploration<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career decision making<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">career planning<o:p></o:p></span></li>
-							<li><span style="font-size:9.0pt">acting on options<o:p></o:p></span></li>
-						</ul>
-					<li><span style="font-size:11.0pt">Each student has diverse experiences, interests and goals, and deserves to be respected as an individual.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Each student deserves to be assisted with her/his individual needs in a caring manner that also allows the student to develop individual responsibility.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">Services and programs need to be evaluated and redirected as academic environment and employment trends dictate.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">The needs of external and internal constituents drive what we do. These constituents include students, alumni, employers, faculty and staff, as well as parents, prospective students and other external populations.<o:p></o:p></span></li>
-					<li><span style="font-size:11.0pt">A supportive environment is provided in which people from a wide variety of backgrounds and traditions may encounter each other in a spirit of cooperation, openness and mutual respect.<o:p></o:p></span></li>
-				</ul>	
-		</div>
-	</div>
-	<!--End about ECS HTML-->
+	?>	
 	
-	<!--Start announcements HTML-->
-    <div data-role="page" data-theme="a" id="announcements">
-        <div data-role="header" data-position="fixed">
-            <h1>Announcements</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
-        <div data-role="content">
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">Career Fair Announcements</li>
-                <li>
-                    <a href="option">New Companies</a>
-                </li>
-                <li>
-                    <a href="option2.html">Changed Booth Locations</a>
-                </li>
-                <li>
-                    <a href="option8.html">Updates</a>
-                </li>
-            </ul>
-        </div>
-        <div data-position="fixed" data-role="footer" data-role="footer">
-            <input data-mini="true" id="basic" name="name" placeholder=
-            "Search the Career Fair" type="text" value="">
-
-            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
-        </div>
-    </div>
-    <!--End announcements HTML-->
-
 </body>
 </html>
