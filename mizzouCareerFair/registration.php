@@ -195,7 +195,6 @@ function handleStudentRegistration()
 				$passHashed = sha1($passHashed);
 			}
 			
-			//Insert user into the students table
 			$query = "INSERT INTO careerschema.students (email) VALUES ($1)";
 			$state = pg_prepare($conn,"insert_0",$query) ;
 			$queryInsert = pg_execute($conn,"insert_0",array($_POST['email']));
@@ -205,10 +204,15 @@ function handleStudentRegistration()
 			$state = pg_prepare($conn,"insert_1",$query) ;
 			$queryInsert = pg_execute($conn,"insert_1",array($email,$passHashed,$salt,"student") )  ;
 
+
+
 			if ($queryInsert)
 			{
 				$_SESSION['registered'] = TRUE;
-				header("Location: login.php");
+				echo '<script type="text/javascript">
+				window.location = "login.php";
+				</script>';
+				// header("Location: login.php");
 			}
 			else
 				echo pg_last_error($conn);

@@ -62,83 +62,86 @@
 
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider"></li>
+			<?php
+				if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
+				{
+					echo '<li data-role="list-divider" >My Account</li>';
+					echo'<li><a class="ui-btn ui-icon-user ui-btn-icon-left"  rel="external" href="login.php">Sign In!</a></li>';
+				}
+				else if($_SESSION['admin_loggedin']){
+					echo ' <li data-role="list-divider">My Account</li>';
+					echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+					echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
+				}
+				else
+				{
+					echo '<li data-role="list-divider" style="background: linear-gradient(#FFEB99,#FFF0B2 )" >Student Tools</li>';
+					echo '<li><a href="#myProfile">View My Profile</a></li>';
+					// echo '<li><a rel="external" href="updateProfileForm.php">Edit My Profile</a></li>';
+					// echo '<li><a href="#jobHunt">Job Hunt</a></li>';
+					echo '<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+				}
+			?>
+			</ul>
+			
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Information</li>
                 <li>
                     <a data-transition="slideup" href="#companies">List of Companies</a>
                 </li>
                 <li>
-                    <a  class="ui-btn ui-icon-action ui-btn-icon-right" href="#fairSelect">Select a Career Fair</a>
+                    <a data-transition="flip" href="#events">List of Events </a>
                 </li>
-                <li>
-                    <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
-                </li>
-			</ul>
-			<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
-    			Add to Calendar
-    <span class="_start">02-10-2015 10:00:00</span>
-    <span class="_end">02-10-2015 15:30:00</span>
-    <span class="_zonecode">11</span>
-    <span class="_summary">Engineering Career Fair</span>
-    <span class="_description">Spring 2015 Engineering Career Fair</span>
-   	<span class="_location">Hearnes Center Columbia, MO</span>
-    <span class="_organizer">College of Engineering</span>
-    <span class="_facebook_event">https://www.facebook.com/MUEngineering</span>
-    <span class="_all_day_event">false</span>
-    <span class="_date_format">MM/DD/YYYY</span>
-			</a>
-			<ul data-dividertheme="b" data-inset="true" data-role="listview">
-				<li data-role="list-divider"></li>
 				<li>
-                    <a data-transition="flip" href="#map_page">Directions to Fair</a>
-                </li>
-                <li>
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
                 </li>
-			</ul>
-			<ul data-dividertheme="b" data-inset="true" data-role="listview">
-				<li data-role="list-divider"></li>
 				<li>
                     <a data-transition="flip" href="#prep">How to Prepare</a>
                 </li>	
-            </ul>
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-				<?php
-					
-					if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
-					{
-						echo ' <li data-role="list-divider">My Account</li>';
-						echo'<li><a rel="external" href="login.php">Sign In!</a></li>';
-					}
-					else if($_SESSION['admin_loggedin']){
-						echo ' <li data-role="list-divider">My Account</li>';
-						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
-                        echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
-					}
-					else
-					{
-						echo '<li data-role="list-divider">Student Tools</li>';
-						echo '<li><a href="#qrCode">My QR Code</a></li>';
-						echo '<li><a rel="external" href="updateProfileForm.php">Edit My Profile</a></li>';
-						echo '<li><a href="#jobHunt">Job Hunt</a></li>';
-						echo '<li><a rel="external" href="logout.php">Sign Out!</a></li>';
-					}
-					echo '</ul>';
-					echo ' <a><script type="in/Login">Hello, <?js= firstName ?> <?js= lastName ?>. Your id is: <?js= id ?></script></a>';
-				?>
-            </ul>
+				<li>
+					<a data-transition="flip" href="">Announcements</a>
+				</li>
+			</ul>
+
         </div>
 		<div data-role="footer" data-position="fixed" style="background: linear-gradient(#E6E6E6,#E6E6E6 )">
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:kristi.decker347@gmail.com?Subject=TEST">Contact Us</a></li>
-					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="comment" href="">Anouncements</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="gear" href="#fairOptions">Fair Options</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
 			</div>
 		</div>
+		
+		
+		<div class="panel left" data-role="panel" id="fairOptions" data-position="left" data-display="overlay">
+		
+		<a  style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-bars ui-btn-icon-left" href="#fairSelect">Select a Fair</a>
+		<a style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-navigation ui-btn-icon-left" data-transition="flip" href="#map_page">Get Directions</a>
+		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Fair to Calendar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<span class="_start">02-10-2015 10:00:00</span>
+				<span class="_end">02-10-2015 15:30:00</span>
+				<span class="_zonecode">11</span>
+				<span class="_summary">Engineering Career Fair</span>
+				<span class="_description">Spring 2015 Engineering Career Fair</span>
+				<span class="_location">Hearnes Center Columbia, MO</span>
+				<span class="_organizer">College of Engineering</span>
+				<span class="_facebook_event">https://www.facebook.com/MUEngineering</span>
+				<span class="_all_day_event">false</span>
+				<span class="_date_format">MM/DD/YYYY</span>
+			</a>
+		</div>
+		
+		
+		
 	<?php include('fairSelection.php');?>
-	</div>
+  </div>
+  
+  <?php include('displayProfile.php'); ?>
+  
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1 onclick="$.mobile.silentScroll(0)">Companies</h1>
@@ -424,26 +427,7 @@
         </div>
     </div>
 	<!--End Job Hunt HTML.-->
-	
-	<!--Start QR Code HTML-->
-    <div data-role="page" data-theme="a" id="qrCode">
-        <div data-role="header" data-position="fixed">
-            <h1>My QR Code</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
 
-        <div data-role="content">
-        	<h2><center>Have employers scan your QR Code and they will have your information!<center></h2>
-			<?php
-			echo '<center><img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/CodeScanned.php?email='.$_SESSION['student_loggedin'].'"&choe=UTF-8"/><center>';
-			?>
-        </div>
-    </div>
-	<!--End QR Code HTML.-->
-	
 	<!--Start Success Resume HTML-->
     <div data-role="page" data-theme="a" id="successResume">
         <div data-role="header" data-position="fixed">
