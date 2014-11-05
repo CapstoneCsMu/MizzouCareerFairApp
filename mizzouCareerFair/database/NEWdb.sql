@@ -95,7 +95,8 @@ CREATE TABLE careerSchema.employerScannedStudents (
 	email				varchar(50),
 	employerEmail		varchar(50),
 	firstname 			varchar(50),
-	lastname			varchar(50)
+	lastname			varchar(50),
+	company				varchar(50)
 );
 
 
