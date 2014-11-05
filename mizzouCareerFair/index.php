@@ -214,9 +214,7 @@
 									}*/
 								}
 								else{
-									//echo '<div data-role="content">'
 									echo '<center><p><b>You have not visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>';
-									//echo '</div>';
 								}	
 								
 						}

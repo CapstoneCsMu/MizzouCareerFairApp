@@ -219,6 +219,8 @@
 			
 				
 			
+				
+			
 			for ($j=0; $j<$i; $j++){
 			
 					echo '<div data-role="page" data-theme="a" id="student'.$j.'">
@@ -241,16 +243,8 @@
 				echo '<form name="favorite_student" method="post"> 
 				<input type="submit" data-icon="star" value="Favorite This Student!" name="submit" />
 				</form>';
-				
-				echo $emailList[$j];
-				echo $line['email'];
-				if(!empty($_POST['submit'])){
-				
-				$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$emailList[$j]'";
-				$result = pg_query($query3) or die("Query failed: " . pg_last_error());
 			
-				}
-				
+			
 				//Grab each individual field
 				$k=0;
 				foreach ($line as $col_value) {
@@ -297,7 +291,7 @@
 					$k++;
 				}
 				
-				
+			
 				
 				echo '</div>';
 				echo '</div>';
@@ -305,6 +299,17 @@
 			
 			
 			}
+			
+			echo $line['email'];
+			echo $emailList[$j];
+			
+			$email = $line['email'];
+			if(!empty($_POST['submit'])){
+			
+			$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$email'";
+			$result = pg_query($query3) or die("Query failed: " . pg_last_error());
+		
+			}	
 		}
 	?>	
 	
