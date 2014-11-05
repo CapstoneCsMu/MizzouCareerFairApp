@@ -645,23 +645,23 @@
                 <li data-role="list-divider">How To's and Tutorials</li>
 				
 				<li>
-                    <a href="#questions">REWRITE ME Recruiter Questions</a>
+                    <a href="#questions">Recruiter Questions</a>
                 </li>
 
                 <li>
-                    <a href="#dress">REWRITE ME Dress for Success</a>
+                    <a href="#dress">Dress for Success</a>
                 </li>
 
                 <li>
-                    <a href="#standOut">REWRITE ME Standing Out</a>
+                    <a href="#standOut">Standing Out</a>
                 </li>
 
                 <li>
-                    <a href="#speech">REWRITE ME Making Your Speech Count</a>
+                    <a href="#speech">Making Your Speech Count</a>
                 </li>
 				
 				<li>
-                    <a href="#badGrades">REWRITE ME Bad Grades?</a>
+                    <a href="#badGrades">Bad Grades?</a>
                 </li>
             </ul>
 
