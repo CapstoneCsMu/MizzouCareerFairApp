@@ -20,6 +20,7 @@
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
 	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
 	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
+	<link rel="stylesheet" href="css/eventStyle.css">
 	
     <!--jQuery and jQM JavaScript -->
 	<script src="js/jquery-1.11.1.min.js"></script>
@@ -90,7 +91,7 @@
                     <a data-transition="slideup" href="#companies">List of Companies</a>
                 </li>
                 <li>
-                    <a data-transition="flip" href="#events">List of Events </a>
+                    <a data-transition="flip" href="#eventCalendar">List of Events </a>
                 </li>
 				<li>
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
@@ -237,6 +238,88 @@
 	//Load a page for each company dynamically
 	include('companyLoad.php');
 	?>
+	
+	
+	<!-- Page to add career fair related events as show on 
+		http://engineering.missouri.edu/careers/calendar/
+	-->
+
+    <div data-role="page" data-theme="a" id="eventCalendar" style="position:fixed;">
+        <div data-role="header" data-position="fixed">
+            <h1>Events</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+
+
+        
+		<div data-role="content" style="height:300px;">
+			<div class="addthisevent" style="padding: 0px 0px 0px 13px;">
+				<div class="date">
+					<span class="mon">NOV</span>
+					<span class="day">15</span>
+					<div class="bdr1"></div>
+					<div class="bdr2"></div>
+				</div>
+				<div class="desc">
+					<p>
+					<strong class="hed">2014 Garmin Contest</strong>
+					<span class="des">Location: Ketcham, Lafferre<br />When: 8 AM - 5 PM</span>
+					</p>
+				</div>
+				<span class="_start">11-15-2014 8:00:00</span>
+				<span class="_end">11-15-2014 17:00:00</span>
+				<span class="_zonecode">11</span>
+				<span class="_summary">2014 Garmin Programming Showdown</span>
+				<span class="_description">Test your programming skills and create your own app, such as a custom watch face, information widget or mobile interactive for Garmin wearable technology devices with our new Connect IQ Software Development Kit.  Compete on your own or with a friend.
+
+Free Food!  Prizes for the Winners!!!!!</span>
+				<span class="_location">Ketcham Auditorium/Lafferre Hall</span>
+				<span class="_organizer">Engineering Career Services</span>
+				<span class="_organizer_email">engcareerservices@gmail.com</span>
+				<span class="_all_day_event">false</span>
+				<span class="_date_format">MM/DD/YYYY</span>
+			</div>    
+			
+			<br><br>
+			<div class="addthisevent" style="padding: 0px 0px 0px 13px;">
+				<div class="date">
+					<span class="mon">FEB</span>
+					<span class="day">10</span>
+					<div class="bdr1"></div>
+					<div class="bdr2"></div>
+				</div>
+				<div class="desc">
+					<p>
+					<strong class="hed">2015 Engineering Fair</strong>
+					<span class="des">Hearnes Center Concourse<br />When: 10 AM - 3:30 PM</span>
+					</p>
+				</div>
+				<span class="_start">2-10-2015 8:00:00</span>
+				<span class="_end">2-10-2015 17:00:00</span>
+				<span class="_zonecode">11</span>
+				<span class="_summary">Spring 2015 Engineering Career Fair</span>
+				<span class="_description">Explore opportunities in engineering internships and careers.  Bring a resume and dress professionally.  Explore companies and more at :
+				babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/
+				</span>
+				<span class="_location">Hearnes Center Concourse, Columbia, MO</span>
+				<span class="_organizer">Engineering Career Services</span>
+				<span class="_organizer_email">engcareerservices@gmail.com</span>
+				<span class="_all_day_event">false</span>
+				<span class="_date_format">MM/DD/YYYY</span>
+			</div>
+			
+			
+           
+        </div>
+
+		
+        <div data-role="footer" data-position="fixed">
+            <h4>&copy; 2014 Team X Mizzou Career Fair App</h4>
+        </div>
+    </div>
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
 	<div data-role="page" id="map_page" style="height: 50% width: 50%">
@@ -611,7 +694,7 @@
 	<!--Start old rewrite code-->
     <div data-role="page" data-theme="a" id="prep">
         <div data-role="header" data-position="fixed">
-            <h1>Career Fair Events</h1>
+            <h1>Career Fair Preparation</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
             data-transition="flip" href="#home">Home</a> <a data-icon="search"
             data-iconpos="notext" data-rel="dialog" data-transition="fade"
