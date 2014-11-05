@@ -25,6 +25,7 @@
 					{
 						continue;
 					}
+					// Skipping this information 
 					if ($companyDataKey[$keyZ][$j] == "Event Id:" || $companyDataKey[$keyZ][$j] == "Career Event Name:" || 
 					$companyDataKey[$keyZ][$j] == "Registration ID:" || $companyDataKey[$keyZ][$j] == "Registration Date:") 
 					{

@@ -108,7 +108,9 @@ include('check_https.php');
 			</div>
 			
 			<div data-role="main" class="ui-content">
+			<?php include('updateWithLinkedIn.php'); ?>
 					<div class="ui-field-contain">
+					
 				<form data-ajax="false" id="updateInfoForm" method="post" action="updateProfile.php" >
 						
 						<div data-role="fieldcontain">

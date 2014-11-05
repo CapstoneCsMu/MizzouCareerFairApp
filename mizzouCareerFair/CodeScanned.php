@@ -1,3 +1,11 @@
+<?php
+	if (!isset($_SESSION))
+	{
+		session_start();
+	}
+	$_SESSION['prevPage'] = 'employerView.php';
+ ?>
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +30,41 @@
 </head>
 <body>
 	<?php
+		//query db for ip address
+		$query = "SELECT ip_address FROM careerschema.authorizationTable WHERE ip_address=($1)";
+		$stmt = pg_prepare($conn, "grab_ip", $query);
+		//sends query to database
+		$result = pg_execute($conn, "grab_ip", array($_SERVER['REMOTE_ADDR']));
+
+		//if database doesnt return results make them log in
+		if(!$result) {
+			
+			echo "<script type=\"text/javascript\">";
+			echo "window.location='login.php'";
+			echo "</script>";
+		}
+		//if there is a result, log them in with that ip address
+		if($_SERVER['REMOTE_ADDR'] == $result){
+                                
+			$ip_address = $result;
+			
+			$query = "SELECT email FROM careerschema.authorizationTable(email) WHERE ip_address=($1)";
+			$stmt = pg_prepare($conn, "grab_email", $query);
+			//sends query to database
+			$result = pg_execute($conn, "grab_email", array($ip_address));
+			//if database doesnt return results print this
+			if(!$result) {
+				die("Unable to execute: here" . pg_last_error($conn));
+				
+			}
+			
+		$_SESSION['employer_loggedin'] == $result;
+		};
+		
+		$empEmail = $_SESSION['employer_loggedin'];
+		
+		echo $empEmail;
+		echo '</br>';
 	    include ("data.php");
         $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
         if (!$conn)
@@ -29,21 +72,33 @@
             echo "<br/>An error occurred with connecting to the server.<br/>";
             die();
         }
-	
+		
 		if ($_SESSION['employer_loggedin'])
 		{
+			//Grab first and last name of the email
+			$query = "select firstname, lastname from careerschema.students where email =$1";
+			$stmt = pg_prepare($conn, "grab_student_info", $query) or die(pg_last_error());
+			$result = pg_execute($conn, "grab_student_info", array($_GET['email'])) or die(pg_last_error());
+			$row = pg_fetch_assoc($result);
+			echo "firstname: ".$row['firstname'];
+			echo "</br>";
+			echo "lastname: ".$row['lastname'];
 			
-			//add email into employer table first
-			$query = "INSERT INTO careerschema.employerScannedStudents(email) VALUES=($1)";
-			$stmt = pg_prepare($conn, "store_info", $query);
+			//add student email and employer email into employer
+			$query = "INSERT INTO careerschema.employerScannedStudents(email, employerEmail, firstname, lastname) VALUES($1,$2, $3, $4)";
+			$stmt = pg_prepare($conn, "insert_email", $query) or die(pg_last_error());
 			//sends query to database
-			$result = pg_execute($conn, "store_info", array($_GET['email']));
+			$result = pg_execute($conn, "insert_email", array($_GET['email'], $empEmail, $row['firstname'], $row['lastname'])) or die(pg_last_error());
 			//if database doesnt return results print this
 			if(!$result) {
 					die("Unable to execute: " . pg_last_error($conn));
 			}
-			
-			echo "Thank you for scanning this students QR code. Their email is now stored on your page." 
+			else
+			{
+				echo "<script type=\"text/javascript\">";
+				echo "window.location='employerView.php'";
+				echo "</script>";
+			}
 		}
 	?>
 </body>

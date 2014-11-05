@@ -1,12 +1,12 @@
 <!--
 File: AdminCompanies.php
 Parent: None yet
-Purpose: The purpose of this file is to add additional RSS feeds into the database. It will be implemented into admin.php (I think)
+Purpose: This file is not currently in use. Its purpose is being taken care of in admin.php#adminCompanies
 -->
-<!DOCTYPE html> 
-<html> 
-<head> 
- </head> 
+<!DOCTYPE html>
+<html>
+<head>
+ </head>
  <body>
  <center>In order to populate a new RSS field, please enter the URL to the RSS field and click submit.</center></br>
  <center>
@@ -26,31 +26,31 @@ Purpose: The purpose of this file is to add additional RSS feeds into the databa
 		if($xml = simplexml_load_file($rssLink)){
 			$content = $xml->channel->item->children("http://purl.org/rss/1.0/modules/content/");
 			$data = $content->encoded;
-			
+
 			echo "<br>";
 			echo "<fieldset>";
 			echo "<h3><ul>Example of item in feed:</ul></h3>";
 			echo $data;
 			echo "</fieldset>";
 			echo "<br>";
-			
+
 			$dom = new DOMDocument();
 			$table = $dom->loadHTML($data);
 			$dom->preserveWhiteSpace = false;
 			$tables = $dom->getElementsByTagName('table');
 			$rows = $tables->item(0)->getElementsByTagName('tr');
-			
+
 			foreach($rows as $row){
 				$cols = $row->getElementsByTagName('td');
 				$fields[] = $cols->item(0)->nodeValue;
 				}
-			
+
 			echo "<form method=\"post\" action=\"input.php\" id=\"fields\">";
 				echo "<input type=\"hidden\" name=\"rssLink\" value=".$rssLink.">";
 				?>
-				
+
 				<!-- Select the field that contains company name -->
-				
+
 				<fieldset class="ui-field-contain">
     				<label for="nameField">Field For Company Name:</label><br>
     				<select name="nameField" id="nameField">
@@ -60,9 +60,9 @@ Purpose: The purpose of this file is to add additional RSS feeds into the databa
     				?>
     			</select>
   				</fieldset>
-  				
+
   				<!-- Select the field that contains the available positions -->
-  				
+
   				<fieldset class="ui-field-contain">
     				<label for="positionsField">Field For Available Positions:</label><br>
     				<select name="positionsField" id="positionsField">
@@ -72,7 +72,7 @@ Purpose: The purpose of this file is to add additional RSS feeds into the databa
     				?>
     			</select>
   				</fieldset>
-  				
+
   				<!-- Select the field that contains the company address -->
   				<fieldset class="ui-field-contain">
     				<label for="addressField">Field For Company Address:</label><br>
@@ -83,7 +83,7 @@ Purpose: The purpose of this file is to add additional RSS feeds into the databa
     				?>
     			</select>
   				</fieldset>
-  				
+
   				<!-- Select the field that contains the desired majors -->
   				<fieldset class="ui-field-contain">
     				<label for="majorsField">Field For Desired Majors:</label><br>
@@ -94,7 +94,7 @@ Purpose: The purpose of this file is to add additional RSS feeds into the databa
     				?>
     			</select>
   				</fieldset>
-  				
+
   				<!-- Select the field that contains the position types -->
   				<fieldset class="ui-field-contain">
     				<label for="positionTypeField">Field For Position Types:</label><br>
@@ -105,19 +105,19 @@ Purpose: The purpose of this file is to add additional RSS feeds into the databa
     				?>
     			</select>
   				</fieldset>
-  				
-  				
+
+
   				<input type="submit" value="submit" name="fieldSubmit"></input>
   			</form>
 
 			<?php
-			
+
 			}
 		else
 			echo "invalid link";
 		}
 
-//get most recent rss info	
+//get most recent rss info
 ?>
- 
+
  </body>

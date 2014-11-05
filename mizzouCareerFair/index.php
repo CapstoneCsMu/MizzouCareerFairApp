@@ -4,7 +4,7 @@
 	Parent: None
 	Function: Home Page. Pretty much everything is called from here.
 	*/
-	session_start();
+	include('check_https.php');
 	$_POST['student_loggedin'] = $_SESSION['student_loggedin'];
  ?>
 <!DOCTYPE html>
@@ -15,19 +15,20 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1" name="viewport">
     
-    <!-- Include CSS and JQM CSS -->
+    <!--CSS-->
     <link href="css/themes/MizzouCareerFair.css" rel="stylesheet">
     <link href="css/themes/jquery.mobile.icons.min.css" rel="stylesheet">
-
 	<link href="jquery.mobile-1.4.4/jquery.mobile.structure-1.4.4.min.css" rel="stylesheet">
-    
 	<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/themes/screensize.css"/>
 	
-    <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
+    <!--jQuery and jQM JavaScript -->
 	<script src="js/jquery-1.11.1.min.js"></script>
     <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
     <!-- Include JS file for our JS -->
     <script src="js/index.js"></script>
+    
+    <!-- AddThisEvent -->
+<script type="text/javascript" src="https://addthisevent.com/libs/1.5.8/ate.min.js"></script>
     
     <!-- Include LinkedIn Framework, API Key Unique to Us -->
 	<?php if($_SERVER['HTTP_HOST'] == 'localhost'): ?>
@@ -44,14 +45,14 @@
 	</script>
 	<?php endif; ?>
 	<!-- Include Google Maps API -->
-	<script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+	 <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
 	<!-- Includes directions functionality -->
-	<script type="text/javascript" src="index.js"></script>
+	
 
 </head>
 
-<body>
+<body style="width: 100%; height: 100%;">
     <div data-role="page" data-theme="a" id="home">
         <div data-role="header" >
 			</br>
@@ -61,72 +62,86 @@
 
         <div data-role="content">
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider"></li>
+			<?php
+				if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
+				{
+					echo '<li data-role="list-divider" >My Account</li>';
+					echo'<li><a class="ui-btn ui-icon-user ui-btn-icon-left"  rel="external" href="login.php">Sign In!</a></li>';
+				}
+				else if($_SESSION['admin_loggedin']){
+					echo ' <li data-role="list-divider">My Account</li>';
+					echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+					echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
+				}
+				else
+				{
+					echo '<li data-role="list-divider" style="background: linear-gradient(#FFEB99,#FFF0B2 )" >Student Tools</li>';
+					echo '<li><a href="#myProfile">View My Profile</a></li>';
+					// echo '<li><a rel="external" href="updateProfileForm.php">Edit My Profile</a></li>';
+					// echo '<li><a href="#jobHunt">Job Hunt</a></li>';
+					echo '<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+				}
+			?>
+			</ul>
+			
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Information</li>
                 <li>
                     <a data-transition="slideup" href="#companies">List of Companies</a>
                 </li>
                 <li>
-                    <a data-transition="slide" data-direction="reverse" href="#fairSelect">Select a Career Fair</a>
+                    <a data-transition="flip" href="#events">List of Events </a>
                 </li>
-                <li>
-                    <a data-transition="flip" href="#events">Events - Not Implemented Yet</a>
-                </li>
-			</ul>
-			<ul data-dividertheme="b" data-inset="true" data-role="listview">
-				<li data-role="list-divider"></li>
 				<li>
-                    <a data-transition="flip" href="#map_page">Directions to Fair</a>
-                </li>
-                <li>
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
                 </li>
-			</ul>
-			<ul data-dividertheme="b" data-inset="true" data-role="listview">
-				<li data-role="list-divider"></li>
 				<li>
                     <a data-transition="flip" href="#prep">How to Prepare</a>
                 </li>	
-            </ul>
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-				<?php
-					
-					if (!$_SESSION['student_loggedin'] && !$_SESSION['admin_loggedin'])
-					{
-						echo ' <li data-role="list-divider">My Account</li>';
-						echo'<li><a rel="external" href="login.php">Sign In!</a></li>';
-					}
-					else if($_SESSION['admin_loggedin']){
-						echo ' <li data-role="list-divider">My Account</li>';
-						echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
-                        echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
-					}
-					else
-					{
-						echo '<li data-role="list-divider">Student Tools</li>';
-						echo '<li><a href="#qrCode">My QR Code</a></li>';
-						echo '<li><a rel="external" href="updateProfileForm.php">Edit My Profile</a></li>';
-						echo '<li><a href="#jobHunt">Job Hunt</a></li>';
-						echo '<li><a rel="external" href="logout.php">Sign Out!</a></li>';
-					}
-					echo '</ul>';
-					echo ' <a><script type="in/Login">Hello, <?js= firstName ?> <?js= lastName ?>. Your id is: <?js= id ?></script></a>';
-				?>
-            </ul>
+				<li>
+					<a data-transition="flip" href="">Announcements</a>
+				</li>
+			</ul>
+
         </div>
 		<div data-role="footer" data-position="fixed" style="background: linear-gradient(#E6E6E6,#E6E6E6 )">
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:kristi.decker347@gmail.com?Subject=TEST">Contact Us</a></li>
-					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="comment" href="">Anouncements</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="gear" href="#fairOptions">Fair Options</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
 			</div>
 		</div>
-    </div>
-	
+		
+		
+		<div class="panel left" data-role="panel" id="fairOptions" data-position="left" data-display="overlay">
+		
+		<a  style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-bars ui-btn-icon-left" href="#fairSelect">Select a Fair</a>
+		<a style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-navigation ui-btn-icon-left" data-transition="flip" href="#map_page">Get Directions to Fair</a>
+		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent" style="width:80%">
+				<center>Add Fair to Calendar</center>
+				<span class="_start">02-10-2015 10:00:00</span>
+				<span class="_end">02-10-2015 15:30:00</span>
+				<span class="_zonecode">11</span>
+				<span class="_summary">Engineering Career Fair</span>
+				<span class="_description">Spring 2015 Engineering Career Fair</span>
+				<span class="_location">Hearnes Center Columbia, MO</span>
+				<span class="_organizer">College of Engineering</span>
+				<span class="_facebook_event">https://www.facebook.com/MUEngineering</span>
+				<span class="_all_day_event">false</span>
+				<span class="_date_format">MM/DD/YYYY</span>
+			</a>
+		</div>
+		
+		
+		
 	<?php include('fairSelection.php');?>
-	
+  </div>
+  
+  <?php include('displayProfile.php'); ?>
+  
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1 onclick="$.mobile.silentScroll(0)">Companies</h1>
@@ -140,7 +155,10 @@
 					<ul>
 						<li><a href="#unfiltered">All</a></li>
 						<li><a href="#filtered">Filtered</a></li>
-						<li><a href="#visited">Visited</a></li>
+						<?php
+						if($_SESSION['student_loggedin'])
+						echo '<li><a href="#visited">Favorites</a></li>';
+						?>
 					</ul>
 				</div>
 
@@ -163,14 +181,57 @@
 					</ul>
 				</div>
 				
-				<div id="visited"></br>
-					<div class="ui-bar ui-bar-a">
-						<center><p><b>You haven't visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>
-					</div>
-				</div>
+			
+						<?php
+						echo 
+						'<div id="visited"></br>
+							<div class="ui-bar ui-bar-a">';
+						if ($_SESSION['student_loggedin']){
+							
+								$stuEmail = $_SESSION['student_loggedin'];
+								
+								//select distinct on company 
+								$query1 = "SELECT DISTINCT ON(company) * FROM careerSchema.employerScannedStudents WHERE email = '$stuEmail'";
+								$result = pg_query($query1) or die("Query failed: " . pg_last_error());
+								
+								$num_rows = pg_num_rows($result);
+								if ($num_rows > 0){
+									echo '<div data-role="content">
+									<ul data-dividertheme="b" data-inset="true" data-role="listview">
+									<li data-role="list-divider">Companies You Visited</li>';
+									
+									$i=0;
+									while ($line = pg_fetch_assoc($result)) {
+										echo '<li><a href="index.php#company'.$i.'">'.$line['company'].'</a></li>';
+										$company = $line['company'];
+										$i++;
+									}
+									
+									echo '</ul>';
+									echo '</div>';
+									
+									/*for ($j=0; $j<$i; $j++){
+										echo '<div data-role="page" data-theme="a" id="company'.$j.'">
+										<div data-role="header" data-position="fixed">
+										<h1>'.$company.'</h1>
+										<a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+										data-transition="flip" href="index.php#companies">Home</a> <a data-icon="search"
+										data-iconpos="notext" data-rel="dialog" data-transition="fade"
+										href="../nav.html">Search</a>
+										</div></div>';
+									}*/
+								}
+								else{
+									echo '<center><p><b>You have not visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>';
+								}	
+								
+						}
+						echo'</div>
+						</div>';
+						?>
 			</div>
 		</div>
-    </div>
+	</div>
 
 	<?php
 	//Load a page for each company dynamically
@@ -178,17 +239,16 @@
 	?>
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
-    <div data-role="page" id="map_page">
+	<div data-role="page" id="map_page" style="height: 50% width: 50%">
+	
             <div data-role="header" data-position="fixed">
-            <h1>Directions</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-            <div data-role="content">
-                <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
-                    <div id="map_canvas" style="height:300px;"></div>
+				<h1>Directions</h1>
+				<a data-direction="reverse" data-icon="home" data-iconpos="notext"
+				href="#home">Home</a>
+			</div>
+			</br>
+            <div data-role="content" style="height: 100% width: 100%" class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
+                   <div id="map_canvas" style="height:400px; width: 100%"></div>
                     <div id="fromDirection" data-role="fieldcontain">
                         <label for="from">From</label> 
                         <input type="text" id="from"/>
@@ -205,25 +265,26 @@
                             <option value="BICYCLING">Bicycling</option>
                         </select>
                     </div>
-                    <a data-icon="navigation" data-role="button" href="#" id="submitDirections">Get Directions</a>
-                    
-                    <div data-role="fieldcontain">
+                    <a data-icon="navigation" data-role="button" href="" id="submitDirections">Get Directions</a>
+                <div id ="directions" style="height: 100%"></div> 
+				<!--
+			    <div id="results" style="display:none;">
+                    <div id="directions"></div>
+                </div>
+				-->
+                    <div id="mapOptions" data-role="fieldcontain" style="display:none;">
 						<label for="flip-2">Display Map : </label>
 						<select id="toggleMap" data-role="slider">
 							<option value="off">Off</option>
 							<option value="on">On</option>
-						</select> 
-						
+						</select>
 						<a id="resetSearch" style="float:right;" data-icon="navigation" href="#" data-role="button" data-inline="true" data-theme="b">Reset Search</a>
-						
 					</div>
-                    
-                    
-                </div>
-                
-                <div id="results" style="display:none;">
-                    <div id="directions"></div>
-                </div>
+                </br>
+				 <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;"><center>
+				<a style="background: linear-gradient(#FFCC00,#E6E6E6 )" data-inline="true" data-iconpos="top" data-role="button" href="http://maps.apple.com/maps?daddr=38.933294,-92.330062&saddr=Current%20Location" target="_blank" style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="audio">	Open in Apple Maps App	</a>
+				<a style="background: linear-gradient(#FFD119,#E6E6E6 )" data-inline="true" data-iconpos="top" data-role="button" href="http://maps.google.com/maps?daddr=38.933294,-92.330062&saddr=Current%20Location" target="_blank" style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="audio">	Open in Google Maps App	</a>
+				</center></div>
             </div>
     </div>
 	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->
@@ -412,26 +473,7 @@
         </div>
     </div>
 	<!--End Job Hunt HTML.-->
-	
-	<!--Start QR Code HTML-->
-    <div data-role="page" data-theme="a" id="qrCode">
-        <div data-role="header" data-position="fixed">
-            <h1>My QR Code</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
-        </div>
 
-        <div data-role="content">
-        	<h2>DAS CODE!</h2>
-			<?php
-			echo '<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/CodeScanned.php?email='.$_SESSION['student_loggedin'].'"&choe=UTF-8"/>';
-			?>
-        </div>
-    </div>
-	<!--End QR Code HTML.-->
-	
 	<!--Start Success Resume HTML-->
     <div data-role="page" data-theme="a" id="successResume">
         <div data-role="header" data-position="fixed">
@@ -457,7 +499,8 @@
             href="../nav.html">Search</a>
         </div>
         <div data-role="content">
-			<h3>Your Profile has been saved!</h3>
+			<h3><center>Your Profile has been saved!<center></h3>
+			<a href="index.php" data-role="button">Return to Home Page</a>
         </div>
     </div>
 	<!--End Success Profile HTML.-->
@@ -536,7 +579,7 @@
         include ("data.php");
         $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 
-        $query = "SELECT * FROM careerSchema.mapUploads ORDER BY entryTime DESC LIMIT 1";
+        $query = "SELECT * FROM careerSchema.mapUploads WHERE inUse = TRUE";
         $result =  pg_query($query) or die('Query failed: ' . pg_last_error());
         $line = pg_fetch_array($result, null, PGSQL_ASSOC);
         $filePath = $line["filepath"];
@@ -602,23 +645,23 @@
                 <li data-role="list-divider">How To's and Tutorials</li>
 				
 				<li>
-                    <a href="#questions">REWRITE ME Recruiter Questions</a>
+                    <a href="#questions">Recruiter Questions</a>
                 </li>
 
                 <li>
-                    <a href="#dress">REWRITE ME Dress for Success</a>
+                    <a href="#dress">Dress for Success</a>
                 </li>
 
                 <li>
-                    <a href="#standOut">REWRITE ME Standing Out</a>
+                    <a href="#standOut">Standing Out</a>
                 </li>
 
                 <li>
-                    <a href="#speech">REWRITE ME Making Your Speech Count</a>
+                    <a href="#speech">Making Your Speech Count</a>
                 </li>
 				
 				<li>
-                    <a href="#badGrades">REWRITE ME Bad Grades?</a>
+                    <a href="#badGrades">Bad Grades?</a>
                 </li>
             </ul>
 
@@ -883,5 +926,6 @@
         </div>
     </div>
 	<!--End old rewrite HTML-->
+	<script type="text/javascript" src="index.js"></script>
 </body>
 </html>

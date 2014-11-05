@@ -57,7 +57,7 @@ if(isset($_SESSION['employer_loggedin']))
     <body>
     <div data-role="page" data-dialog="true">
         <div data-role="header">
-            <a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a>
+            <a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php" rel="external">Back</a>
             </br><center>Login</center></br>
         </div>
         <div>
@@ -161,14 +161,15 @@ function handle_login()
                 // Conditional Handling
                 if ($p == 0)
                 {
-                    session_start();
                     if($row["user_type"] == "admin"){
                         $_SESSION['admin_loggedin'] = $row['email'];
-                        header('Location: admin.php');
+                        // header('Location: admin.php');
+						print '<script type="text/javascript">window.location="admin.php";</script>';
                     }
 					else if($row["user_type"] == "employer"){
                         $_SESSION['employer_loggedin'] = $row['email'];
-                        header('Location: employerView.php');
+                        // header('Location: employerView.php');
+						print '<script type="text/javascript">window.location="employerView.php";</script>';
 			   
 					   $query = "INSERT INTO careerschema.authorizationtable(ip_address) WHERE email =($1) VALUES ($2)";
 						$stmt = pg_prepare($conn, "log", $query);
@@ -181,12 +182,10 @@ function handle_login()
 					}	
 					else{
                         $_SESSION['student_loggedin'] = $row['email'];
-                        header('Location: index.php');
+                       // header('Location: index.php');
+					   print '<script type="text/javascript">window.location="index.php";</script>';
                     }
-					
-                    exit();
                 }
-
             }
             else
             {

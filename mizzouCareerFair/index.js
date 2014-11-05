@@ -20,10 +20,10 @@
 		}
 	}
 	
-	$(document).on("pageinit", "#map_page", function() {
+	// $(document).on("pageinit", "#map_page", function() {
+	
+	function nowRun(){
 		initialize();
-		
-		
 		$("#map_canvas").hide();
 		
 		
@@ -32,9 +32,12 @@
     		var show = myswitch[0].selectedIndex == 1 ? true:false;
     
     		if(show) {
-        
-        		$('#map_canvas').fadeIn('slow');
-        		//$('#first-me').fadeOut();
+				$('#map_canvas').fadeIn('slow');
+				google.maps.event.trigger(map, "resize");
+				map.setCenter(mapCenter); 
+				map.setZoom(12);
+				// mapCenter = map.getCenter();
+				// map.setCenter(mapCenter);
     		} else {
         
        			//$('#first-me').fadeIn('slow');
@@ -42,7 +45,8 @@
     		}
 		});
 		
-	});
+	}
+	window.onload = nowRun;
 
 	$(document).on('click', '#submitDirections', function(e) {
 		e.preventDefault();
@@ -51,6 +55,7 @@
 		$("#toDirection").hide()
 		$("#fromDirection").hide()
 		$("#submitDirections").hide()
+		$("#mapOptions").show()
 	});
 	
 	$(document).on('click', '#resetSearch', function(e) {
@@ -59,12 +64,13 @@
 
 	var directionDisplay,
 		directionsService = new google.maps.DirectionsService(),
-		map;
+		map,
+		mapCenter;
 
 	function initialize() 
 	{
 		directionsDisplay = new google.maps.DirectionsRenderer();
-		var mapCenter = new google.maps.LatLng(38.9343, -92.3306);
+		mapCenter = new google.maps.LatLng(38.9343, -92.3306);
 
 		var myOptions = {
 			zoom:10,
@@ -87,10 +93,16 @@
 			
 			$('#from').val(latlon);
 		};
+	google.maps.event.addDomListener(window, "resize", function() {
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(mapCenter); 
+	});
 	}
 	
+	calculateRoute();
 	function calculateRoute() 
 	{
+		/*
 		var x = document.getElementById("map_canvas");
 		
 		navigator.geolocation.getCurrentPosition(showPosition);
@@ -101,7 +113,7 @@
 			console.log(latlon);
 			
 		};
-			
+		*/
 	
 	
 		var selectedMode = $("#mode").val(),
@@ -111,7 +123,6 @@
 		if(start == '' || end == '')
 		{
 			// cannot calculate route
-			$("#results").hide();
 			return;
 		}
 		else
@@ -125,7 +136,6 @@
 			directionsService.route(request, function(response, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
 					directionsDisplay.setDirections(response); 
-					$("#results").show();
 					/*
 						var myRoute = response.routes[0].legs[0];
 						for (var i = 0; i < myRoute.steps.length; i++) {
@@ -134,7 +144,6 @@
 					*/
 				}
 				else {
-					$("#results").hide();
 				}
 			});
 

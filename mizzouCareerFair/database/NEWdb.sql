@@ -16,6 +16,8 @@ CREATE TABLE careerSchema.authorizationTable(
 	email 		varchar(50) PRIMARY KEY NOT NULL,
     hashed_pass varchar(40) NOT NULL,
     salt        varchar(50) NOT NULL,
+	firsname 	varchar(30),
+	lastname 	varchar(30)
 	ip_address 	varchar(40),
 	user_type 	varchar(40),
 	company 	varchar(100),
@@ -76,15 +78,25 @@ CREATE TABLE careerSchema.students (
 
 );
 
+
 -- Table to hold admin upload info
 DROP TABLE IF EXISTS careerSchema.mapUploads CASCADE;
 CREATE TABLE careerSchema.mapUploads (
     filePath varchar(100) PRIMARY KEY NOT NULL,
 		imgName varchar(50),
-		entryTime timestamp NOT NULL default CURRENT_TIMESTAMP
+		entryTime timestamp NOT NULL default 
+		CURRENT_TIMESTAMP,
+		inUse boolean
 );
 
-
-
+--Table populates when employers scan qr code
+DROP TABLE IF EXISTS careerSchema.employerScannedStudents CASCADE;
+CREATE TABLE careerSchema.employerScannedStudents (
+	email				varchar(50),
+	employerEmail		varchar(50),
+	firstname 			varchar(50),
+	lastname			varchar(50),
+	company				varchar(50)
+);
 
 
