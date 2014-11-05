@@ -119,7 +119,7 @@
 		<div class="panel left" data-role="panel" id="fairOptions" data-position="left" data-display="overlay">
 		
 		<a  style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-bars ui-btn-icon-left" href="#fairSelect">Select a Fair</a>
-		<a style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-navigation ui-btn-icon-left" data-transition="flip" href="#map_page">Get Directions</a>
+		<a style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-navigation ui-btn-icon-left" data-transition="flip" href="#map_page">Get Directions to Fair</a>
 		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent" style="width:80%">
 				<center>Add Fair to Calendar</center>
 				<span class="_start">02-10-2015 10:00:00</span>
@@ -155,7 +155,10 @@
 					<ul>
 						<li><a href="#unfiltered">All</a></li>
 						<li><a href="#filtered">Filtered</a></li>
-						<li><a href="#visited">Visited</a></li>
+						<?php
+						if($_SESSION['student_loggedin'])
+						echo '<li><a href="#visited">Favorites</a></li>';
+						?>
 					</ul>
 				</div>
 
@@ -178,9 +181,11 @@
 					</ul>
 				</div>
 				
-				<div id="visited"></br>
-					<div class="ui-bar ui-bar-a">
+			
 						<?php
+						echo 
+						'<div id="visited"></br>
+							<div class="ui-bar ui-bar-a">';
 						if ($_SESSION['student_loggedin']){
 							
 								$stuEmail = $_SESSION['student_loggedin'];
@@ -221,9 +226,9 @@
 								}	
 								
 						}
+						echo'</div>
+						</div>';
 						?>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
