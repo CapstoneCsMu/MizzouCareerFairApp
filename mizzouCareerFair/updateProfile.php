@@ -153,7 +153,7 @@ if(isset($_POST['Update'])){
 	$lifePlan = htmlspecialchars($_POST['lifePlan']);
 	$job = htmlspecialchars($_POST['job']);
 	$linkedinURL = htmlspecialchars($_POST['linkedInURL']);
-	$pictureURL = htmlspecialchars($_POST['pictureURL']);
+	$pictureURL = htmlspecialchars($_POST['picture']);
 	$location = htmlspecialchars($_POST['location']);
 	$linkedIn = htmlspecialchars($_POST['linkedIn']);
 	$student_loggedin = $_POST['student_loggedin'];

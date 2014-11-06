@@ -109,7 +109,7 @@ function oauth_session_exists() {
 		  $phone = $response['linkedin']->{'phone-numbers'}->{'phone-number'}->{'phone-number'};
 		  $profileURL = $response['linkedin']->{'public-profile-url'};
 		  
-		  echo "</br><pre>" . print_r($response['linkedin'], TRUE) . "</pre>";
+		  // echo "</br><pre>" . print_r($response['linkedin'], TRUE) . "</pre>";
 		} else {
 		  // request failed
 		  echo "Error retrieving profile information:<br /><br />RESPONSE:<br /><br /><pre>" . print_r($response) . "</pre>";

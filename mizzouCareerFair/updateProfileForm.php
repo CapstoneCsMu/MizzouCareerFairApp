@@ -101,7 +101,7 @@ include('check_https.php');
 </head>
 
 <body>
-	<div data-role="page">
+	<div data-role="page" data-dialog="true">
 			<div data-role="header">
 				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a> 
 				<h1>Update Profile</h1>
@@ -111,7 +111,7 @@ include('check_https.php');
 					<div class="ui-field-contain">
 						<form id="linkedin_connect_form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="get">
 							<input type="hidden" name="lType" id="lType" value="initiate" />
-							<center><button style="width: 50%;" data-rel="button" class="ui-btn ui-icon-cloud ui-btn-icon-left" onclick="document.getElementById('linkedin_connect_form').submit();">Use Your LinkedIn Data</button></center>
+							<center><button  style="text-overflow: ellipsis; overflow: visible; white-space: normal; width: 80%;" data-rel="button" class="ui-btn ui-icon-cloud ui-btn-icon-left" onclick="document.getElementById('linkedin_connect_form').submit();">Use Your LinkedIn Data</button></center>
 						</form>
 				<form data-ajax="false" id="updateInfoForm" method="post" action="updateProfile.php" >
 				<?php include('updateWithLinkedIn.php'); ?>
@@ -137,11 +137,11 @@ include('check_https.php');
 						</div>
 						<div data-role="fieldcontain">	
 							<label for="lifePlan">Career Goals:</label>
-							<textarea rows="5" name="lifePlan" wrap="physical" maxlength="200" data-mini="true" value="<?php echo $lifeplan; ?>"></textarea>
+							<textarea rows="5" name="lifePlan" wrap="physical" maxlength="200" data-mini="true" placeholder="<?php echo $lifeplan; ?>"value="<?php echo $lifeplan; ?>"></textarea>
 						</div>
 						<div data-role="fieldcontain">
 							<label for="job">Current Job:</label>
-							<input type="text" name="job" id="job" value="<?php echo $headline; ?>"placeholder="Dec-2015" data-mini="true">
+							<input type="text" name="job" id="job" value="<?php echo $headline; ?>" data-mini="true">
 						</div>
 						<div data-role="fieldcontain">
 							<label for="linkedInURL">LinkedIn Profile (Public-URL):</label>
