@@ -222,11 +222,6 @@
 			echo '</ul>';
 			echo '</div></div>';	
 			
-			//echo $line['email'];
-			//echo $emailStudents[$j];
-			
-			//$email = $line['email'];
-			
 			for ($j=0; $j<$num_rows; $j++){
 			
 					echo '<div data-role="page" data-theme="a" id="student'.$j.'" data-cache="false">
@@ -245,8 +240,6 @@
 				
 				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
 				$student = $line['email'];
-				//echo $student;
-				//echo "seee";
 				
 				echo '<form name="favorite_student" method="post" action="" data-ajax="false">';
 				echo"<input type=\"hidden\" name=\"fav\" value=\"".$student."\"/>";
@@ -306,14 +299,10 @@
 		<?php
 		if(isset($_POST['fav_me'])){
 				
-			//	$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$student'";
-				//$result = pg_query($query3) or die("Query failed: " . pg_last_error());
 				$result=pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 $result=pg_execute($conn,"query3",array('1',$_POST['fav']));
 				$result=pg_execute($conn,"query3",array('1',$_POST['fav']));
 				header('Location: employerView.php');  
-			//	header('Location: '.$_SERVER['REQUEST_URI']);
-					
 			}	
 	?>
 	
