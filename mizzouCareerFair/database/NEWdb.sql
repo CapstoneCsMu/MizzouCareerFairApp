@@ -74,6 +74,10 @@ CREATE TABLE careerSchema.students (
         phoneNumber varchar(20),
         lifePlan 	varchar(200),
         linkedin_id varchar(50),
+		picture_url varchar(100),
+		location varchar(100),
+		linkedin_url varchar(150),
+		job varchar(150),
         FOREIGN KEY (email) REFERENCES careerSchema.authorizationTable(email)
 
 );
