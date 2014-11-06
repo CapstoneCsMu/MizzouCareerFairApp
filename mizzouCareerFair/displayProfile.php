@@ -36,7 +36,7 @@
 			</ul>
 		</div>
 	</div>
-<?
+<?php
 function displayProfile()
 {
     // include ("data.php");

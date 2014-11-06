@@ -103,7 +103,7 @@ include('check_https.php');
 <body>
 	<div data-role="page" data-dialog="true">
 			<div data-role="header">
-				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a> 
+				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php" rel="external">Back</a> 
 				<h1>Update Profile</h1>
 			</div>
 			
