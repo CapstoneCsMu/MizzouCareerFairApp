@@ -244,7 +244,8 @@
 				<input type="submit" data-icon="star" value="Favorite This Student!" name="submit" />
 				</form>';
 			
-			
+				
+				
 				//Grab each individual field
 				$k=0;
 				foreach ($line as $col_value) {
@@ -253,7 +254,7 @@
 						case 0:
 							echo '<b>Email Address: <b>';
 							echo $col_value."</br>";
-							$email = $col_value;
+							//$email = $col_value;
 							break;
 						case 1:
 							echo 'First Name: ';
@@ -286,30 +287,32 @@
 						case 8:
 							echo 'LinkedIn ID: ';
 							echo $col_value."</br>";
-							break;	
+							break;						
 					}
-					$k++;
+					
+					$k++;	
+	
 				}
-				
-			
-				
+
 				echo '</div>';
 				echo '</div>';
-			
-			
-			
+				
 			}
+
+			//echo $emailList[$j];
+			//echo $line['email'];
 			
-			echo $line['email'];
-			echo $emailList[$j];
+			$email = $emailList[$j];
+					$check=0;
+					//$email = $line['email'];
+					if(!empty($_POST['submit']) && ($check==0)){
+
+						$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$email'";
+						$result = pg_query($query3) or die("Query failed: " . pg_last_error());
+						
+						$check++;
+					}
 			
-			$email = $line['email'];
-			if(!empty($_POST['submit'])){
-			
-			$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$email'";
-			$result = pg_query($query3) or die("Query failed: " . pg_last_error());
-		
-			}	
 		}
 	?>	
 	
