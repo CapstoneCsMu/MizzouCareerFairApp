@@ -248,7 +248,7 @@
 				//echo $student;
 				//echo "seee";
 				
-				echo '<form name="favorite_student" method="post">';
+				echo '<form name="favorite_student" method="post" action="" data-ajax="false">';
 				echo"<input type=\"hidden\" name=\"fav\" value=\"".$student."\"/>";
 				echo '<input type="submit" data-icon="star" name="fav_me" value="Favorite This Student!" />
 				</form>';
@@ -311,7 +311,7 @@
 				$result=pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 $result=pg_execute($conn,"query3",array('1',$_POST['fav']));
 				$result=pg_execute($conn,"query3",array('1',$_POST['fav']));
-				header('Location: '.$_SERVER['PHP_SELF']);  
+				header('Location: employerView.php');  
 			//	header('Location: '.$_SERVER['REQUEST_URI']);
 					
 			}	
