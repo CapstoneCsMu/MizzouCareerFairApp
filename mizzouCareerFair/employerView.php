@@ -243,12 +243,10 @@
 				
 				$page = $_SERVER['PHP_SELF'];
 				
-				echo '<form name="favorite_student" method="post" action="">';
+				echo '<form name="favorite_student" method="post" data-ajax="false">';
 				echo"<input type=\"hidden\" name=\"fav\" value=\"".$student."\"/>";
 				echo '<input type="submit" data-icon="star" name="fav_me" value="Favorite This Student!" />
 				</form>';
-				
-				//header("Refresh:0; url=employerView.php#scannedStudents");
 				
 				//Grab each individual field
 				$k=0;
@@ -314,9 +312,10 @@
 
 			//header("Location: index.php#successFavorite");
 			//header('Location: https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/employerView.php');  
-		
+			header("refresh:0;url=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/employerView.php");
+				
 			
-			//echo "outside!";
+			echo "outside!";
 			//header("Location: employerView.php#successFavorite");
 	?>
 </body>

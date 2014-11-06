@@ -21,17 +21,17 @@ if ($_SESSION['student_loggedin']){
 			<li data-role="list-divider">Companies You Visited</li>';
 			
 			$i=1;
-			while ($line = pg_fetch_assoc($result)) {
-				
-				//foreach($companyNames as $line['company']){
+			//while ($line = pg_fetch_assoc($result)) {
+				$line = pg_fetch_assoc($result);
+				foreach($line['company'] as $companyNames){
 					
-					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$line['company'].'</a></li>';
+					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$companyNames.'</a></li>';
 
-				//}
+				}
 	
 				$i++;
 				
-			}
+			//}
 	
 			echo '</ul>';
 			echo '</div>';		
