@@ -155,7 +155,11 @@
 					<ul>
 						<li><a href="#unfiltered">All</a></li>
 						<li><a href="#filtered">Filtered</a></li>
-						<li><a href="#visited">Visited</a></li>
+						<?php
+						if($_SESSION['student_loggedin']){
+							echo '<li><a href="#visited">Favorites</a></li>';
+						}
+						?>
 					</ul>
 				</div>
 
@@ -177,11 +181,14 @@
 					<?php include 'displayWithFilters.php'; ?>
 					</ul>
 				</div>
-				
-				<div id="visited"></br>
-					<div class="ui-bar ui-bar-a">
-						<center><p><b>You haven't visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>
-					</div>
+				<div id="visited">
+					<form class="ui-filterable">
+						<input id="UNFILTERED" data-type="search">
+					</form>
+					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
+					<?php include 'displayVisited.php'; ?>
+					</ul>
+
 				</div>
 			</div>
 		</div>
@@ -599,23 +606,23 @@
                 <li data-role="list-divider">How To's and Tutorials</li>
 				
 				<li>
-                    <a href="#questions">REWRITE ME Recruiter Questions</a>
+                    <a href="#questions">Recruiter Questions</a>
                 </li>
 
                 <li>
-                    <a href="#dress">REWRITE ME Dress for Success</a>
+                    <a href="#dress">Dress for Success</a>
                 </li>
 
                 <li>
-                    <a href="#standOut">REWRITE ME Standing Out</a>
+                    <a href="#standOut">Standing Out</a>
                 </li>
 
                 <li>
-                    <a href="#speech">REWRITE ME Making Your Speech Count</a>
+                    <a href="#speech">Making Your Speech Count</a>
                 </li>
 				
 				<li>
-                    <a href="#badGrades">REWRITE ME Bad Grades?</a>
+                    <a href="#badGrades">Bad Grades?</a>
                 </li>
             </ul>
 

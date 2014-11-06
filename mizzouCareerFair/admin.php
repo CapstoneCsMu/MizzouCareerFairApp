@@ -57,26 +57,66 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
 <div data-role="page" data-theme="a" id="home">
     <div data-role="header" >
         </br>
-        <center>Administrator</center>
+        <center>Mizzou Career Fairs Site Administrator</center>
         </br>
         <a data-direction="reverse" data-icon="home" data-iconpos="notext"
            data-transition="flip" href="index.php">Home</a> <a data-icon="search"
                                                                data-iconpos="notext" data-rel="dialog" data-transition="fade"
                                                                href="../nav.html">Search</a>
     </div>
-    <div data-role="navbar">
-        <ul>
-            <li><a href="#adminCompanies">RSS Feed</a></li>
-            <li><a href="#uploadMap">Upload Map</a></li>
-            <li><a href="#anylink">Add/Edit Users</a></li>
-            <li><a href="#anylink">News Feed</a></li>
-        </ul>
-    </div>
-
     <div data-role="content">
-        <h2>Admin</h2>
+		<h2>Welcome</h2> <?php echo $_SESSION['admin_loggedin']; ?>
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider"></li>
+                  <li>
+                    <a data-transition="slideup" href="#changePass">Change Password</a>
+                </li>
+		 <li>
+                    <a data-transition="slideup" href="adminCompanies.php">RSS Feed</a>
+                </li>
+                <li>
+                    <a data-transition="slide" data-direction="reverse" href="#uploadMap">Upload Map</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="adminUsers.php">Manage Users</a>
+                </li>
+		<li>
+		    <a data-transition="flip" href=#newsFeed">News Feed</a>
+			</ul>
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+				<li data-role="list-divider"></li>
+	   </ul>
+	</div>
+</div>
 
-    </div>
+    <div data-role="page" id="changePass" data-dialog="true">
+        <div data-role="header">
+        </br>
+                <a data-icon="delete" data-transition="pop" data-iconpos="notext" href="admin.php">Back</a>
+                <center>Change Password</center>
+        </br>
+        </div>
+        <div data-role="main" class="ui-content ui-grid-a">
+
+                <form method="post" id="changeAdminPass" action="admin.php#changePass" data-ajax="false" >
+                                        <label for="currPassword"><b>Current Password:</label>
+                                        <input type="password" name="currPassword" id="currPassword">
+                                        <label for="newPassword"><b>New Password:</label>
+                                        <input type="password" name="newPassword" id="newPassword" placeholder="At least 5 characters">
+                                        <label for="confPassword"><b>Confirm New Password:</label>
+                                        <input type="password" name="confPassword" id="confPassword" placeholder="At least 5 characters">
+                </form>
+                        <center>
+
+                                <input type="submit" data-inline="true" value="Update" onclick="submitAdmin();" name="Submit">
+                                <?php if (isset($_POST['Submit'])){ changePass();} ?>
+                        </center>
+
+
+        </div>
+        <div data-role="footer">
+                </br>
+        </div>
 </div>
 
 <div data-role="page" data-theme="a" id="uploadMap">

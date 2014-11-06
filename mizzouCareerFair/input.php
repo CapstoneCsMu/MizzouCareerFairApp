@@ -6,40 +6,41 @@ Parent: adminCompanies.php
 Purpose:This inputs the rss information into the database. 
 */
 include ("data.php");
+include("rssFunctions.php");
 $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 
 // This is the URL of the rss feed
-$rssLink = $_POST['rssLink'];
+if($_POST['function'] == "add") {
+    $rssLink = $_POST['rssLink'];
 
-// The field that holds company name
-$name = $_POST['nameField'];
+    $name = $_POST['nameField'];
 
-$city = $_POST['cityField'];
+    $city = $_POST['cityField'];
 
-$state = $_POST['stateField'];
-// This is the desired majors field
-$majors = $_POST['majorsField'];
+    $state = $_POST['stateField'];
 
-// This is the position type field
-$positionType = $_POST['positionTypeField'];
+    $majors = $_POST['majorsField'];
 
-$website = $_POST['websiteField'];
+    $positionType = $_POST['positionTypeField'];
 
-$citizenship = $_POST['citizenshipField'];
+    $website = $_POST['websiteField'];
 
-$status = $_POST['statusField'];
+    $citizenship = $_POST['citizenshipField'];
 
-$eventName = $_POST['event'];
+    $status = $_POST['statusField'];
 
+    $eventName = $_POST['event'];
 
+    $function = $_POST['function'];
 
+    addRss($rssLink, $name, $positionType, $majors, $city, $state, $website, $citizenship, $eventName);
 
-// Save the RSS URL and the field for the company name to DB
-$query = 'INSERT INTO careerSchema.rssinfo (rss, companyName, positionTypes, majors, city, states, website, citizenship, fairName) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)';
-$statement = pg_prepare("myQuery", $query) or die (pg_last_error());
-$result = pg_execute("myQuery", array($rssLink, $name, $positionType, $majors, $city, $state, $website, $citizenship, $eventName)) or die(pg_last_error());
+}
+
+else if($_POST['function'] == "remove"){
+    $fairName = $_POST['eventName'];
+    removeRss($fairName);
+}
 
 header('Location: admin.php');
-
-
 ?>
