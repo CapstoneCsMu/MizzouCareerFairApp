@@ -10,6 +10,7 @@
 		session_start();
 	}
 	$_SESSION['prevPage'] = 'employerView.php';
+	
  ?>
 <!DOCTYPE html>
 <html>
@@ -151,7 +152,7 @@
 	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->
 	
 	<!--Start scanned students HTML-->
-	<div data-role="page" data-theme="a" id="scannedStudents">
+	<div data-role="page" data-theme="a" id="scannedStudents" data-cache="false">
         <div data-role="header" data-position="fixed">
             <h1>Potential Employees</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -161,6 +162,7 @@
         </div>
 		
 		<?php
+		
 		include ("data.php");
 			$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 			if (!$conn)
@@ -175,7 +177,6 @@
 	<?php
 		
 		$empEmail = $_SESSION['employer_loggedin'];
-		
 		echo $empEmail;
 		echo '</br></br>';
 
@@ -188,18 +189,20 @@
 			}
 			
 		if ($_SESSION['employer_loggedin'])
-		{	
-			
+		{	 
 			//use pg_num_rows to get amount of rows. Print that many pages with info.	
 			$query1 = "SELECT DISTINCT ON(email) * FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
 			$result = pg_query($query1) or die("Query failed: " . pg_last_error());
 			$num_rows = pg_num_rows($result);
 			
-			echo '<div data-role="content">
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+			//echo '<div data-role="content" data-cache="false">
+			echo '<div role="main" class="ui-content jqm-content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview" data-cache="false">
                 <li data-role="list-divider">Students you have scanned</li>';
 			
+			
 			$i=0;
+			//loop through every student employer has scanned in CF
 			while ($line = pg_fetch_assoc($result)) {
 					
 					//prints data by the line
@@ -209,23 +212,26 @@
 					else{
 						echo '<li><a href="employerView.php#student'.$i.'">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
 					}
-					
-					$emailList[$i] = $line['email'];
-					$namesList[$i] = $line['firstname']." ".$line['lastname'];
+					//makes array of students emails
+					$emailStudents[$i] = $line['email'];
+					//makes array of students fist and last name
+					$namesStudents[$i] = $line['firstname']." ".$line['lastname'];
 					$i++;
 			}
+			
 			echo '</ul>';
-			echo '</div></div>';
+			echo '</div></div>';	
 			
-				
+			//echo $line['email'];
+			//echo $emailStudents[$j];
 			
-				
+			//$email = $line['email'];
 			
-			for ($j=0; $j<$i; $j++){
+			for ($j=0; $j<$num_rows; $j++){
 			
-					echo '<div data-role="page" data-theme="a" id="student'.$j.'">
+					echo '<div data-role="page" data-theme="a" id="student'.$j.'" data-cache="false">
 					<div data-role="header" data-position="fixed">
-					<h1>'.$namesList[$j].'</h1>
+					<h1>'.$namesStudents[$j].'</h1>
 					<a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
 					data-transition="flip" href="employerview.php#scannedStudents">Home</a> <a data-icon="search"
 					data-iconpos="notext" data-rel="dialog" data-transition="fade"
@@ -233,19 +239,20 @@
 					</div>
 
 					<div data-role="content">';
-					
 				
-				$query2 = "SELECT * FROM careerSchema.students WHERE email = '$emailList[$j]'";
+				$query2 = "SELECT * FROM careerSchema.students WHERE email = '$emailStudents[$j]'";
 				$result = pg_query($query2) or die("Query failed: " . pg_last_error());
 				
 				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
+				$student = $line['email'];
+				//echo $student;
+				//echo "seee";
 				
-				echo '<form name="favorite_student" method="post"> 
-				<input type="submit" data-icon="star" value="Favorite This Student!" name="submit" />
+				echo '<form name="favorite_student" method="post">';
+				echo"<input type=\"hidden\" name=\"fav\" value=\"".$student."\"/>";
+				echo '<input type="submit" data-icon="star" name="fav_me" value="Favorite This Student!" />
 				</form>';
 			
-				
-				
 				//Grab each individual field
 				$k=0;
 				foreach ($line as $col_value) {
@@ -254,7 +261,7 @@
 						case 0:
 							echo '<b>Email Address: <b>';
 							echo $col_value."</br>";
-							//$email = $col_value;
+							$email = $col_value;
 							break;
 						case 1:
 							echo 'First Name: ';
@@ -287,34 +294,28 @@
 						case 8:
 							echo 'LinkedIn ID: ';
 							echo $col_value."</br>";
-							break;						
+							break;	
 					}
-					
-					$k++;	
-	
-				}
-
+					$k++;
+				}			
 				echo '</div>';
-				echo '</div>';
-				
-			}
-
-			//echo $emailList[$j];
-			//echo $line['email'];
-			
-			$email = $emailList[$j];
-					$check=0;
-					//$email = $line['email'];
-					if(!empty($_POST['submit']) && ($check==0)){
-
-						$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$email'";
-						$result = pg_query($query3) or die("Query failed: " . pg_last_error());
-						
-						$check++;
-					}
-			
+				echo '</div>';			
+			}	
 		}
-	?>	
+		?>	
+		<?php
+		if(isset($_POST['fav_me'])){
+				
+			//	$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$student'";
+				//$result = pg_query($query3) or die("Query failed: " . pg_last_error());
+				$result=pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
+                $result=pg_execute($conn,"query3",array('1',$_POST['fav']));
+				$result=pg_execute($conn,"query3",array('1',$_POST['fav']));
+				header('Location: '.$_SERVER['PHP_SELF']);  
+			//	header('Location: '.$_SERVER['REQUEST_URI']);
+					
+			}	
+	?>
 	
 </body>
 </html>
