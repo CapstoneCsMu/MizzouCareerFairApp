@@ -20,26 +20,22 @@ if ($_SESSION['student_loggedin']){
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
 			<li data-role="list-divider">Companies You Visited</li>';
 			
-			$i=0;
+			$i=1;
 			while ($line = pg_fetch_assoc($result)) {
-				echo '<li><a href="index.php#company'.$i.'">'.$line['company'].'</a></li>';
-				$company = $line['company'];
+				
+				//foreach($companyNames as $line['company']){
+					
+					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$line['company'].'</a></li>';
+
+				//}
+	
 				$i++;
+				
 			}
-			
+	
 			echo '</ul>';
-			echo '</div>';
+			echo '</div>';		
 			
-			/*for ($j=0; $j<$i; $j++){
-				echo '<div data-role="page" data-theme="a" id="company'.$j.'">
-				<div data-role="header" data-position="fixed">
-				<h1>'.$company.'</h1>
-				<a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-				data-transition="flip" href="index.php#companies">Home</a> <a data-icon="search"
-				data-iconpos="notext" data-rel="dialog" data-transition="fade"
-				href="../nav.html">Search</a>
-				</div></div>';
-			}*/
 		}
 		else{
 			echo '<center><p><b>You have not visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>';
