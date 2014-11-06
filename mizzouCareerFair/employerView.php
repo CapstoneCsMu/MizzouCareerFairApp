@@ -241,11 +241,15 @@
 				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
 				$student = $line['email'];
 				
-				echo '<form name="favorite_student" method="post" action="" data-ajax="false">';
+				$page = $_SERVER['PHP_SELF'];
+				
+				echo '<form name="favorite_student" method="post" action="">';
 				echo"<input type=\"hidden\" name=\"fav\" value=\"".$student."\"/>";
 				echo '<input type="submit" data-icon="star" name="fav_me" value="Favorite This Student!" />
 				</form>';
-			
+				
+				//header("Refresh:0; url=employerView.php#scannedStudents");
+				
 				//Grab each individual field
 				$k=0;
 				foreach ($line as $col_value) {
@@ -295,16 +299,25 @@
 				echo '</div>';			
 			}	
 		}
-		?>	
-		<?php
+		?>
+
+		
+		
+	<?php
 		if(isset($_POST['fav_me'])){
 				
 				$result=pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 $result=pg_execute($conn,"query3",array('1',$_POST['fav']));
 				$result=pg_execute($conn,"query3",array('1',$_POST['fav']));
-				header('Location: employerView.php');  
+
 			}	
+
+			//header("Location: index.php#successFavorite");
+			//header('Location: https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/employerView.php');  
+		
+			
+			//echo "outside!";
+			//header("Location: employerView.php#successFavorite");
 	?>
-	
 </body>
 </html>
