@@ -68,13 +68,11 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
             <li><a href="#uploadMap">Upload Map</a></li>
             <li><a href="#anylink">Add/Edit Users</a></li>
             <li><a href="#anylink">News Feed</a></li>
+            <li><a href="#changePass">Change Password</a></li>
+
         </ul>
     </div>
 
-    <div data-role="content">
-        <h2>Admin</h2>
-
-    </div>
 </div>
 
 <div data-role="page" data-theme="a" id="uploadMap">
@@ -85,6 +83,8 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
                                                                data-iconpos="notext" data-rel="dialog" data-transition="fade"
                                                                href="../nav.html">Search</a>
     </div><br><br>
+
+
 
     <div>
         <form action="" method="post" enctype="multipart/form-data" data-ajax="false">
@@ -151,6 +151,34 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
     <div data-role="footer">
         </br>
     </div>
+</div>
+
+<div data-role="page" data-dialog="true" id="changePass">
+    <div data-role="header">
+        <a rel="external" data-icon="arrow-l" data-iconpos="notext" href="admin.php">Back</a>
+        <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
+        <h1>RSS Configuration</h1>
+    </div>
+    <div data-role="main" class="ui-content ui-grid-a">
+
+        <form method="post" id="changeAdminPass" action="admin.php#changePass" data-ajax="false" >
+            <label for="currPassword"><b>Current Password:</label>
+            <input type="password" name="currPassword" id="currPassword">
+            <label for="newPassword"><b>New Password:</label>
+            <input type="password" name="newPassword" id="newPassword" placeholder="At least 5 characters">
+            <label for="confPassword"><b>Confirm New Password:</label>
+            <input type="password" name="confPassword" id="confPassword" placeholder="At least 5 characters">
+        </form>
+        <center>
+            <input type="submit" data-inline="true" value="Update" onclick="submitAdmin();" name="Submit">
+            <?php if (isset($_POST['Submit'])){ changePass();} ?>
+        </center>
+
+
+        </div>
+        <div data-role="footer">
+        </br>
+        </div>
 </div>
 
 
