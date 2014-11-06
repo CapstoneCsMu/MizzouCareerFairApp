@@ -2,9 +2,11 @@
 /*File:  admin.php
 Parent:  login.php (redirects here upon admin logging in)
 Function:  administrative dashboard to configure application*/
-include("rssFunctions.php");
-authorization();
-
+session_start();
+if(!$_SESSION['admin_loggedin']){
+    $_SESSION['admin_attempt'] = "yes";
+    header('Location: login.php');
+}
 include ("data.php");
 $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 ?>
@@ -55,26 +57,66 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
 <div data-role="page" data-theme="a" id="home">
     <div data-role="header" >
         </br>
-        <center>Administrator</center>
+        <center>Mizzou Career Fairs Site Administrator</center>
         </br>
         <a data-direction="reverse" data-icon="home" data-iconpos="notext"
            data-transition="flip" href="index.php">Home</a> <a data-icon="search"
                                                                data-iconpos="notext" data-rel="dialog" data-transition="fade"
                                                                href="../nav.html">Search</a>
     </div>
-    <div data-role="navbar">
-        <ul>
-            <li><a href="#option">RSS Feed</a></li>
-            <li><a href="#uploadMap">Upload Map</a></li>
-            <li><a href="#anylink">Add/Edit Users</a></li>
-            <li><a href="#anylink">News Feed</a></li>
-        </ul>
-    </div>
-
     <div data-role="content">
-        <h2>Admin</h2>
+		<h2>Welcome</h2> <?php echo $_SESSION['admin_loggedin']; ?>
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider"></li>
+                  <li>
+                    <a data-transition="slideup" href="#changePass">Change Password</a>
+                </li>
+		 <li>
+                    <a data-transition="slideup" href="adminCompanies.php">RSS Feed</a>
+                </li>
+                <li>
+                    <a data-transition="slide" data-direction="reverse" href="#uploadMap">Upload Map</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="adminUsers.php">Manage Users</a>
+                </li>
+		<li>
+		    <a data-transition="flip" href=#newsFeed">News Feed</a>
+			</ul>
+			<ul data-dividertheme="b" data-inset="true" data-role="listview">
+				<li data-role="list-divider"></li>
+	   </ul>
+	</div>
+</div>
 
-    </div>
+    <div data-role="page" id="changePass" data-dialog="true">
+        <div data-role="header">
+        </br>
+                <a data-icon="delete" data-transition="pop" data-iconpos="notext" href="admin.php">Back</a>
+                <center>Change Password</center>
+        </br>
+        </div>
+        <div data-role="main" class="ui-content ui-grid-a">
+
+                <form method="post" id="changeAdminPass" action="admin.php#changePass" data-ajax="false" >
+                                        <label for="currPassword"><b>Current Password:</label>
+                                        <input type="password" name="currPassword" id="currPassword">
+                                        <label for="newPassword"><b>New Password:</label>
+                                        <input type="password" name="newPassword" id="newPassword" placeholder="At least 5 characters">
+                                        <label for="confPassword"><b>Confirm New Password:</label>
+                                        <input type="password" name="confPassword" id="confPassword" placeholder="At least 5 characters">
+                </form>
+                        <center>
+
+                                <input type="submit" data-inline="true" value="Update" onclick="submitAdmin();" name="Submit">
+                                <?php if (isset($_POST['Submit'])){ changePass();} ?>
+                        </center>
+
+
+        </div>
+        <div data-role="footer">
+                </br>
+        </div>
 </div>
 
 <div data-role="page" data-theme="a" id="uploadMap">
@@ -85,7 +127,6 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
                                                                data-iconpos="notext" data-rel="dialog" data-transition="fade"
                                                                href="../nav.html">Search</a>
     </div><br><br>
-
     <div>
         <form action="" method="post" enctype="multipart/form-data" data-ajax="false">
             <div class="chooseFile">
@@ -134,25 +175,177 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
     }?>
 </div>
 
-<div data-role="page" data-dialog="true" id="option">
-    <div data-role="header">
-        <a rel="external" data-icon="arrow-l" data-iconpos="notext" href="admin.php">Back</a>
-        <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
-        <h1>RSS Configuration</h1>
+<div data-role="page" data-theme="a" id="adminCompanies">
+    <div data-role="header" data-position="fixed">
+        <h1>RSS Feed Configuration</h1>
+        <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
+           data-transition="flip" href="admin.php">Back</a> <a data-icon="search"
+                                                               data-iconpos="notext" data-rel="dialog" data-transition="fade"
+                                                               href="../nav.html">Search</a>
+    </div><br><br>
+<form method="post" action="" id="link" data-ajax="false">
+    <label for="year"><h4>Year For This Career Fair:</h4></label>
+    <select name="year" id="year">
+        <?php
+        for($i = 2014; $i < 2050; $i++)
+            echo "<option value=\"".$i."\">".$i."</option>";
+        ?>
+    </select>
+
+    <label for="semester"><h4>Semester Of This Career Fair:</h4></label>
+    <select name="semester" id="semester">
+        <option value="Fall">"Fall"</option>
+        <option value="Spring">"Spring"</option>
+    </select>
+
+    <label for="college"><h4>College For This Career Fair:</h4></label>
+    <select name="college" id="college">
+        <option value="Engineering">Engineering</option>
+        <option value="Business">Business</option>
+        <option value="Journalism">Journalism</option>
+        <option value="CAFNR">CAFNR</option>
+    </select>
+
+    <input type="text" name="link" placeholder="RSS Link"></input>
+	<div class="submitBtn">
+       <input type="submit" name="submitLink" value="Submit">
     </div>
-    <div data-role="main" class="ui-content ui-grid-a">
-        <div class="ui-block-a">
-            <a data-role="button" rel="external" data-transition="slidedown" href="rssConfig.php#add" data-corners="true">Add An Event</a>
-        </div>
-        <div class="ui-block-b">
-            <a data-role="button" rel="external" data-transition="slidedown" href="rssConfig.php#remove" data-corners="true">Remove An Event</a>
-        </div>
-    </div>
-    <div data-role="footer">
-        </br>
-    </div>
+</form>
+</center>
+
+<?php
+	include ("data.php");
+	$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+
+	if(isset($_POST['submitLink'])){
+		//Get rss link and all data fields in rss link and put them into database
+		$rssLink = $_POST['link'];
+        $eventName = $_POST['year']." ".$_POST['semester']." ".$_POST['college']." Career Fair";
+		if($xml = simplexml_load_file($rssLink)){
+			$content = $xml->channel->item->children("http://purl.org/rss/1.0/modules/content/");
+			$data = $content->encoded;
+
+			echo "<br>";
+			echo "<fieldset>";
+			echo "<h3><ul>Example of item in feed:</ul></h3>";
+			echo $data;
+			echo "</fieldset>";
+			echo "<br>";
+
+			$dom = new DOMDocument();
+			$table = $dom->loadHTML($data);
+			$dom->preserveWhiteSpace = false;
+			$tables = $dom->getElementsByTagName('table');
+			$rows = $tables->item(0)->getElementsByTagName('tr');
+
+			foreach($rows as $row){
+				$cols = $row->getElementsByTagName('td');
+				$fields[] = $cols->item(0)->nodeValue;
+				}
+            ?>
+
+
+
+				<!-- Select the field that contains company name -->
+                <form method="post" action="input.php" id="fields" data-ajax="false">";
+                <input type="hidden" name="rssLink" id="rssLink" value="<?php echo $rssLink;?>">
+                    <input type="hidden" name="event" id="event" value="<?php echo $eventName;?>">
+
+				<fieldset class="ui-field-contain">
+    				<label for="nameField">Field For Company Name:</label><br>
+    				<select name="nameField" id="nameField">
+      				<?php
+      					for($i = 0; $i < sizeof($fields); $i++)
+      						echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+    				?>
+    			</select>
+  				</fieldset>
+
+  				<!-- Select the field that contains the company address -->
+  				<fieldset class="ui-field-contain">
+    				<label for="cityField">Field For Company City:</label><br>
+    				<select name="cityField" id="cityField">
+      				<?php
+      					for($i = 0; $i < sizeof($fields); $i++)
+      						echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+    				?>
+    			</select>
+  				</fieldset>
+
+                <fieldset class="ui-field-contain">
+                    <label for="stateField">Field For Company State:</label><br>
+                    <select name="stateField" id="stateField">
+                        <?php
+                        for($i = 0; $i < sizeof($fields); $i++)
+                            echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+                        ?>
+                    </select>
+                </fieldset>
+
+  				<!-- Select the field that contains the desired majors -->
+  				<fieldset class="ui-field-contain">
+    				<label for="majorsField">Field For Desired Majors:</label><br>
+    				<select name="majorsField" id="majorsField">
+      				<?php
+      					for($i = 0; $i < sizeof($fields); $i++)
+      						echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+    				?>
+    			</select>
+  				</fieldset>
+
+  				<!-- Select the field that contains the position types -->
+  				<fieldset class="ui-field-contain">
+    				<label for="positionTypeField">Field For Position Types:</label><br>
+    				<select name="positionTypeField" id="positionTypeField">
+      				<?php
+      					for($i = 0; $i < sizeof($fields); $i++)
+      						echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+    				?>
+    			</select>
+  				</fieldset>
+
+				<fieldset class="ui-field-contain">
+    				<label for="websiteField">Field For Company Website:</label><br>
+    				<select name="websiteField" id="websiteField">
+      				<?php
+      					for($i = 0; $i < sizeof($fields); $i++)
+      						echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+    				?>
+    			</select>
+  				</fieldset>
+
+				<fieldset class="ui-field-contain">
+    				<label for="citizenshipField">Field For Citizenship:</label><br>
+    				<select name="citizenshipField" id="citizenshipField">
+      				<?php
+      					for($i = 0; $i < sizeof($fields); $i++)
+      						echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+    				?>
+    			</select>
+				</fieldset>
+
+				<fieldset class="ui-field-contain">
+    				<label for="citizenshipField">Field For Company Status:</label><br>
+    				<select name="statusField" id="statusField">
+      				<?php
+      					for($i = 0; $i < sizeof($fields); $i++)
+      						echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
+    				?>
+    			</select>
+  				</fieldset>
+
+  				<input type="submit" value="Submit" name="fieldSubmit"></input>
+  			</form>
+
+			<?php
+
+			}
+		else
+			echo "invalid link";
+		}
+
+//get most recent rss info
+?>
 </div>
-
-
 </body>
 </html>
