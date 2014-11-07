@@ -66,7 +66,7 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
         <ul>
             <li><a href="#option">RSS Feed</a></li>
             <li><a href="#uploadMap">Upload Map</a></li>
-            <li><a href="#anylink">Add/Edit Users</a></li>
+            <li><a href="adminUsers.php">Add/Edit Users</a></li>
             <li><a href="#anylink">News Feed</a></li>
             <li><a href="#changePass">Change Password</a></li>
 
