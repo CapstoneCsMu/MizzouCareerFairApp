@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	/*
 	File: index.php
 	Parent: None
@@ -185,7 +185,7 @@
 					<form class="ui-filterable">
 						<input id="UNFILTERED" data-type="search">
 					</form>
-					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
+					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#VISITED" data-autodividers="true">
 					<?php include 'displayVisited.php'; ?>
 					</ul>
 

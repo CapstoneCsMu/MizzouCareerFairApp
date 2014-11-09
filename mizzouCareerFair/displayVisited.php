@@ -20,19 +20,22 @@ if ($_SESSION['student_loggedin']){
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
 			<li data-role="list-divider">Companies You Visited</li>';
 			
-			$i=1;
-			//while ($line = pg_fetch_assoc($result)) {
-				$line = pg_fetch_assoc($result);
-				foreach($line['company'] as $companyNames){
-					
-					echo '<li><a data-transition="slide" href="#company'.$i.'">'.$companyNames.'</a></li>';
-
-				}
+			$j=0;
+			while ($line = pg_fetch_assoc($result)) {
+				asort($companyNames);
+				$_SESSION['companies'] = $companyNames;
+				$i = 1;
+				foreach($companyNames as $companyName => $val)
+				{
+					if ($val == $line['company']){
 	
-				$i++;
+						echo '<li><a data-transition="slide" href="#company'.$i.'">'.$val.'</a></li>';
 				
-			//}
-	
+					}
+					$i++;
+				}
+				$j++;			
+			}	
 			echo '</ul>';
 			echo '</div>';		
 			
