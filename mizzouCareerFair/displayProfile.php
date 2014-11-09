@@ -48,10 +48,11 @@ function displayProfile()
 	// var_dump($row);
 	if(pg_num_rows($result) > 0)
 	{
+		echo '<div class="ui-bar ui-bar-a ui-corner-all" style="padding: 5px;">';
 		echo "</br><table>";
 		$row = pg_fetch_assoc($result);
 		// display picture
-
+		
 		echo '<center><img src="'.$row['picture_url'].'" style=".ui-grid-b img{width:100%; height: auto;}" /></center>';
 		foreach($row as $key => $value)
 		{
@@ -96,7 +97,7 @@ function displayProfile()
 				
 			}
 		}
-		echo "</table>";
+		echo "</table></div>";
 	}
 	else
 	{
