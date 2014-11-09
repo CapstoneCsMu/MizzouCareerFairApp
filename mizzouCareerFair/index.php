@@ -108,7 +108,7 @@
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
-					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:kristi.decker347@gmail.com?Subject=TEST">Contact Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:mizzoucareerfairs@gmail.com?Subject""Mizzou Career Fairs Support>Contact Us</a></li>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="gear" href="#fairOptions">Fair Options</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
@@ -183,11 +183,12 @@
 				</div>
 				<div id="visited">
 					<form class="ui-filterable">
-						<input id="VISITED" data-type="search">
+						<input id="UNFILTERED" data-type="search">
 					</form>
-					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#VISITED" data-autodividers="true">
+					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#UNFILTERED" data-autodividers="true">
 					<?php include 'displayVisited.php'; ?>
 					</ul>
+
 				</div>
 			</div>
 		</div>
