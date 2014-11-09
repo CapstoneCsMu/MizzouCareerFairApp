@@ -239,17 +239,17 @@
 				$student = $line['email'];
 				if ($favorites[$j] == '0')
 				{
-				echo '<form id="fav_'.$j.'" method="post">';
+				echo '<form id="fav_'.$j.'" method="post" data-ajax="false">';
 				echo '<input type="hidden" name="fav" value="'.$student.'" />';
 				echo '</form>';
-				echo '<center><a rel="external" href="employerView.php" data-role="button" data-theme="b" onclick="document.getElementById(\'fav_'.$j.'\').submit(); window.alert(\'Student has been added to Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Favorite This Student!</a></center>';
+				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'fav_'.$j.'\').submit(); window.alert(\'Student has been added to Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Favorite This Student!</a></center>';
 				}
 				else
 				{
-				echo '<form id="unfav_'.$j.'" method="post">';
+				echo '<form id="unfav_'.$j.'" method="post" data-ajax="false">';
 				echo '<input type="hidden" name="unfav" value="'.$student.'" />';
 				echo '</form>';
-				echo '<center><a rel="external" href="employerView.php" data-role="button" data-theme="b" onclick="document.getElementById(\'unfav_'.$j.'\').submit(); window.alert(\'Student has been removed from Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Un-Favorite This Student!</a></center>';
+				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'unfav_'.$j.'\').submit(); window.alert(\'Student has been removed from Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Remove from Favorites.</a></center>';
 				}
 				
 				// Display Profile
@@ -311,11 +311,13 @@
 
 				pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 pg_execute($conn,"query3",array('1',$_POST['fav']));
+				echo '<script type="text/javascript">location.reload();</script>';
 			}	
 		else if(isset($_POST['unfav'])){
 
 				pg_prepare($conn,"query4",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 pg_execute($conn,"query4",array('0',$_POST['unfav']));
+				echo '<script type="text/javascript">location.reload();</script>';
 			}	
 	?>
 </body>
