@@ -244,12 +244,19 @@
 				echo '</form>';
 				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'fav_'.$j.'\').submit(); window.alert(\'Student has been added to Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Favorite This Student!</a></center>';
 				}
-				else
+				else if
 				{
 				echo '<form id="unfav_'.$j.'" method="post" data-ajax="false">';
 				echo '<input type="hidden" name="unfav" value="'.$student.'" />';
 				echo '</form>';
-				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'unfav_'.$j.'\').submit(); window.alert(\'Student has been removed from Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Remove from Favorites.</a></center>';
+				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'unfav_'.$j.'\').submit(); window.alert(\'Student has been removed from Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Remove from Favorites!</a></center>';
+				}
+				else if
+				{
+				echo '<form id="delete_'.$j.'" method="post" data-ajax="false">';
+				echo '<input type="hidden" name="delete" value="'.$student.'" />';
+				echo '</form>';
+				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'delete_'.$j.'\').submit(); window.alert(\'Student has been removed from your list.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Delete from your list!</a></center>';
 				}
 				
 				// Display Profile
@@ -317,6 +324,12 @@
 
 				pg_prepare($conn,"query4",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 pg_execute($conn,"query4",array('0',$_POST['unfav']));
+				echo '<script type="text/javascript">location.reload();</script>';
+			}
+		else if(isset($_POST['unfav'])){
+
+				pg_prepare($conn,"query5",'DELETE FROM careerSchema.employerScannedStudents WHERE email = $1' );
+                pg_execute($conn,"query5",array($_POST['delete']));
 				echo '<script type="text/javascript">location.reload();</script>';
 			}	
 	?>
