@@ -71,7 +71,7 @@ if(isset($_SESSION['employer_loggedin']))
                     <label for="email">Email:</label>
                     <input type="text" name="email" id="email">
                     <label for="password">Password:</label>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" >
                 </div>
                 <center><input type="submit" data-inline="true" name="Submit" onClick="submitLogin();" value="Submit"></center>
             </form>
@@ -81,7 +81,7 @@ if(isset($_SESSION['employer_loggedin']))
             </center>
         </div>
         <center>
-            <div data-role="footer">
+            <div data-role="footer" >
                 <p>Don't have an account?</p>
             <!--    <center><a href="registration.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>-->
 				<center><a href="registration.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>
@@ -94,6 +94,13 @@ if(isset($_SESSION['employer_loggedin']))
 <?php
 function handle_login()
 {
+	if ($_SESSION['student_authenticated'] === false)
+	{
+		echo "\n<div class ='alert alert-danger alert-dismissable'>";
+		echo "\n\t<center>You must be a Mizzou Student to <b>Register</b> or Login.</center>";
+		echo "\n</div>";
+		$_SESSION['student_authenticated'] = '';
+	}
     if ($_SESSION['registered'])
     {
         echo "\n<div class ='alert alert-success alert-dismissable'>";
@@ -161,15 +168,14 @@ function handle_login()
                 // Conditional Handling
                 if ($p == 0)
                 {
+                    session_start();
                     if($row["user_type"] == "admin"){
                         $_SESSION['admin_loggedin'] = $row['email'];
-                        // header('Location: admin.php');
-						print '<script type="text/javascript">window.location="admin.php";</script>';
+                        header('Location: admin.php');
                     }
 					else if($row["user_type"] == "employer"){
                         $_SESSION['employer_loggedin'] = $row['email'];
-                        // header('Location: employerView.php');
-						print '<script type="text/javascript">window.location="employerView.php";</script>';
+                        header('Location: employerView.php');
 			   
 					   $query = "INSERT INTO careerschema.authorizationtable(ip_address) WHERE email =($1) VALUES ($2)";
 						$stmt = pg_prepare($conn, "log", $query);
@@ -182,10 +188,12 @@ function handle_login()
 					}	
 					else{
                         $_SESSION['student_loggedin'] = $row['email'];
-                       // header('Location: index.php');
-					   print '<script type="text/javascript">window.location="index.php";</script>';
+                        header('Location: index.php');
                     }
+					
+                    exit();
                 }
+
             }
             else
             {

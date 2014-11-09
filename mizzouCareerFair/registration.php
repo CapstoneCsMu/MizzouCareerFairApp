@@ -69,7 +69,7 @@ pre_process();
 <div data-role="page" id="employer" data-dialog="true"]>
 	<div data-role="header">
 	<a data-icon="delete" data-transition="pop" data-iconpos="notext" href="registration.php">Back</a> 
-		</br><center>Employer Registration</center></br>
+		</br><center>Employer Verification</center></br>
 	</div>
 	<div data-role="main" class="ui-content ui-grid-a">
 		<form class="ui-filterable">
@@ -109,10 +109,10 @@ pre_process();
 	<?php handleStudentRegistration(); ?>
 		<form id="studentForm" method="post" action="registration.php#student">
 					<label for="email"><b>Email:</label>
-					<input type="text" name="email" id="email"> 
+					<input type="text" name="email" id="email" readonly="readonly" value="<?php print $_SESSION['pawprint']."@mail.missouri.edu"; ?>"> 
 					<!--<label for="username"><b>Choose a Username:</label>
 					<input type="text" name="username" id="username" placeholder="At least 5 characters">   --->    
-					<label for="password"><b>Choose a Password:</label>
+					<label for="password"><b>Choose a NEW Password:</label>
 					<input type="password" name="password" id="password" placeholder="At least 5 characters">
 		</form>
 			<center>
@@ -150,7 +150,20 @@ function pre_process()
 //Function to Handle Student Login
 function handleStudentRegistration()
 {
-	
+	// NOTE: empty returns true if it does not exist OR if it's set equal to false
+	if(empty($_SESSION['student_authenticated']))
+	{
+		echo "\n<div class ='alert alert-danger alert-dismissable'>";
+		echo "\n\t<center>You must be a Mizzou Student to <b>Register</b> or Login.</center>";
+		echo "\n</div>";
+		exit();
+	}
+	else
+	{
+		echo "\n<div class ='alert alert-success alert-dismissable'>";
+		echo "\n\t<center>Student Verification success!</center>";
+		echo "\n</div>";
+	}
 	if( isset($_POST['email']) )
 	{
 		//Include Database information
