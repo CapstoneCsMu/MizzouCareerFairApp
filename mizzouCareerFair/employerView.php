@@ -2,7 +2,9 @@
 	/*File:  employerView.php 
 	Parent:  login.php 
 	Function:  Employer view form, default view when employer logs in.*/
+?>
 
+<?php
 	if (!isset($_SESSION))
 	{
 		session_start();
@@ -153,10 +155,7 @@
 	<div data-role="page" data-theme="a" id="scannedStudents" data-cache="false">
         <div data-role="header" data-position="fixed">
             <h1>Potential Employees</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext" data-transition="flip" href="#home">Home</a> 
         </div>
 		
 		<?php
@@ -175,7 +174,7 @@
 	<?php
 		
 		$empEmail = $_SESSION['employer_loggedin'];
-		echo $empEmail;
+		// echo $empEmail;
 		echo '</br></br>';
 
 		include ("data.php");
@@ -202,7 +201,7 @@
 			$i=0;
 			//loop through every student employer has scanned in CF
 			while ($line = pg_fetch_assoc($result)) {
-					
+					$favorites[$i] = $line['favorite'];
 					//prints data by the line
 					if ($line['favorite'] == '1'){ 
 						echo'<li><a href="employerView.php#student'.$i.'" class="ui-btn ui-icon-star ui-btn-icon-left">'.$line['firstname'].' '.$line['lastname'].'</a></li>';	
@@ -238,58 +237,69 @@
 				
 				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
 				$student = $line['email'];
+				if ($favorites[$j] == '0')
+				{
+				echo '<form id="fav_'.$j.'" method="post">';
+				echo '<input type="hidden" name="fav" value="'.$student.'" />';
+				echo '</form>';
+				echo '<center><a rel="external" href="employerView.php" data-role="button" data-theme="b" onclick="document.getElementById(\'fav_'.$j.'\').submit(); window.alert(\'Student has been added to Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Favorite This Student!</a></center>';
+				}
+				else
+				{
+				echo '<form id="unfav_'.$j.'" method="post">';
+				echo '<input type="hidden" name="unfav" value="'.$student.'" />';
+				echo '</form>';
+				echo '<center><a rel="external" href="employerView.php" data-role="button" data-theme="b" onclick="document.getElementById(\'unfav_'.$j.'\').submit(); window.alert(\'Student has been removed from Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Un-Favorite This Student!</a></center>';
+				}
 				
-				echo '<form name="favorite_student" method="post" data-ajax="false">';
-				echo"<input type=\"hidden\" name=\"fav\" value=\"".$student."\"/>";
-				echo '<input type="submit" data-icon="star" name="fav_me" value="Favorite This Student!" />
-				</form>';
-				
-				//Grab each individual field
-				$k=0;
-				foreach ($line as $col_value) {
-					switch($k){
-					
-						case 0:
-							echo '<b><div data-role="content">Email Address: </b>';
-							echo $col_value."</br>";
-							$email = $col_value;
-							break;
-						case 1:
-							echo '<b>First Name: </b>';
-							echo $col_value."</br>";
-							break;
-						case 2:
-							echo '<b>Last Name: </b>';
-							echo $col_value."</br>";
-							break;
-						case 3:
-							echo '<b>Graduation Date: </b>';
-							echo $col_value."</br>";
-							break;
-						case 4:
-							echo '<b>Major: </b>';
-							echo $col_value."</br>";
-							break;
-						case 5:
-							echo '<b>Resume: </b>';
-							echo $col_value."</br>";
-							break;
-						case 6:
-							echo '<b>Phone Number: </b>';
-							echo $col_value."</br>";
-							break;
-						case 7:
-							echo '<b>Life Plan: </b>';
-							echo $col_value."</br>";
-							break;
-						case 8:
-							echo '<b>LinkedIn ID: </b>';
-							echo $col_value."</br>";
-							echo '</div>';
-							break;	
+				// Display Profile
+				echo '<div class="ui-bar ui-bar-a ui-corner-all" style="padding: 5px;">';
+				echo "</br><table>";
+				echo '<center><img src="'.$line['picture_url'].'" style=".ui-grid-b img{width:100%; height: auto;}" /></center>';
+				foreach($line as $key => $value)
+				{
+					if ($value != NULL)
+					{
+
+						switch($key)
+						{
+							case 'email':
+								echo '<tr><td valign="top" align="left">Email: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'firstname':
+								echo '<tr><td valign="top" align="left">First Name: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'lastname':
+								echo '<tr><td valign="top" align="left">Last Name: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'phonenumber':
+								echo '<tr><td valign="top" align="left">Phone Number: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'location':
+								echo '<tr><td valign="top" align="left">Location: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'linkedin_url':
+								echo '<tr><td valign="top" align="left">LinkedIn Profile: </td><td valign="top" align="left"><a target="_blank" href="'.$value.'">Click</a></td></tr>';
+								break;
+							case 'job':
+								echo '<tr><td valign="top" align="left">Job: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'graddate':
+								echo '<tr><td valign="top" align="left">Graduation Date: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'major':
+								echo '<tr><td valign="top" align="left">Major: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							case 'lifeplan':
+								echo '<tr><td valign="top" align="left">Career Goals: </td><td valign="top" align="left">'.$value.'</td></tr>';
+								break;
+							default;
+								break;
+						}
+						
 					}
-					$k++;
-				}			
+				}
+				echo "</table></div>";		
 				echo '</div>';
 				echo '</div>';			
 			}	
@@ -297,19 +307,16 @@
 		?>	
 		
 	<?php
-		if(isset($_POST['fav_me'])){
+		if(isset($_POST['fav'])){
 
-				$result=pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
-                $result=pg_execute($conn,"query3",array('1',$_POST['fav']));
-
+				pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
+                pg_execute($conn,"query3",array('1',$_POST['fav']));
 			}	
+		else if(isset($_POST['unfav'])){
 
-			//header("Location: index.php#successFavorite");
-			//header('Location: https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/employerView.php');  
-			
-			header("refresh:0;url=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/employerView.php");	
-			
-			echo "outside!";
+				pg_prepare($conn,"query4",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
+                pg_execute($conn,"query4",array('0',$_POST['unfav']));
+			}	
 	?>
 </body>
 </html>
