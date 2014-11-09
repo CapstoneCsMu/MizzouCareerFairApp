@@ -2,9 +2,7 @@
 	/*File:  employerView.php 
 	Parent:  login.php 
 	Function:  Employer view form, default view when employer logs in.*/
-?>
 
-<?php
 	if (!isset($_SESSION))
 	{
 		session_start();
@@ -222,11 +220,6 @@
 			echo '</ul>';
 			echo '</div></div>';	
 			
-			//echo $line['email'];
-			//echo $emailStudents[$j];
-			
-			//$email = $line['email'];
-			
 			for ($j=0; $j<$num_rows; $j++){
 			
 					echo '<div data-role="page" data-theme="a" id="student'.$j.'" data-cache="false">
@@ -245,55 +238,54 @@
 				
 				$line = pg_fetch_array($result, null, PGSQL_ASSOC);
 				$student = $line['email'];
-				//echo $student;
-				//echo "seee";
 				
-				echo '<form name="favorite_student" method="post">';
+				echo '<form name="favorite_student" method="post" data-ajax="false">';
 				echo"<input type=\"hidden\" name=\"fav\" value=\"".$student."\"/>";
 				echo '<input type="submit" data-icon="star" name="fav_me" value="Favorite This Student!" />
 				</form>';
-			
+				
 				//Grab each individual field
 				$k=0;
 				foreach ($line as $col_value) {
 					switch($k){
 					
 						case 0:
-							echo '<b>Email Address: <b>';
+							echo '<b><div data-role="content">Email Address: </b>';
 							echo $col_value."</br>";
 							$email = $col_value;
 							break;
 						case 1:
-							echo 'First Name: ';
+							echo '<b>First Name: </b>';
 							echo $col_value."</br>";
 							break;
 						case 2:
-							echo 'Last Name: ';
+							echo '<b>Last Name: </b>';
 							echo $col_value."</br>";
 							break;
 						case 3:
-							echo 'Graduation Date: ';
+							echo '<b>Graduation Date: </b>';
 							echo $col_value."</br>";
 							break;
 						case 4:
-							echo 'Major: ';
+							echo '<b>Major: </b>';
 							echo $col_value."</br>";
 							break;
 						case 5:
-							echo 'Resume: ';
+							echo '<b>Resume: </b>';
 							echo $col_value."</br>";
 							break;
 						case 6:
-							echo 'Phone Number: ';
+							echo '<b>Phone Number: </b>';
 							echo $col_value."</br>";
 							break;
 						case 7:
-							echo 'Life Plan: ';
+							echo '<b>Life Plan: </b>';
 							echo $col_value."</br>";
 							break;
 						case 8:
-							echo 'LinkedIn ID: ';
+							echo '<b>LinkedIn ID: </b>';
 							echo $col_value."</br>";
+							echo '</div>';
 							break;	
 					}
 					$k++;
@@ -303,19 +295,21 @@
 			}	
 		}
 		?>	
-		<?php
+		
+	<?php
 		if(isset($_POST['fav_me'])){
-				
-			//	$query3 = "UPDATE careerSchema.employerScannedStudents SET favorite=1 WHERE email = '$student'";
-				//$result = pg_query($query3) or die("Query failed: " . pg_last_error());
+
 				$result=pg_prepare($conn,"query3",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 $result=pg_execute($conn,"query3",array('1',$_POST['fav']));
-				$result=pg_execute($conn,"query3",array('1',$_POST['fav']));
-				header('Location: '.$_SERVER['PHP_SELF']);  
-			//	header('Location: '.$_SERVER['REQUEST_URI']);
-					
+
 			}	
+
+			//header("Location: index.php#successFavorite");
+			//header('Location: https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/employerView.php');  
+			
+			header("refresh:0;url=https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/employerView.php");	
+			
+			echo "outside!";
 	?>
-	
 </body>
 </html>

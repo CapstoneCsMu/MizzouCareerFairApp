@@ -103,16 +103,18 @@ include('check_https.php');
 <body>
 	<div data-role="page" data-dialog="true">
 			<div data-role="header">
-				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a> 
+				<a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php" rel="external">Back</a> 
 				<h1>Update Profile</h1>
 			</div>
 			
 			<div data-role="main" class="ui-content">
-			<?php include('updateWithLinkedIn.php'); ?>
 					<div class="ui-field-contain">
-					
+						<form id="linkedin_connect_form" action="<?php echo $_SERVER['PHP_SELF'];?>" method="get">
+							<input type="hidden" name="lType" id="lType" value="initiate" />
+							<center><button  style="text-overflow: ellipsis; overflow: visible; white-space: normal; width: 80%;" data-rel="button" class="ui-btn ui-icon-cloud ui-btn-icon-left" onclick="document.getElementById('linkedin_connect_form').submit();">Use Your LinkedIn Data</button></center>
+						</form>
 				<form data-ajax="false" id="updateInfoForm" method="post" action="updateProfile.php" >
-						
+				<?php include('updateWithLinkedIn.php'); ?>
 						<div data-role="fieldcontain">
 							<label for="firstname">Firstname:</label>
 							<input type="text" name="firstname" id="firstname" value="<?php echo $firstname; ?>"data-mini="true">
@@ -121,31 +123,34 @@ include('check_https.php');
 							<label for="lastname">Lastname:</label>
 							<input type="text" name="lastname" id="lastname" value="<?php echo $lastname; ?>" data-mini="true">
 						</div>
-						<div data-role="fieldcontain">
-							<label for="email">E-mail:</label>
-							<input type="email" name="email" id="email" value="<?php echo $email; ?>"data-mini="true">
-						</div>
-						<div data-role="fieldcontain">
-							<label for="gradDate">Grad. Date:</label>
-							<input type="text" name="gradDate" id="gradDate" value="<?php echo $gradDate; ?>"placeholder="Dec-2015" data-mini="true">
+						<div data-role="fieldcontain">	
+							<label for="phone">Phone:</label>
+							<input type="text" name="phone" id="phone" value="<?php echo $phone; ?>"placeholder="(xxx)xxx-xxxx" data-mini="true">
 						</div>
 						<div data-role="fieldcontain">
 							<label for="major">Major:</label>
 							<input type="text" name="major" id="major" value="<?php echo $major; ?>"data-mini="true">
 						</div>
-						<div data-role="fieldcontain">	
-							<label for="phone">Phone:</label>
-							<input type="text" name="phone" id="phone" value="<?php echo $phone; ?>"placeholder="(xxx)xxx-xxxx" data-mini="true">
+						<div data-role="fieldcontain">
+							<label for="gradDate">Grad. Date:</label>
+							<input type="text" name="gradDate" id="gradDate" value="<?php echo $gradDate; ?>"placeholder="Dec-2015" data-mini="true">
 						</div>
 						<div data-role="fieldcontain">	
 							<label for="lifePlan">Career Goals:</label>
-							<textarea rows="5" name="lifePlan" wrap="physical" maxlength="200" data-mini="true" value="<?php echo $lifeplan; ?>"></textarea>
+							<textarea rows="5" name="lifePlan" wrap="physical" maxlength="200" data-mini="true" placeholder="<?php echo $lifeplan; ?>"value="<?php echo $lifeplan; ?>"></textarea>
 						</div>
 						<div data-role="fieldcontain">
-							<label for="linkedIn">LinkedIn Email:</label>
-							<input type="text" name="linkedIn" id="linkedIn" value="<?php echo $linkedin; ?>" data-mini="true">
+							<label for="job">Current Job:</label>
+							<input type="text" name="job" id="job" value="<?php echo $headline; ?>" data-mini="true">
+						</div>
+						<div data-role="fieldcontain">
+							<label for="linkedInURL">LinkedIn Profile (Public-URL):</label>
+							<input type="text" name="linkedInURL" id="linkedInURL" value="<?php echo $profileURL; ?>" data-mini="true">
 						</div>	
-					
+						
+						<input type="hidden" name="picture" value="<? echo $pictureURL;?>">
+						<input type="hidden" name="location" value="<? echo $location;?>">
+						<input type="hidden" name="linkedin" value="<? echo $linkedin_ID;?>">
 						<input type="hidden" name="student_loggedin" value="<? echo $email;?>">
 						<center><input type="submit" data-inline="true" value="Submit" name="Update"></center>
 					

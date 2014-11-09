@@ -147,74 +147,81 @@ if(isset($_POST['Update'])){
 	
 	$firstname = htmlspecialchars($_POST['firstname']);
 	$lastname = htmlspecialchars($_POST['lastname']);
-	$email = htmlspecialchars($_POST['email']);
-	$gradDate = htmlspecialchars($_POST['gradDate']);
-	$major = htmlspecialchars($_POST['major']);
-	$resume =  htmlspecialchars($_POST['resume']);
 	$phone = htmlspecialchars($_POST['phone']);
+	$major = htmlspecialchars($_POST['major']);
+	$gradDate = htmlspecialchars($_POST['gradDate']);
 	$lifePlan = htmlspecialchars($_POST['lifePlan']);
+	$job = htmlspecialchars($_POST['job']);
+	$linkedinURL = htmlspecialchars($_POST['linkedInURL']);
+	$pictureURL = htmlspecialchars($_POST['picture']);
+	$location = htmlspecialchars($_POST['location']);
 	$linkedIn = htmlspecialchars($_POST['linkedIn']);
 	$student_loggedin = $_POST['student_loggedin'];
+	$email = $_SESSION['student_loggedin'];
 	
-	
-	$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-	if (!$conn) 
+	//Make sure the person logged in is the same person who submitted the form!
+	if ($email == $student_loggedin)
 	{
-		echo "<br/>An error occurred with connecting to the server.<br/>";
-		die();
-	}
-
-	//Run variables against dB
-	$query = array( 0 =>"SELECT * FROM careerschema.students WHERE email=$1");
-	//Search the three tables for authentication success
-	$userWasFound = FALSE;
-			
-	for ($p = 0 ; $p < count($query) ; $p++)
-	{
-		$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
-		$result = pg_execute($conn, "check_".$p, array($email))  or die( "ERROR:". pg_last_error() );
-		
-		if(pg_num_rows($result) > 0)
+		$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+		if (!$conn) 
 		{
-			$userWasFound = TRUE;
-			$row = pg_fetch_assoc($result);
-			//update_student($conn);
-			$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-			if (!$dbconn) 
-			{
-				echo "<br/>An error occurred with connecting to the server.<br/>";
-				die();
-			}
-			$query1 ="UPDATE careerschema.students SET firstname = $1, lastname = $2, graddate = $3, major = $4, phonenumber = $5, lifeplan = $6, linkedin_id = $7 WHERE email = $8";
-			
-			$stmt1 = pg_prepare($dbconn, "update", $query1)  or die( "ERROR:". pg_last_error());
-			$result1 = pg_execute($dbconn, "update", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
-				$linkedIn, $email))  or die( "ERROR:". pg_last_error() );	
-				
-			pg_close($dbconn);
-			header("Location: index.php#successProfile");		
+			echo "<br/>An error occurred with connecting to the server.<br/>";
+			die();
 		}
-		else
-		{
-			//insert_student($firstname, $lastname, $gradDate, $major, $phone, $lifePlan, $linkedIn, $email);
-			$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-			if (!$dbconn) 
-			{
-				echo "<br/>An error occurred with connecting to the server.<br/>";
-				die();
-			}
-			$query1 ="INSERT INTO careerschema.students (email, firstname, lastname,  graddate, major, phonenumber, lifeplan, linkedin_id) VALUES($8, $1, $2, $3, $4, $5, $6, $7)";
-			
-			$stmt1 = pg_prepare($dbconn, "insert", $query1)  or die( "ERROR:". pg_last_error());
-			$result1 = pg_execute($dbconn, "insert", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
-			$linkedIn, $email))  or die( "ERROR:". pg_last_error() );	
 
-			pg_close($dbconn);
-			header("Location: index.php#successProfile");
-		}		
+		//Run variables against dB
+		$query = array( 0 =>"SELECT * FROM careerschema.students WHERE email=$1");
+		//Search the three tables for authentication success
+		$userWasFound = FALSE;
+				
+		for ($p = 0 ; $p < count($query) ; $p++)
+		{
+			$stmt = pg_prepare($conn, "check_".$p, $query[$p])  or die( "ERROR:". pg_last_error() );
+			$result = pg_execute($conn, "check_".$p, array($email))  or die( "ERROR:". pg_last_error() );
+			
+			if(pg_num_rows($result) > 0)
+			{
+				$userWasFound = TRUE;
+				$row = pg_fetch_assoc($result);
+				//update_student($conn);
+				$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+				if (!$dbconn) 
+				{
+					echo "<br/>An error occurred with connecting to the server.<br/>";
+					die();
+				}
+				$query1 ="UPDATE careerschema.students SET firstname = $1, lastname = $2, graddate = $3, major = $4, phonenumber = $5, lifeplan = $6, linkedin_id = $7, picture_url = $8, location = $9, linkedin_url = $10, job = $11 WHERE email = $12";
+				
+				$stmt1 = pg_prepare($dbconn, "update", $query1)  or die( "ERROR:". pg_last_error());
+				$result1 = pg_execute($dbconn, "update", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
+					$linkedIn, $pictureURL, $location, $linkedinURL, $job, $email))  or die( "ERROR:". pg_last_error() );	
+					
+				pg_close($dbconn);
+				header("Location: index.php#successProfile");		
+			}
+			else
+			{
+				//insert_student($firstname, $lastname, $gradDate, $major, $phone, $lifePlan, $linkedIn, $email);
+				$dbconn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+				if (!$dbconn) 
+				{
+					echo "<br/>An error occurred with connecting to the server.<br/>";
+					die();
+				}
+				$query1 ="INSERT INTO careerschema.students (email, firstname, lastname,  graddate, major, phonenumber, lifeplan, linkedin_id, picture_url, location, linkedin_url, job) VALUES($12, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)";
+				
+				$stmt1 = pg_prepare($dbconn, "insert", $query1)  or die( "ERROR:". pg_last_error());
+				$result1 = pg_execute($dbconn, "insert", array($firstname, $lastname, $gradDate, $major, $phone, $lifePlan,
+				$linkedIn, $pictureURL, $location, $linkedinURL, $job, $email))  or die( "ERROR:". pg_last_error() );	
+
+				pg_close($dbconn);
+				header("Location: index.php#successProfile");
+			}		
+		}
+		pg_close($conn);
 	}
-	pg_close($conn);
-	//header("Location: index.php");
+	else
+		header("Location: index.php");
 }
 
 ?>
