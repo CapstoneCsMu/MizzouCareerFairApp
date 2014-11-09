@@ -55,14 +55,40 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
 <div data-role="page" data-theme="a" id="home">
     <div data-role="header" >
         </br>
-        <center>Administrator</center>
+        <center>Mizzou Career Fairs Administrator</center>
         </br>
         <a data-direction="reverse" data-icon="home" data-iconpos="notext"
            data-transition="flip" href="index.php">Home</a> <a data-icon="search"
                                                                data-iconpos="notext" data-rel="dialog" data-transition="fade"
                                                                href="../nav.html">Search</a>
     </div>
-    <div data-role="navbar">
+
+    <div data-role="content">
+            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+		</ul>
+
+                        <ul data-dividertheme="b" data-inset="true" data-role="listview">
+                <li data-role="list-divider">Welcome, <?php echo $_SESSION['admin_loggedin']; ?></li>
+                <li>
+                    <a data-transition="flip" href="#option">RSS Feed</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="#uploadMap">Upload Map</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="adminUsers.php">Manage Users</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="#anylink">News Feed</a>
+                </li>
+                <li>
+                    <a data-transition="flip" href="#changePass">Change Password</a>
+                </li>
+                </ul>
+
+   </div>
+
+<!--    <div data-role="navbar">
         <ul>
             <li><a href="#option">RSS Feed</a></li>
             <li><a href="#uploadMap">Upload Map</a></li>
@@ -72,7 +98,7 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
 
         </ul>
     </div>
-
+-->
 </div>
 
 <div data-role="page" data-theme="a" id="uploadMap">
@@ -157,7 +183,7 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
     <div data-role="header">
         <a rel="external" data-icon="arrow-l" data-iconpos="notext" href="admin.php">Back</a>
         <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
-        <h1>RSS Configuration</h1>
+        <h1>Change Password</h1>
     </div>
     <div data-role="main" class="ui-content ui-grid-a">
 

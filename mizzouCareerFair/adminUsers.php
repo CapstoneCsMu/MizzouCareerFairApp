@@ -58,6 +58,10 @@ if(!$_SESSION['admin_loggedin']){
             {
                 document.getElementById("addAdminForm").submit();
             }
+	    function deleteAdmins()
+	    {
+		document.getElementById("deleteAdmin").submit();
+	    }
    </script>
 
 </head>
@@ -68,20 +72,85 @@ if(!$_SESSION['admin_loggedin']){
         <div data-role="header">
         <a rel="external" data-icon="arrow-l" data-iconpos="notext" href="admin.php">Back</a>
                 <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
-                <h1>Administration Options</h1>
+                <h1>Admin User Options</h1>
         </div>
         <div data-role="main" class="ui-content ui-grid-a">
                 <div class="ui-block-a">
-                        <a data-role="button" data-transition="slidedown" href="#addAdmin" data-corners="true">Add Admin</a>
+                        <a data-role="button" data-transition="flip" href="#addAdmin" data-corners="true">Add Admin</a>
                 </div>
                 <div class="ui-block-b">
-                        <a data-role="button" data-transition="slidedown" href="#deleteAdmin" data-corners="true">Delete Admin</a>
+                        <a data-role="button" data-transition="flip" href="#deleteAdmin" data-corners="true">Delete Admin</a>
                 </div>
         </div>
         <div data-role="footer">
                 </br>
         </div>
 </div>
+
+<div data-role="page" id="deleteAdmin" data-dialog="true">
+        <div data-role="header">
+        </br>
+                <a data-icon="delete" data-transition="pop" data-iconpos="notext" href="admin.php">Back</a>
+                <center>Delete Administrative User</center>
+        </br>
+        </div>
+        <div data-role="main" class="ui-content ui-grid-a">
+
+                <form method="post" id="deleteAdmin" action="adminUsers.php#deleteAdmin" data-ajax="false" >
+			<?php
+                         	if($_SERVER['HTTP_HOST'] == 'localhost')
+                        		include('data_ryanslocal.php');
+                		else
+                        		include ("data.php");
+                		$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+                		if (!$conn)
+                		{
+                        		echo "\n<div class='container'>\n\t<div class ='alert alert-danger'>";
+                        		echo "<center>An Error occurred during connection.</center>";
+                        		echo "\n\t</div>\n</div>";
+                        		exit();
+                		}
+
+	                        if ($_SESSION['admin_loggedin'])
+				{
+                                	$adminEmail = $_SESSION['admin_loggedin'];
+                                  	$query1 = "SELECT email, firstname, lastname FROM careerSchema.authorizationtable WHERE user_type = 'admin' and email != '$adminEmail'";
+                                  	$result = pg_query($query1) or die("Query failed: " . pg_last_error());
+                                  	printResults($result);
+                        	}
+                	?>
+		</form>
+        </div>
+</div>
+
+<div data-role="page" data-theme="a" id="deleteSuccess">
+        <div data-role="header" data-position="fixed">
+            <h1>Success</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+                        <h3><center>Administrator Has Been Deleted!<center></h3>
+                        <a href="admin.php" data-role="button">Return to Your Admin Dashboard</a>
+        </div>
+</div>
+
+<div data-role="page" data-theme="a" id="deleteFailure">
+        <div data-role="header" data-position="fixed">
+            <h1>Failure</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+                        <h3><center>Administrator Has Not Been Deleted.<center></h3>
+                        <a href="admin.php" data-role="button">Return to Your Admin Dashboard</a>
+        </div>
+</div>
+
 
 <div data-role="page" id="addAdmin" data-dialog="true">
         <div data-role="header">
@@ -107,97 +176,69 @@ if(!$_SESSION['admin_loggedin']){
                 </form>
 
                                 <?php if (isset($_POST['submit'])){ handleNewAdmin();} ?>
-
-
-
-<div data-role="page" id="deleteAdmin" data-dialog="true">
-        <div data-role="header">
-        </br>
-                <a data-icon="delete" data-transition="pop" data-iconpos="notext" href="admin.php">Back</a>
-                <center>Delete Administrative User</center>
-        </br>
+<!--
+<div data-role="page" data-theme="a" id="deleteSuccess">
+        <div data-role="header" data-position="fixed">
+            <h1>Success</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
         </div>
-        <div data-role="main" class="ui-content ui-grid-a">
-		<?php
-			 if($_SERVER['HTTP_HOST'] == 'localhost')
-                        include('data_ryanslocal.php');
-                else
-                        include ("data.php");
-                $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-                if (!$conn)
+        <div data-role="content">
+                        <h3><center>Administrator Has Been Deleted!<center></h3>
+                        <a href="admin.php" data-role="button">Return to Your Admin Dashboard</a>
+        </div>
+</div>
+
+<div data-role="page" data-theme="a" id="deleteFailure">
+        <div data-role="header" data-position="fixed">
+            <h1>Failure</h1>
+            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+            data-transition="flip" href="#home">Home</a> <a data-icon="search"
+            data-iconpos="notext" data-rel="dialog" data-transition="fade"
+            href="../nav.html">Search</a>
+        </div>
+        <div data-role="content">
+                        <h3><center>Administrator Has Not Been Deleted.<center></h3>
+                        <a href="admin.php" data-role="button">Return to Your Admin Dashboard</a>
+        </div>
+</div>
+-->
+
+
+<?php
+function printResults($result)
+{
+        echo "<table border='1'><br/>\n";
+
+        echo "<tr>\n";
+        $numrows = pg_num_fields($result);
+        echo "<th>Actions</th>";
+        for($i = 0; $i < $numrows; $i++)
+        {
+                $fieldnames = pg_field_name($result, $i);
+                echo "<th>$fieldnames</th>\n";
+        }
+
+        echo "</tr>\n";
+
+        while ($line = pg_fetch_array($result, null, PGSQL_ASSOC))
+        {
+                echo "<tr>\n";
+                echo '<input type="submit" name="submit" value="Delete" />';
+                if (isset($_POST['submit'])){ deleteAdmin();}
+                foreach ($line as $columnData)
                 {
-                        echo "\n<div class='container'>\n\t<div class ='alert alert-danger'>";
-                        echo "<center>An Error occurred during connection.</center>";
-                        echo "\n\t</div>\n</div>";
-                        exit();
+                        echo "\t\t<td>$columnData</td>\n";
                 }
 
+                echo "\t</tr>\n";
+        }
 
-			if ($_SESSION['admin_loggedin']){
-				  $adminEmail = $_SESSION['admin_loggedin'];
-                                  $query1 = "SELECT email, firstname, lastname FROM careerSchema.authorizationtable WHERE user_type = 'admin' and email != '$adminEmail'";
-                                  $result = pg_query($query1) or die("Query failed: " . pg_last_error());
-				  printResults($result); 
-			}
-
-
-		function printResults($result)  //function to display the results we get from each query in a table
-		{
-			echo "<table border='1'><br/>\n";  //creates table border and another break statement for newline
-
-        		echo "<tr>\n"; //create new row to display the column names
-        		$numrows = pg_num_fields($result);  //use function pg_num_fields to get the column fields for each query
-			echo "<th>Actions</th>"; //displays column header
-                	for($i = 0; $i < $numrows; $i++)  //use for loop to iterate through the columns of each query
-                	{
-                        	$fieldnames = pg_field_name($result, $i); //set fieldnames to pg_field_name to be able to display the column names
-                        	echo "<th>$fieldnames</th>\n"; //will print each column name
-                	}
-
-        		echo "</tr>\n"; //end the row
-    			
-        		while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) { //while loop to get all of the information in the array
-		//		echo "<tr>\n"; //begin new row
-				echo "<td><form method='POST' action='deleteAdmin.php'>";
-				echo '<input type="submit" name="action" value="Delete" />'; //creates submit button Remove
-				//echo '<input type="submit" data-inline="true" value="Delete" onclick="deleteAdmin();" name="Submit">'
-                        //        if (isset($_POST['Submit'])){ deleteAdmin();
-				echo "</form></td>\n";
-
-			foreach ($line as $columnData) {
-                        	echo "\t\t<td>$columnData</td>\n";  //will print each column value in its own cell
-                	}
-
-                		echo "\t</tr>\n";  //closes the row
-        		}
-
-        		echo "</table>\n";  //closes the table
-		}
-		
-	/*	if ($_POST['action'] == 'Delete') //if the action is Remove then execute delete queries
-        	{
-			$query = "DELETE FROM careerschema.authorizationtable WHERE email = $1"; //query to delete country record
-                        $stmt = pg_prepare($conn, "delete_0", $query) or die("Could not prepare query." . pg_last_error($conn)); //prepare query for execution - die adn print error message if prepare fials
-                        $result = pg_execute($conn, "delete_0", array($_POST['email'])) or die("Could not execute query." . pg_last_error($conn)); //execute delete query - die if query could not be executed
-                        echo "Delete was successful"; //if query could be prepared AND executed then print message and return to main page
-                        echo '<br />Return to <a href="admin.php">Admin Dashboard</a>'; //a tag to return to main page
-		}*/
-	/*	function deleteAdmin($email)
-		{
-                        $query = "DELETE FROM careerschema.authorizationtable WHERE email = $1"; //query to delete country record
-                        $stmt = pg_prepare($conn, "delete_0", $query) or die("Could not prepare query." . pg_last_error($conn)); //prepare query for execution - die adn print error message if prepare fials
-                        $result = pg_execute($conn, "delete_0", array($_POST['email'])) or die("Could not execute query." . pg_last_error($conn)); //execute delete query - die if query could not be executed
-                        echo "Delete was successful"; //if query could be prepared AND executed then print message and return to main page
-                        echo '<br />Return to <a href="admin.php">Admin Dashboard</a>'; //a tag to return to main page	
-		}*/
-                ?>
-                        </div>
-                </div>
-
-        </div>
-
-	</div>
-</div>
+        echo "</table>\n";
+}
+?>
 
 </body>
 </html>

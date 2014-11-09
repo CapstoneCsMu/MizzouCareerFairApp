@@ -68,4 +68,35 @@ function handleNewAdmin()
         exit();
     }
 }
+
+function deleteAdmin($email)
+{
+    if($_SERVER['HTTP_HOST'] == 'localhost')
+        include('data_ryanslocal.php');
+    else
+        include ("data.php");
+    $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+    if (!$conn)
+    {
+        echo "\n<div class='container'>\n\t<div class ='alert alert-danger'>";
+        echo "<center>An Error occurred during connection.</center>";
+        echo "\n\t</div>\n</div>";
+        exit();
+    }
+    $query = "DELETE FROM careerschema.authorizationtable WHERE authorizationtable.email = $1"; 
+    $state = pg_prepare($conn, "delete_0", $query) or die("Could not prepare query." . pg_last_error($conn));
+    $result = pg_execute($conn, "delete_0", array($email)) or die("Could not execute query." . pg_last_error($conn));
+    if ($result)
+    {
+	header("Location: adminUsers.php#deleteSuccess");
+        exit();
+
+    }
+    else    
+    {
+	header("Location: adminUsers.php#deleteFailure");
+	exit();
+    }
+}
+
 ?>

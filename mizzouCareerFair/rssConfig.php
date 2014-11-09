@@ -32,6 +32,7 @@ authorization();
         <h1>RSS Configuration</h1>
     </div><br><br>
     <form method="post" action="" id="link" data-ajax="false">
+	<div class="chooseFile">
         <label for="year"><h4>Year For This Career Fair:</h4></label>
         <select name="year" id="year">
             <?php
@@ -53,11 +54,12 @@ authorization();
             <option value="Journalism">Journalism</option>
             <option value="CAFNR">CAFNR</option>
         </select>
-
+	<br />
         <input type="text" name="link" placeholder="RSS Link"></input>
         <div class="submitBtn">
             <input type="submit" name="submitLink" value="Submit">
         </div>
+	</div>
     </form>
     </center>
 
@@ -209,6 +211,7 @@ authorization();
 
     <form method="post" action="input.php" data-ajax="false">
         <input type="hidden" name="function" value="remove">
+    <div class="chooseFile">
     <label for="eventName"><h3>Select The Fair You Would Like To Remove:</h3></label><br>
     <select name="eventName" id="eventName">
         <?php
@@ -222,6 +225,7 @@ authorization();
         <div class="submitBtn">
         <input type="submit" value="Submit" name="fieldSubmit"></input>
         </div>
+	</div>
     </form>
 </div>
 
