@@ -99,4 +99,68 @@ function deleteAdmin($email)
     }
 }
 
+/*function changePass ($currPassword, $newPassword, $confPassword)
+{
+    if($_SERVER['HTTP_HOST'] == 'localhost')
+        include('data_ryanslocal.php');
+    else
+        include ("data.php");
+    $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+    if (!$conn)
+    {
+        echo "\n<div class='container'>\n\t<div class ='alert alert-danger'>";
+        echo "<center>An Error occurred during connection.</center>";
+        echo "\n\t</div>\n</div>";
+        exit();
+    }
+    $user = $_SESSION['admin_loggedin'];
+    $currentPassword = htmlspecialchars($currPassword);
+    $newPass = $newPassword;
+    $confirmNewPassword = $confPassword;
+    $query = array( 0 =>"SELECT * FROM careerschema.authorizationTable WHERE email=$1");
+    $row = pg_fetch_assoc($result);
+    $salt = $row['salt'];
+    $salty = sha1($salt);
+    $salty = trim($salt);
+    $localHash = sha1($salty.$currentPassword);
+
+    for ($i=0; $i<10000; $i++) //Slow Hashing
+    {
+	$localHash = sha1($localHash);
+    }
+    if ($localHash == $row['hashed_pass'] ) //if entered password equals stored password
+    {
+	if ($newPass == $confirmNewPassword
+	{
+	      mt_srand(); //Seed number generator
+    	      $salt = mt_rand(); //generate salt
+    	      $salt = sha1($salt);
+    	      $salt = trim($salt);
+    	      $pass = htmlspecialchars($confirmNewPassword);
+    	      $passHashed = sha1($salt.$pass);
+    	      for ($i=0; $i<10000; $i++) //Slow Hashing
+    	      {
+        	   $passHashed = sha1($passHashed);
+    	      }
+    	      $query = "UPDATE careerschema.authorizationtable SET hashed_pass = $1, salt = $2 WHERE email = $3";
+    	      $state = pg_prepare($conn,"update_1",$query) ;
+    	      $queryInsert = pg_execute($conn,"update_1",array($passHashed, $salt, $user) )  ;
+    	      if ($queryInsert)
+	      {
+		  header("Location: admin.php");
+	          exit();
+	      }
+	      else
+	      {
+		 echo "Your password was not changed.";
+              }
+	}
+	else
+	{
+	     echo "Passwords do not match";
+	}
+    }
+	
+}
+*/
 ?>

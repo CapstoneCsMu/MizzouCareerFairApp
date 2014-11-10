@@ -99,7 +99,7 @@
                     <a data-transition="flip" href="#prep">How to Prepare</a>
                 </li>	
 				<li>
-					<a data-transition="flip" href="">Announcements</a>
+					<a data-transition="flip" href="#newsFeed">News Feed</a>
 				</li>
 			</ul>
 
@@ -108,7 +108,7 @@
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" rel="external" data-icon="info" href="aboutUs.php">About Us</a></li>
-					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:mizzoucareerfairs@gmail.com?Subject""Mizzou Career Fairs Support>Contact Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:mizzoucareerfairs@gmail.com"Subject="Mizzou Career Fairs Support">Contact Us</a></li>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="gear" href="#fairOptions">Fair Options</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
