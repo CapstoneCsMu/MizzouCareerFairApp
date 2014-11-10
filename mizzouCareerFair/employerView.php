@@ -77,6 +77,9 @@
                 <li>
                     <a data-transition="flip" href="#map">Map of Career Fair</a>
                 </li>
+		<li>
+		    <a data-transition="flip" href="#newsFeed">News Feed</a>
+		</li>
 
 				<li>
 					<a data-transition="flip" href="logout.php">Logout</a>
@@ -91,7 +94,7 @@
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="info" href="aboutUs">About Us</a></li>
-					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:kristi.decker347@gmail.com?Subject=TEST">Contact Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:mizzoucareerfairs@gmail.com"Subject="Mizzou Career Fairs Support">Contact Us</a></li>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="comment" href="">Anouncements</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
@@ -332,5 +335,26 @@
 				echo '<script type="text/javascript">location.reload();</script>';
 			}	
 	?>
+
+<div data-role="page" data-dialog="true" id="newsFeed">
+    <div data-role="header">
+        <a rel="external" data-icon="arrow-l" data-iconpos="notext" href="employerView.php">Back</a>
+        <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
+        <h1>News Feed</h1>
+    </div>
+    <div data-role="main" class="ui-content ui-grid-a">
+        <div class="ui-block-a">
+            <a data-role="button" rel="external" data-transition="slidedown" href="newsFeed.php#createPost" data-corners="true">Create Post</a>
+        </div>
+        <div class="ui-block-b">
+            <a data-role="button" rel="external" data-transition="slidedown" href="newsFeed.php#viewPosts" data-corners="true">View All Posts</a>
+        </div>
+    </div>
+    <div data-role="footer">
+        </br>
+    </div>
+</div>
+
+
 </body>
 </html>

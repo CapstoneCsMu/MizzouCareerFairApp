@@ -48,6 +48,12 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
 
     <script type="text/javascript" src="index.js"></script>
+    <script type="text/javascript">
+            function submitAdmin()
+            {
+                document.getElementById("changeAdminPass").submit();
+            }
+    </script>
 
 </head>
 
@@ -88,17 +94,6 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
 
    </div>
 
-<!--    <div data-role="navbar">
-        <ul>
-            <li><a href="#option">RSS Feed</a></li>
-            <li><a href="#uploadMap">Upload Map</a></li>
-            <li><a href="adminUsers.php">Add/Edit Users</a></li>
-            <li><a href="#anylink">News Feed</a></li>
-            <li><a href="#changePass">Change Password</a></li>
-
-        </ul>
-    </div>
--->
 </div>
 
 <div data-role="page" data-theme="a" id="uploadMap">
@@ -194,10 +189,13 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
             <input type="password" name="newPassword" id="newPassword" placeholder="At least 5 characters">
             <label for="confPassword"><b>Confirm New Password:</label>
             <input type="password" name="confPassword" id="confPassword" placeholder="At least 5 characters">
+	    <div class="submitBtn">
+                  <input type="submit" name="submit" value="Submit">
+            </div>
         </form>
         <center>
-            <input type="submit" data-inline="true" value="Update" onclick="submitAdmin();" name="Submit">
-            <?php if (isset($_POST['Submit'])){ changePass();} ?>
+           <!-- <input type="submit" data-inline="true" value="Update" onclick="submitAdmin();" name="Submit">-->
+            <?php if (isset($_POST['submit'])){ changePass();} ?>
         </center>
 
 
