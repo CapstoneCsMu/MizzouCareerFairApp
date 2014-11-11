@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 -- mizzouCareerFair.sql for Mizzou Career Fair Application
 -- creates tables in database for careerSchema
 
@@ -17,7 +16,7 @@ CREATE TABLE careerSchema.authorizationTable(
     hashed_pass varchar(40) NOT NULL,
     salt        varchar(50) NOT NULL,
 	firsname 	varchar(30),
-	lastname 	varchar(30)
+	lastname 	varchar(30),
 	ip_address 	varchar(40),
 	user_type 	varchar(40),
 	company 	varchar(100),
@@ -74,10 +73,6 @@ CREATE TABLE careerSchema.students (
         phoneNumber varchar(20),
         lifePlan 	varchar(200),
         linkedin_id varchar(50),
-		picture_url varchar(200),
-		location varchar(100),
-		linkedin_url varchar(150),
-		job varchar(150),
         FOREIGN KEY (email) REFERENCES careerSchema.authorizationTable(email)
 
 );
@@ -103,4 +98,16 @@ CREATE TABLE careerSchema.employerScannedStudents (
 	company				varchar(50)
 );
 
-
+DROP TABLE IF EXISTS careerSchema.newsFeed CASCADE;
+CREATE TABLE careerSchema.newsFeed (
+	email				varchar(50),
+	imageName			varchar(50),
+	entryDate			timestamp NOT NULL default
+	CURRENT_TIMESTAMP,
+	postedBy			varchar(50),
+	textPost			varchar(2500),
+	imgFilePath			varchar(1000),
+	dataType			varchar(10),
+	company				varchar(50),
+	FOREIGN KEY (email) REFERENCES careerSchema.authorizationTable(email)
+);
