@@ -109,5 +109,6 @@ CREATE TABLE careerSchema.newsFeed (
 	imgFilePath			varchar(1000),
 	dataType			varchar(10),
 	company				varchar(50),
+	title				varchar(200),
 	FOREIGN KEY (email) REFERENCES careerSchema.authorizationTable(email)
 );

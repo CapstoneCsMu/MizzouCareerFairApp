@@ -85,7 +85,7 @@
 					<a data-transition="flip" href="logout.php">Logout</a>
 				</li>
 			</ul>
-            
+         
             <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
 
 	    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
@@ -354,7 +354,6 @@
         </br>
     </div>
 </div>
-
 
 </body>
 </html>
