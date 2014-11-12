@@ -95,8 +95,6 @@ if(!$_SESSION['admin_loggedin']){
         </br>
         </div>
         <div data-role="main" class="ui-content ui-grid-a">
-
-                <form method="post" id="deleteAdmin" action="adminUsers.php#deleteAdmin" data-ajax="false" >
 			<?php
                          	if($_SERVER['HTTP_HOST'] == 'localhost')
                         		include('data_ryanslocal.php');
@@ -111,15 +109,31 @@ if(!$_SESSION['admin_loggedin']){
                         		exit();
                 		}
 
-	                        if ($_SESSION['admin_loggedin'])
-				{
+	                        if ($_SESSION['admin_loggedin']){
+
                                 	$adminEmail = $_SESSION['admin_loggedin'];
                                   	$query1 = "SELECT email, firstname, lastname FROM careerSchema.authorizationtable WHERE user_type = 'admin' and email != '$adminEmail'";
                                   	$result = pg_query($query1) or die("Query failed: " . pg_last_error());
-                                  	printResults($result);
-                        	}
-                	?>
-		</form>
+                                    ?>
+                                    <form method="post" action="" data-ajax="false" id="deleteAdmin">
+                                        <label for="eventName"><h4>Select Admin You Would Like To Remove:</h4></label>
+                                            <select name="adminRemove" id="adminRemove">
+                                                <?php
+                                                while ($admins = pg_fetch_array($result, null, PGSQL_ASSOC)) {
+                                                    echo "<option value=\"" . $admins["email"] . "\">" . $admins["email"] . "</option>";
+                                                    $admins++;
+                                                }
+                                                ?>
+                                                <br>
+                                            </select>
+                                            <div class="submitBtn">
+                                                <input type="submit" value="Submit" name="deleteSubmit">
+                                            </div>
+                                        </form>
+                            <?if (isset($_POST['deleteSubmit'])){ deleteAdmin($_POST["adminRemove"]);}
+                            }?>
+
+
         </div>
 </div>
 
@@ -171,11 +185,11 @@ if(!$_SESSION['admin_loggedin']){
                                         <label for="password"><b>Choose a Password:</label>
                                         <input type="password" name="password" id="password" placeholder="At least 5 characters">
                                         <div class="submitBtn">
-                                            <input type="submit" name="submit" value="Submit">
+                                            <input type="submit" name="addSubmit" value="Submit">
                                         </div>
                 </form>
 
-                                <?php if (isset($_POST['submit'])){ handleNewAdmin();} ?>
+                                <?php if (isset($_POST['addSubmit'])){ handleNewAdmin();} ?>
 <!--
 <div data-role="page" data-theme="a" id="deleteSuccess">
         <div data-role="header" data-position="fixed">
@@ -210,7 +224,7 @@ if(!$_SESSION['admin_loggedin']){
 <?php
 function printResults($result)
 {
-        echo "<table border='1'><br/>\n";
+        echo "<div data-role=\"table\" id=\"userstable\" >";
 
         echo "<tr>\n";
         $numrows = pg_num_fields($result);
@@ -236,7 +250,7 @@ function printResults($result)
                 echo "\t</tr>\n";
         }
 
-        echo "</table>\n";
+    echo "</div>";
 }
 ?>
 
