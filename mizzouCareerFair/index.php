@@ -69,15 +69,14 @@
 					echo'<li><a class="ui-btn ui-icon-user ui-btn-icon-left"  rel="external" href="login.php">Sign In!</a></li>';
 				}
 				else if($_SESSION['admin_loggedin']){
-					echo ' <li data-role="list-divider">My Account</li>';
+					echo '<li data-role="list-divider">My Account</li>';
 					echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 					echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
 				}
 				else if($_SESSION['employer_loggedin']){
-					echo ' <li data-role="list-divider">My Account</li>';
+					echo '<li data-role="list-divider">My Account</li>';
 					echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
-					echo'<li><a rel="external" href="employerView.php">Employer Dashboard</a></li>';
-					
+					echo'<li><a rel="external" href="employerView.php">Employer Dashboard</a></li>';	
 				}
 				else
 				{
