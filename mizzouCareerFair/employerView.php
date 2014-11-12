@@ -97,10 +97,6 @@
 				<li>
 					<a data-transition="flip" href="#newsFeed">News Feed</a>
 				</li>
-
-				<li>
-					<a data-transition="flip" href="logout.php">Logout</a>
-				</li>
 			</ul>
          
             <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>

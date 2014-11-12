@@ -20,7 +20,8 @@ if(isset($_SESSION['admin_loggedin']))
 
 if(isset($_SESSION['employer_loggedin']))
 {
-    header("Location: employerView.php");
+    session_start();
+	header("Location: employerView.php");
 }
 ?>
     <!DOCTYPE html>
