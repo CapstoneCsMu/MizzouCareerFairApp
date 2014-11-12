@@ -82,8 +82,7 @@
 				{
 					echo '<li data-role="list-divider" style="background: linear-gradient(#FFEB99,#FFF0B2 )" >Student Tools</li>';
 					echo '<li><a href="#myProfile">View My Profile</a></li>';
-					// echo '<li><a rel="external" href="updateProfileForm.php">Edit My Profile</a></li>';
-					// echo '<li><a href="#jobHunt">Job Hunt</a></li>';
+					echo '<li><a data-transition="flip" href="#prep">How to Prepare</a></li>';
 					echo '<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 				}
 			?>
@@ -99,9 +98,6 @@
                 </li>
 				<li>
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
-                </li>
-				<li>
-                    <a data-transition="flip" href="#prep">How to Prepare</a>
                 </li>	
 				<li>
 					<a data-transition="flip" href="#newsFeed">News Feed</a>
