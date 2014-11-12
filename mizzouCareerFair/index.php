@@ -73,6 +73,12 @@
 					echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
 					echo'<li><a rel="external" href="admin.php">Admin Dashboard</a></li>';
 				}
+				else if($_SESSION['employer_loggedin']){
+					echo ' <li data-role="list-divider">My Account</li>';
+					echo'<li><a rel="external" href="logout.php">Sign Out!</a></li>';
+					echo'<li><a rel="external" href="employerView.php">Employer Dashboard</a></li>';
+					
+				}
 				else
 				{
 					echo '<li data-role="list-divider" style="background: linear-gradient(#FFEB99,#FFF0B2 )" >Student Tools</li>';

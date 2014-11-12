@@ -50,14 +50,38 @@
 
 </head>
 
+<?php
+		
+	include ("data.php");
+	$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+	if (!$conn)
+	{
+		echo "<br/>An error occurred with connecting to the server.<br/>";
+		die();
+	}
+	
+	$empEmail = $_SESSION['employer_loggedin'];
+
+	//use pg_num_rows to get amount of rows. Print that many pages with info.	
+	$query = "SELECT DISTINCT ON(email) company FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
+	$result = pg_query($query) or die("Query failed: " . pg_last_error());
+	$line = pg_fetch_assoc($result)
+
+?> 
+				
+
 <body>
 
     <div data-role="page" data-theme="a" id="home">
-        <div data-role="header" data-position="fixed">
-            <h1 class="no-ellipses">Company Page</h1>
-        </div>
-
-		
+    <div data-role="header">
+        </br>
+        <center><?php echo $line['company']; ?></center>
+        </br>
+        <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+           data-transition="flip" href="index.php">Home</a> <a data-icon="search"
+                                                               data-iconpos="notext" data-rel="dialog" data-transition="fade"
+                                                               href="../nav.html">Search</a>
+    </div>
 
         <div data-role="content">
             
@@ -70,16 +94,9 @@
                     <a data-transition="flip" href="#scannedStudents">Students You Have Scanned!</a>
                 </li>	
                 
-                <li>
-                    <a data-transition="flip" href="#map_page">Directions to Fair</a>
-                </li>
-				
-                <li>
-                    <a data-transition="flip" href="#map">Map of Career Fair</a>
-                </li>
-		<li>
-		    <a data-transition="flip" href="#newsFeed">News Feed</a>
-		</li>
+				<li>
+					<a data-transition="flip" href="#newsFeed">News Feed</a>
+				</li>
 
 				<li>
 					<a data-transition="flip" href="logout.php">Logout</a>
@@ -103,81 +120,17 @@
         </div>
 
     </div>
-    <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
-    <div data-role="page" id="map_page">
-            <div data-role="header" data-position="fixed">
-            <h1>Directions</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-            <div data-role="content">
-                <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
-                    <div id="map_canvas" style="height:300px;"></div>
-                    <div id="fromDirection" data-role="fieldcontain">
-                        <label for="from">From</label> 
-                        <input type="text" id="from"/>
-                    </div>
-                    <div id="toDirection" data-role="fieldcontain">
-                        <label for="to">To</label> 
-                        <input type="text" id="to" value="Hearnes Center 600 E Stadium Blvd, Columbia, MO 65203"/>
-                    </div>
-                    <div id="dirSpecs" data-role="fieldcontain">
-                        <label for="mode" class="select">Transportation method:</label>
-                        <select name="select-choice-0" id="mode">
-                            <option value="DRIVING">Driving</option>
-                            <option value="WALKING">Walking</option>
-                            <option value="BICYCLING">Bicycling</option>
-                        </select>
-                    </div>
-                    <a data-icon="navigation" data-role="button" href="#" id="submitDirections">Get Directions</a>
-                    
-                    <div data-role="fieldcontain">
-						<label for="flip-2">Display Map : </label>
-						<select id="toggleMap" data-role="slider">
-							<option value="off">Off</option>
-							<option value="on">On</option>
-						</select> 
-						
-						<a id="resetSearch" style="float:right;" data-icon="navigation" href="#" data-role="button" data-inline="true" data-theme="b">Reset Search</a>
-						
-					</div>
-                    
-                    
-                </div>
-                
-                <div id="results" style="display:none;">
-                    <div id="directions"></div>
-                </div>
-            </div>
-    </div>
-	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->
-	
+   
 	<!--Start scanned students HTML-->
 	<div data-role="page" data-theme="a" id="scannedStudents" data-cache="false">
         <div data-role="header" data-position="fixed">
             <h1>Potential Employees</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext" data-transition="flip" href="#home">Home</a> 
-        </div>
-		
-		<?php
-		
-		include ("data.php");
-			$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-			if (!$conn)
-			{
-				echo "<br/>An error occurred with connecting to the server.<br/>";
-				die();
-			}
-		
-		?> 
-					
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext" data-transition="flip" href="#home">Home</a> 
+        </div>	
 				
 	<?php
 		
 		$empEmail = $_SESSION['employer_loggedin'];
-		// echo $empEmail;
 		echo '</br></br>';
 
 		include ("data.php");
