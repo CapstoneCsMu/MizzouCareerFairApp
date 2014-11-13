@@ -181,7 +181,7 @@
 					data-iconpos="notext" data-rel="dialog" data-transition="fade"
 					href="../nav.html">Search</a>
 					</div>
-
+					
 					<div data-role="content">';
 				
 				$query2 = "SELECT * FROM careerSchema.students WHERE email = '$emailStudents[$j]'";
@@ -257,11 +257,15 @@
 						
 					}
 				}
-				echo "</table></div>";		
+				echo '<div data-position="fixed" data-role="footer" data-role="footer">
+				<h4>&copy; 2014 Mizzou Career Fair App Dev Team</h4>
+				</div>';
+				echo "</table></div>";	
 				echo '</div>';
-				echo '</div>';			
+				echo '</div>';
 			}	
 		}
+
 		?>	
 		
 	<?php
