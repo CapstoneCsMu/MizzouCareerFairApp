@@ -122,7 +122,7 @@
 		
 		<a  style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-bars ui-btn-icon-left" href="#fairSelect">Select a Fair</a>
 		<a style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-navigation ui-btn-icon-left" data-transition="flip" href="#map_page">Get Directions</a>
-		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
+		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent" style="width: 195px;">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Fair to Calendar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span class="_start">02-10-2015 10:00:00</span>
 				<span class="_end">02-10-2015 15:30:00</span>
