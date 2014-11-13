@@ -84,9 +84,9 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
                 <li>
                     <a data-transition="flip" href="adminUsers.php" rel="external">Manage Users</a>
                 </li>
-                <li>
+                <!--<li>
                     <a data-transition="flip" href="#anylink">News Feed</a>
-                </li>
+                </li>-->
                 <li>
                     <a data-transition="flip" href="#changePass">Change Password</a>
                 </li>
@@ -190,8 +190,8 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
             <label for="confPassword"><b>Confirm New Password:</label>
             <input type="password" name="confPassword" id="confPassword" placeholder="At least 5 characters">
 	    <div class="submitBtn">
-                  <input type="submit" name="submitPass" value="SubmitPass">
-            </div>
+                  <input type="submit" name="submitPass" value="Submit">
+            </div><br /><br />
         </form>
         <center>
            <!-- <input type="submit" data-inline="true" value="Update" onclick="submitAdmin();" name="Submit">-->
