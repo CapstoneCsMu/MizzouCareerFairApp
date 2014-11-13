@@ -31,43 +31,39 @@ authorization();
         <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
         <h1>RSS Configuration</h1>
     </div><br><br>
+    <form method="post" action="" id="link" data-ajax="false">
+	<div class="chooseFile">
+        <label for="year"><h4>Year For This Career Fair:</h4></label>
+        <select name="year" id="year">
+            <?php
+            for($i = 2014; $i < 2050; $i++)
+                echo "<option value=\"".$i."\">".$i."</option>";
+            ?>
+        </select>
 
-    <?if(!isset($_POST['submitLink'])) { ?>
-        <form method="post" action="rssConfig.php" id="link" data-ajax="false">
-            <div class="chooseFile">
-                <label for="year"><h4>Year For This Career Fair:</h4></label>
-                <select name="year" id="year">
-                    <?php
-                    for ($i = 2014; $i < 2050; $i++)
-                        echo "<option value=\"" . $i . "\">" . $i . "</option>";
-                    ?>
-                </select>
+        <label for="semester"><h4>Semester Of This Career Fair:</h4></label>
+        <select name="semester" id="semester">
+            <option value="Fall">"Fall"</option>
+            <option value="Spring">"Spring"</option>
+        </select>
 
-                <label for="semester"><h4>Semester Of This Career Fair:</h4></label>
-                <select name="semester" id="semester">
-                    <option value="Fall">"Fall"</option>
-                    <option value="Spring">"Spring"</option>
-                </select>
-
-                <label for="college"><h4>College For This Career Fair:</h4></label>
-                <select name="college" id="college">
-                    <option value="Engineering">Engineering</option>
-                    <option value="Business">Business</option>
-                    <option value="Journalism">Journalism</option>
-                    <option value="CAFNR">CAFNR</option>
-                </select>
-                <br/>
-                <input type="text" name="link" placeholder="RSS Link"></input>
-
-                <div class="submitBtn">
-                    <input type="submit" name="submitLink" value="Submit">
-                </div>
-            </div>
-        </form>
-        </center>
+        <label for="college"><h4>College For This Career Fair:</h4></label>
+        <select name="college" id="college">
+            <option value="Engineering">Engineering</option>
+            <option value="Business">Business</option>
+            <option value="Journalism">Journalism</option>
+            <option value="CAFNR">CAFNR</option>
+        </select>
+	<br />
+        <input type="text" name="link" placeholder="RSS Link"></input>
+        <div class="submitBtn">
+            <input type="submit" name="submitLink" value="Submit">
+        </div>
+	</div>
+    </form>
+    </center>
 
     <?php
-    }
     include ("data.php");
     $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
 
@@ -79,10 +75,12 @@ authorization();
             $content = $xml->channel->item->children("http://purl.org/rss/1.0/modules/content/");
             $data = $content->encoded;
 
-            /*echo "<data-role = \"fieldset\">";
+            echo "<br>";
+            echo "<fieldset>";
             echo "<h3><ul>Example of item in feed:</ul></h3>";
             echo $data;
-            echo "</fieldset>";*/
+            echo "</fieldset>";
+            echo "<br>";
 
             $dom = new DOMDocument();
             $table = $dom->loadHTML($data);
@@ -98,95 +96,97 @@ authorization();
 
 
 
-            <div data-role="content" class="ui-grid-b">
+            <!-- Select the field that contains company name -->
             <form method="post" action="input.php" id="fields" data-ajax="false">
                 <input type="hidden" name="rssLink" id="rssLink" value="<?php echo $rssLink;?>">
                 <input type="hidden" name="event" id="event" value="<?php echo $eventName;?>">
                 <input type="hidden" name="function"  value="add">
 
-                    <ul data-dividertheme="b" data-inset="true" >
-                    <li>
-                         <select name="nameField" id="nameField"><option selected disabled>Field For Company Name</option>
+                <fieldset class="ui-field-contain">
+                    <label for="nameField">Field For Company Name:</label><br>
+                    <select name="nameField" id="nameField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
-                    </li>
+                </fieldset>
 
                 <!-- Select the field that contains the company address -->
-
-                    <li>
-                    <select name="cityField" id="cityField"><option selected disabled>Field For Company's City</option>
+                <fieldset class="ui-field-contain">
+                    <label for="cityField">Field For Company City:</label><br>
+                    <select name="cityField" id="cityField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
-                    </li>
+                </fieldset>
 
-
-                <li>
-                    <select name="stateField" id="stateField"><option selected disabled>Field For Company's State</option>
+                <fieldset class="ui-field-contain">
+                    <label for="stateField">Field For Company State:</label><br>
+                    <select name="stateField" id="stateField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
-                </li>
+                </fieldset>
 
                 <!-- Select the field that contains the desired majors -->
-                <li>
-                    <select name="majorsField" id="majorsField"><option selected disabled>Field For Desired Majors</option>
+                <fieldset class="ui-field-contain">
+                    <label for="majorsField">Field For Desired Majors:</label><br>
+                    <select name="majorsField" id="majorsField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
-                </li>
+                </fieldset>
 
                 <!-- Select the field that contains the position types -->
-
-                    <select name="positionTypeField" id="positionTypeField"><option selected disabled>Field For Position Types</option>
+                <fieldset class="ui-field-contain">
+                    <label for="positionTypeField">Field For Position Types:</label><br>
+                    <select name="positionTypeField" id="positionTypeField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
+                </fieldset>
 
-
-                <li>
-                    <select name="websiteField" id="websiteField"><option selected disabled>Field Company Website</option>
+                <fieldset class="ui-field-contain">
+                    <label for="websiteField">Field For Company Website:</label><br>
+                    <select name="websiteField" id="websiteField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
-               </li>
+                </fieldset>
 
-                <li>
-                    <select name="citizenshipField" id="citizenshipField"><option selected disabled>Field Citizenship</option>
+                <fieldset class="ui-field-contain">
+                    <label for="citizenshipField">Field For Citizenship:</label><br>
+                    <select name="citizenshipField" id="citizenshipField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
-                </li>
+                </fieldset>
 
-                <li>
-                    <select name="statusField" id="statusField"><option selected disabled>Field For Company Status</option>
+                <fieldset class="ui-field-contain">
+                    <label for="citizenshipField">Field For Company Status:</label><br>
+                    <select name="statusField" id="statusField">
                         <?php
                         for($i = 0; $i < sizeof($fields); $i++)
                             echo "<option value=\"".$fields[$i]."\">".$fields[$i]."</option>";
                         ?>
                     </select>
-                </li>
-                        <div class="submitBtn">
-                            <input type="submit" value="Submit" name="fieldSubmit"></input>
-                        </div>
-                </ul>
+                </fieldset>
+
+                <input type="submit" value="Submit" name="fieldSubmit"></input>
             </form>
-                </div>
 
         <?php
 

@@ -128,7 +128,7 @@ if(!$_SESSION['admin_loggedin']){
                                             </select>
                                             <div class="submitBtn">
                                                 <input type="submit" value="Submit" name="deleteSubmit">
-                                            </div>
+                                            </div><br /><br />
                                         </form>
                             <?if (isset($_POST['deleteSubmit'])){ deleteAdmin($_POST["adminRemove"]);}
                             }?>
@@ -186,7 +186,7 @@ if(!$_SESSION['admin_loggedin']){
                                         <input type="password" name="password" id="password" placeholder="At least 5 characters">
                                         <div class="submitBtn">
                                             <input type="submit" name="addSubmit" value="Submit">
-                                        </div>
+                                        </div><br /><br />
                 </form>
 
                                 <?php if (isset($_POST['addSubmit'])){ handleNewAdmin();} ?>
