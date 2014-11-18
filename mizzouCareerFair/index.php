@@ -356,13 +356,16 @@ Free Food!  Prizes for the Winners!!!!!</span>
 				<li><span style="font-size:11.0pt">Memorize some questions about the company so the recruiter knows you’ve done some research and you are actually interested in the company. <o:p></o:p></span></li>
 			</ul>
 		</div>
+		<div data-role="footer" data-position="fixed">
+            <center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
+        </div>
     </div>	
 	
 	<div data-role="page" data-theme="a" id="resume">
         <div data-role="header" data-position="fixed">
             <h1>Rules of the Resume</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#preparation">Back</a> <a data-icon="search"
+            data-transition="flip" href="#prep">Back</a> <a data-icon="search"
             data-iconpos="notext" data-rel="dialog" data-transition="fade"
             href="../nav.html">Search</a>
         </div>
@@ -380,6 +383,9 @@ Free Food!  Prizes for the Winners!!!!!</span>
 				<li><span style="font-size:11.0pt">We strongly recommend taking advantage of the resume builder seminars given by Engineering Career Services.<o:p></o:p></span></li>
 			</ul>
 		</div>
+		<div data-role="footer" data-position="fixed">
+            <center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
+        </div>
     </div>
 	
 	
@@ -387,7 +393,7 @@ Free Food!  Prizes for the Winners!!!!!</span>
         <div data-role="header" data-position="fixed">
             <h1>Dress for Success</h1>
             <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext"
-            data-transition="flip" href="#preparation">Back</a>  <a data-icon="search"
+            data-transition="flip" href="#prep">Back</a>  <a data-icon="search"
             data-iconpos="notext" data-rel="dialog" data-transition="fade"
             href="../nav.html">Search</a>
         </div>
@@ -406,6 +412,9 @@ Free Food!  Prizes for the Winners!!!!!</span>
 				<li><span style="font-size:11.0pt">Women should wear a suit, dress, or knee length skirt.<o:p></o:p></span></li>
 			</ul>
 		</div>
+		<div data-role="footer" data-position="fixed">
+            <center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
+        </div>
     </div>
 	
 	<div data-role="page" data-theme="a" id="confidence">
@@ -431,6 +440,9 @@ Free Food!  Prizes for the Winners!!!!!</span>
 				<li><span style="font-size:11.0pt">Have confidence. Know what you are doing.<o:p></o:p></span></li>
 			</ul>
 		</div>
+		<div data-role="footer" data-position="fixed">
+            <center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
+        </div>
     </div>
 	<!--End preparation HTML-->
 	
