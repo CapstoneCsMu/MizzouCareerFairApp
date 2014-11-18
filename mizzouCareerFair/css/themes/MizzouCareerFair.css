@@ -755,4 +755,24 @@ margin: 0 auto;
 width: 500px;
 height: 2px;
 !important
+}
+
+.newsFeed
+{
+margin: 0 auto;
+width: 800px;
+!important
+}
+
+.newsFeedBackground
+{
+border-radius:4px;
+background: #ffcc33 /*{c-body-background-color}*/;
+border-color: #8c701c /*{c-body-border}*/;
+border-width: 1px;
+border-style: solid;
+margin: 0 auto;
+width: 800px;
+background-color:#ffcc33;
+!important
 }		

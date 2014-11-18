@@ -20,13 +20,14 @@ if(isset($_SESSION['admin_loggedin']))
 
 if(isset($_SESSION['employer_loggedin']))
 {
-    header("Location: employerView.php");
+    session_start();
+	header("Location: employerView.php");
 }
 ?>
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Login</title>
+        <title>Registration</title>
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <!-- Include CSS and JQM CSS -->
@@ -38,40 +39,21 @@ if(isset($_SESSION['employer_loggedin']))
         <!-- Include jQuery and jQuery Mobile CDN, add actual files -->
         <script src="js/jquery-1.11.1.min.js"></script>
         <script src="jquery.mobile-1.4.4/jquery.mobile-1.4.4.min.js"></script>
-        <script type="text/javascript">
-            function submitLogin()
-            {
-                document.getElementById("loginForm").submit();
-            }
-            function redirect()
-            {
-                window.location = "registration.php";
-            }
-            function notify()
-            {
-                // Prompt User for Email
-                prompt("Please enter your email address");
-                // Alert on Success (To be implemented later)
-                alert("An email has been sent to you.");
-            }
-        </script>
     </head>
     <body>
     <div data-role="page" data-dialog="true">
         <div data-role="header">
-            <a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="index.php">Back</a>
-            </br><center>Login</center></br>
+            <a data-icon="delete" data-transition="slideup" data-iconpos="notext" href="registration.php" rel="external">Back</a>
+            </br><center>Student Verification</center></br>
         </div>
-        <div>
-            <?php
-           // handle_login();
-            ?>
-        </div>
+
         <div data-role="main" class="ui-content">
             <form id="loginForm" method="post" action="tigerspop.php" data-ajax="false">
                 <div class="ui-field-contain">
-				Disclaimer:  We ask you to enter your pawprint and password to check if you are a current University of Missouri student.  We will not store this information at all!<br><br>
-				
+	
+		<div class ='alert alert-info alert-dismissable'>
+		<center><b>Disclaimer:</b> To register, you must be an MU student. We will not store your official password.</center>
+		</div>
                     <label for="pawprint">Pawprint:</label>
                     <input type="text" name="pawprint" id="pawprint">
                     <label for="password">Password:</label>
@@ -79,19 +61,7 @@ if(isset($_SESSION['employer_loggedin']))
                 </div>
                 <center><input type="submit" data-inline="true" name="Submit" value="Submit"></center>
             </form>
-            <center>
-
-                <!-- <a href="tigerspop.php" data-inline="true" data-role="button" value="Submit" onclick="submitLogin();">Submit</a> -->
-            </center>
         </div>
-        <center>
-            <div data-role="footer">
-                <p>Don't have an account?</p>
-                <!--<center><a href="registration.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>-->
-				<center><a href="tigerspop.php" data-role="button" data-transition="pop" rel="external" onclick="redirect();">Register</a></center>
-          
-            </div>
-        </center>
     </div>
     </body>
     </html>
@@ -100,27 +70,21 @@ if(isset($_SESSION['employer_loggedin']))
 if(isset($_POST['Submit']))
 {
 	 $pawprint = htmlspecialchars($_POST['pawprint']);
+	 $_SESSION['pawprint'] = $pawprint;
 	 $password = htmlspecialchars($_POST['password']);
 	 $identified = true;
 	 $identified = authenticateToUMLDAP($pawprint, $password);
 	if($identified !== true){
 		
 		if($identified == false){
-			header("Location: index.php#failureRegistration");
-			//might be good to add a session variable to avoid registration of non-student in db due to 
-			//hardtyped URL (.../registration.php#student).  I'll do it later - Cecilia
-			//$_SESSION['active_student'] = "no";
+			$_SESSION['student_authenticated'] = false;
+			header("Location: login.php");
 			exit();	
 		}
-		else{		
+		else{	
+			$_SESSION['student_authenticated'] = true;
 			header("Location: registration.php#student");
-			//$_SESSION['active_student'] = "yes";
 			exit();	
 		}
-	}
-	else 
-	{
-		echo "Your code doesn't work";
-		exit();
 	}
 }

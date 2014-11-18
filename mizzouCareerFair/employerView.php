@@ -50,14 +50,38 @@
 
 </head>
 
+<?php
+		
+	include ("data.php");
+	$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
+	if (!$conn)
+	{
+		echo "<br/>An error occurred with connecting to the server.<br/>";
+		die();
+	}
+	
+	$empEmail = $_SESSION['employer_loggedin'];
+
+	//use pg_num_rows to get amount of rows. Print that many pages with info.	
+	$query = "SELECT DISTINCT ON(email) company FROM careerSchema.employerScannedStudents WHERE employerEmail = '$empEmail'";
+	$result = pg_query($query) or die("Query failed: " . pg_last_error());
+	$line = pg_fetch_assoc($result)
+
+?> 
+				
+
 <body>
 
     <div data-role="page" data-theme="a" id="home">
-        <div data-role="header" data-position="fixed">
-            <h1 class="no-ellipses">Company Page</h1>
-        </div>
-
-		
+    <div data-role="header">
+        </br>
+        <center><?php echo $line['company']; ?></center>
+        </br>
+        <a data-direction="reverse" data-icon="home" data-iconpos="notext"
+           data-transition="flip" href="index.php">Home</a> <a data-icon="search"
+                                                               data-iconpos="notext" data-rel="dialog" data-transition="fade"
+                                                               href="../nav.html">Search</a>
+    </div>
 
         <div data-role="content">
             
@@ -70,19 +94,11 @@
                     <a data-transition="flip" href="#scannedStudents">Students You Have Scanned!</a>
                 </li>	
                 
-                <li>
-                    <a data-transition="flip" href="#map_page">Directions to Fair</a>
-                </li>
-				
-                <li>
-                    <a data-transition="flip" href="#map">Map of Career Fair</a>
-                </li>
-
 				<li>
-					<a data-transition="flip" href="logout.php">Logout</a>
+					<a data-transition="flip" href="#newsFeed">News Feed</a>
 				</li>
 			</ul>
-            
+         
             <a><?php echo "<script type=\"in/Login\">Hello, <?js= firstName ?> <?js= lastName ?>.</script>" ?></a>
 
 	    <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
@@ -91,7 +107,7 @@
 			<div data-role="navbar" data-iconpos="top">
 				<ul>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="info" href="aboutUs">About Us</a></li>
-					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:kristi.decker347@gmail.com?Subject=TEST">Contact Us</a></li>
+					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="edit" href="mailto:mizzoucareerfairs@gmail.com"Subject="Mizzou Career Fairs Support">Contact Us</a></li>
 					<li><a style="background: linear-gradient(#CCCCCC,#E6E6E6 )" data-icon="comment" href="">Anouncements</a></li>
 				</ul>
 				<center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
@@ -100,81 +116,17 @@
         </div>
 
     </div>
-    <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
-    <div data-role="page" id="map_page">
-            <div data-role="header" data-position="fixed">
-            <h1>Directions</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-            <div data-role="content">
-                <div class="ui-bar-c ui-corner-all ui-shadow" style="padding:1em;">
-                    <div id="map_canvas" style="height:300px;"></div>
-                    <div id="fromDirection" data-role="fieldcontain">
-                        <label for="from">From</label> 
-                        <input type="text" id="from"/>
-                    </div>
-                    <div id="toDirection" data-role="fieldcontain">
-                        <label for="to">To</label> 
-                        <input type="text" id="to" value="Hearnes Center 600 E Stadium Blvd, Columbia, MO 65203"/>
-                    </div>
-                    <div id="dirSpecs" data-role="fieldcontain">
-                        <label for="mode" class="select">Transportation method:</label>
-                        <select name="select-choice-0" id="mode">
-                            <option value="DRIVING">Driving</option>
-                            <option value="WALKING">Walking</option>
-                            <option value="BICYCLING">Bicycling</option>
-                        </select>
-                    </div>
-                    <a data-icon="navigation" data-role="button" href="#" id="submitDirections">Get Directions</a>
-                    
-                    <div data-role="fieldcontain">
-						<label for="flip-2">Display Map : </label>
-						<select id="toggleMap" data-role="slider">
-							<option value="off">Off</option>
-							<option value="on">On</option>
-						</select> 
-						
-						<a id="resetSearch" style="float:right;" data-icon="navigation" href="#" data-role="button" data-inline="true" data-theme="b">Reset Search</a>
-						
-					</div>
-                    
-                    
-                </div>
-                
-                <div id="results" style="display:none;">
-                    <div id="directions"></div>
-                </div>
-            </div>
-    </div>
-	<!-- End Page for the user to get a google map to the fair, it should attempt to start from geo location -->
-	
+   
 	<!--Start scanned students HTML-->
 	<div data-role="page" data-theme="a" id="scannedStudents" data-cache="false">
         <div data-role="header" data-position="fixed">
             <h1>Potential Employees</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext" data-transition="flip" href="#home">Home</a> 
-        </div>
-		
-		<?php
-		
-		include ("data.php");
-			$conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not connect:'. pg_last_error());
-			if (!$conn)
-			{
-				echo "<br/>An error occurred with connecting to the server.<br/>";
-				die();
-			}
-		
-		?> 
-					
+            <a data-direction="reverse" data-icon="arrow-l" data-iconpos="notext" data-transition="flip" href="#home">Home</a> 
+        </div>	
 				
 	<?php
 		
 		$empEmail = $_SESSION['employer_loggedin'];
-		// echo $empEmail;
 		echo '</br></br>';
 
 		include ("data.php");
@@ -229,7 +181,7 @@
 					data-iconpos="notext" data-rel="dialog" data-transition="fade"
 					href="../nav.html">Search</a>
 					</div>
-
+					
 					<div data-role="content">';
 				
 				$query2 = "SELECT * FROM careerSchema.students WHERE email = '$emailStudents[$j]'";
@@ -249,8 +201,14 @@
 				echo '<form id="unfav_'.$j.'" method="post" data-ajax="false">';
 				echo '<input type="hidden" name="unfav" value="'.$student.'" />';
 				echo '</form>';
-				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'unfav_'.$j.'\').submit(); window.alert(\'Student has been removed from Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Remove from Favorites.</a></center>';
+				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'unfav_'.$j.'\').submit(); window.alert(\'Student has been removed from Favorites.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Remove from Favorites!</a></center>';
 				}
+				
+				echo '<form id="delete_'.$j.'" method="post" data-ajax="false">';
+				echo '<input type="hidden" name="delete" value="'.$student.'" />';
+				echo '</form>';
+				echo '<center><a href="employerView.php#scannedStudents" data-role="button" data-theme="b" onclick="document.getElementById(\'delete_'.$j.'\').submit(); window.alert(\'Student has been removed from your list.\');" data-inline="true" class="ui-btn ui-icon-user ui-btn-icon-left">Delete from your list!</a></center>';
+				
 				
 				// Display Profile
 				echo '<div class="ui-bar ui-bar-a ui-corner-all" style="padding: 5px;">';
@@ -299,11 +257,15 @@
 						
 					}
 				}
-				echo "</table></div>";		
+				echo '<div data-position="fixed" data-role="footer" data-role="footer">
+				<h4>&copy; 2014 Mizzou Career Fair App Dev Team</h4>
+				</div>';
+				echo "</table></div>";	
 				echo '</div>';
-				echo '</div>';			
+				echo '</div>';
 			}	
 		}
+
 		?>	
 		
 	<?php
@@ -313,12 +275,38 @@
                 pg_execute($conn,"query3",array('1',$_POST['fav']));
 				echo '<script type="text/javascript">location.reload();</script>';
 			}	
-		else if(isset($_POST['unfav'])){
+		elseif(isset($_POST['unfav'])){
 
 				pg_prepare($conn,"query4",'UPDATE careerSchema.employerScannedStudents SET favorite = $1 WHERE email = $2' );
                 pg_execute($conn,"query4",array('0',$_POST['unfav']));
 				echo '<script type="text/javascript">location.reload();</script>';
+			}
+		elseif(isset($_POST['delete'])){
+
+				pg_prepare($conn,"query5",'DELETE FROM careerSchema.employerScannedStudents WHERE email = $1 AND employeremail = $2' );
+                pg_execute($conn,"query5",array($_POST['delete'], $empEmail));
+				echo '<script type="text/javascript">location.reload();</script>';
 			}	
 	?>
+
+<div data-role="page" data-dialog="true" id="newsFeed">
+    <div data-role="header">
+        <a rel="external" data-icon="arrow-l" data-iconpos="notext" href="employerView.php">Back</a>
+        <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
+        <h1>News Feed</h1>
+    </div>
+    <div data-role="main" class="ui-content ui-grid-a">
+        <div class="ui-block-a">
+            <a data-role="button" rel="external" data-transition="slidedown" href="newsFeed.php#createPost" data-corners="true">Create Post</a>
+        </div>
+        <div class="ui-block-b">
+            <a data-role="button" rel="external" data-transition="slidedown" href="newsFeed.php#viewPosts" data-corners="true">View All Posts</a>
+        </div>
+    </div>
+    <div data-role="footer">
+        </br>
+    </div>
+</div>
+
 </body>
 </html>
