@@ -101,7 +101,7 @@
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
                 </li>	
 		<li>
-			<a data-transition="flip" href="newsFeed.php">News Feed</a>
+			<a data-transition="flip" href="newsFeed.php#posts">News Feed</a>
 		</li>
 			</ul>
 
@@ -122,7 +122,7 @@
 		
 		<a  style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-bars ui-btn-icon-left" href="#fairSelect">Select a Fair</a>
 		<a style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-navigation ui-btn-icon-left" data-transition="flip" href="#map_page">Get Directions</a>
-		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent" style="width: 195px;">
+		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Fair to Calendar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				<span class="_start">02-10-2015 10:00:00</span>
 				<span class="_end">02-10-2015 15:30:00</span>

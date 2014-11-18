@@ -100,12 +100,8 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
                 }
 
 	 $employerEmail = $_SESSION['employer_loggedin'];
-//         $query1 = "SELECT email, company FROM careerSchema.authorizationtable WHERE email = $employerEmail";
-  //       $result = pg_query($query1) or die("Query failed: " . pg_last_error());
-    //             while ($userss = pg_fetch_array($result, null, PGSQL_ASSOC)) {
-      //                       echo "<option value=\"" . $users["email"] . "\">" . $users["email"] . "</option>";
    
-echo "$employerEmail";              //                              $users++;
+echo "$employerEmail";   
 
 
 	//$query = "SELECT company FROM careerschema.authorizationTable WHERE email = $_SESSION['employer_loggedin']";
@@ -128,9 +124,6 @@ echo "$employerEmail";              //                              $users++;
        // else{
             //save file and insert path into database
             move_uploaded_file($_FILES["file"]["tmp_name"], $path);
-         //   $query = "INSERT INTO careerSchema.newsFeed(email, textPost, company, title) VALUES ($1, $2, $3, $4)";
-           // $statement = pg_prepare("myQuery", $query) or die (pg_last_error());
-           // $result = pg_execute("myQuery", array($email, $_POST['post'], $_SESSION['company'], $_POST['title'])) or die(pg_last_error());
         
        	    $query = "INSERT INTO careerSchema.newsFeed(email, imageName, textPost, imgFilePath, company, title) VALUES ($1, $2, $3, $4, $5, $6)";
             $statement = pg_prepare("myQuery", $query) or die (pg_last_error());
@@ -139,20 +132,6 @@ echo "$employerEmail";              //                              $users++;
 
 
     }?>
-	
-<!--
-    <div data-role="page" data-theme="a" id="viewPosts" data-ajax="false">
-    <div data-role="header">
-        <a rel="external" data-icon="arrow-l" data-iconpos="notext" href="employerView.php">Back</a>
-        <a rel="external" data-icon="home" data-iconpos="notext" href="index.php">Home</a>
-        <h1>View All News Feed Posts</h1>
-    </div><br><br>
-   
-    <div data-role="footer">
-        </br>
-    </div>
-    </div>
--->
 
    <div data-role="page" data-theme="a" id="posts">
         <?php
@@ -208,9 +187,10 @@ function printResults($result, $result2, $company)
                         	{
                                         echo "<div class=newsFeed>";
                                        // echo "<ul data-dividertheme='b' data-inset='true' data-role='listview'>";
-					echo "<ul data-inset='true' data-role='listview'>";
+					//echo "<ul data-inset='true' data-role='listview'>";
                                         //echo "<p data-role='list-divider' style='background-color:#C2C6C6;border-radius:4px;padding:7px;'>$columnData --  Posted by: </p><p style='background-color:#ffcc33;border-radius:4px;padding:7px;height:auto;font-weight:normal;' data-role='list-divider'>$colData</p><br /><br />";
-                                        echo "<li data-role='list-divider'>$columnData --  Posted by: </li><li style='background-color:#ffcc33;height:auto;font-weight:normal;'>$colData</li><br /><br />";
+					echo "<div style='background-color:#ffcc33;padding:5px;border-radius:5px 5px 0px 0px;font-weight:bold'>$columnData -- Posted by: </div><div style='background-color:#dddddd;padding:5px 0px 10px 10px;border-radius:0px 0px 5px 5px;font-weight:normal'>$colData</div><br /><br />";                                       
+ //echo "<li data-role='list-divider'>$columnData --  Posted by: </li><li style='background-color:#ffcc33;height:auto;font-weight:normal;'>$colData</li><br /><br />";
 					echo "</div></ul>";
                                 }
                         }
