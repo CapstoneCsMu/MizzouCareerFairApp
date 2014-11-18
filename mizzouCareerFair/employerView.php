@@ -251,6 +251,9 @@
 							case 'lifeplan':
 								echo '<tr><td valign="top" align="left">Career Goals: </td><td valign="top" align="left">'.$value.'</td></tr>';
 								break;
+							case 'resume':
+								echo '<tr><td valign="top" align="left">Resume: </td><td valign="top" align="left"><a id="downloadLink" href="https://babbage.cs.missouri.edu/~cs4970s14grp2/mizzoucareerfairs/'.$value.'"target="_blank" type="application/octet-stream" download="">Download</a></td></tr>';
+								break;
 							default;
 								break;
 						}
