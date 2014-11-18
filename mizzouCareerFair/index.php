@@ -100,9 +100,9 @@
 				<li>
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
                 </li>	
-		<li>
-			<a data-transition="flip" href="newsFeed.php#posts">News Feed</a>
-		</li>
+				<li>
+					<a data-transition="flip" href="newsFeed.php#posts">News Feed</a>
+				</li>
 			</ul>
 
         </div>
@@ -271,12 +271,7 @@ Free Food!  Prizes for the Winners!!!!!</span>
 				<span class="_all_day_event">false</span>
 				<span class="_date_format">MM/DD/YYYY</span>
 			</div>
-			
-			
-           
         </div>
-
-		
         <div data-role="footer" data-position="fixed">
             <center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
         </div>
@@ -284,7 +279,6 @@ Free Food!  Prizes for the Winners!!!!!</span>
 	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
 	<div data-role="page" id="map_page" style="height: 50% width: 50%">
-	
             <div data-role="header" data-position="fixed">
 				<h1>Directions</h1>
 				<a data-direction="reverse" data-icon="home" data-iconpos="notext"
