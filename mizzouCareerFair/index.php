@@ -282,13 +282,6 @@ Free Food!  Prizes for the Winners!!!!!</span>
         </div>
     </div>
 	
-	
-	
-	
-	
-	
-	
-	
     <!-- Page for the user to get a google map to the fair, it should attempt to start from geo location -->
 	<div data-role="page" id="map_page" style="height: 50% width: 50%">
 	
@@ -439,7 +432,6 @@ Free Food!  Prizes for the Winners!!!!!</span>
 			</ul>
 		</div>
     </div>
-	
 	<!--End preparation HTML-->
 	
 	<!--Start Job Hunt HTML-->
@@ -611,27 +603,6 @@ Free Food!  Prizes for the Winners!!!!!</span>
 
 
         <div data-role="content">
-			<!-- Uncomment when content added
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
-                <li data-role="list-divider">On Campus Preparation</li>
-
-
-                <li>
-                    <a href="option">Resume Review</a>
-                </li>
-
-
-                <li>
-                    <a href="option2.html">Planning Your Career Fair</a>
-                </li>
-
-
-                <li>
-                    <a href="option3.html">How To Act Proffesional</a>
-                </li>
-            </ul>
-			-->
-
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">How To's and Tutorials</li>
 				
