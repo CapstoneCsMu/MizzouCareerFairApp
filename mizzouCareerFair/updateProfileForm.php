@@ -50,6 +50,7 @@ include('check_https.php');
 			$major = $row['major'];
 			if (($row['resume']) != ""){
 				$resume = "Resume on file";
+				//$resume = $row['resume'];
 			}
 			$phone = $row['phonenumber'];
 			$lifeplan = $row['lifeplan'];
@@ -142,7 +143,7 @@ include('check_https.php');
 						<div data-role="fieldcontain">
 							<label for="job">Current Job:</label>
 							<input type="text" name="job" id="job" value="<?php echo $headline; ?>" data-mini="true">
-						</div>
+						</div>	
 						<div data-role="fieldcontain">
 							<label for="linkedInURL">LinkedIn Profile (Public-URL):</label>
 							<input type="text" name="linkedInURL" id="linkedInURL" value="<?php echo $profileURL; ?>" data-mini="true">
