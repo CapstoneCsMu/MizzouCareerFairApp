@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 	/*
 	File: index.php
 	Parent: None
@@ -183,6 +183,7 @@
 					<?php include 'displayWithFilters.php'; ?>
 					</ul>
 				</div>
+				<?php if($_SESSION['student_loggedin']): ?>
 				<div id="visited">
 					<form class="ui-filterable">
 						<input id="UNFILTERED" data-type="search">
@@ -190,8 +191,8 @@
 					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#VISITED" data-autodividers="true">
 					<?php include 'displayVisited.php'; ?>
 					</ul>
-
 				</div>
+				<?php endif; ?>
 			</div>
 		</div>
     </div>

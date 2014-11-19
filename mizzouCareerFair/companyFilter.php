@@ -7,12 +7,17 @@
 	include('check_https.php');
 	
 	//Reset Session to Accept POST Variables from this form.
-	//$_SESSION = NULL;
-	if($_SESSION['prevPage'] != 'index.php')
+	if (!empty($_POST) && $_SESSION['prevPage'] != 'index.php')
+	{
 		$_SESSION['filters'] = $_POST;
+		print("prev: ".$_SESSION['prevPage']);
+	}
 	else
 		$_SESSION['prevPage'] = 'companyFilter.php';
 	
+	if(!empty($_GET))
+		$_SESSION['filters'] = NULL;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -54,6 +59,10 @@
 		else {
 		alert("Error: Please Select a Major");
 		}
+	}
+	function Reset()
+	{
+		document.getElementById("reset").submit();
 	}
 </script>
 </head>
@@ -140,10 +149,15 @@
 			?>
 		</div>
 	</div>
+	
+	<form id="reset" method="get" action="companyFilter.php">
+		<input type="hidden" name="reset" value="true">
+	</form>
+	
 	<div data-role="footer" data-position="fixed">
 		<center>
-		<a href="companyFilter.php" data-role="button" data-theme="b" onclick="submitFilter();" data-inline="true">Submit</a>
-		<a href="companyFilter.php" data-role="button" data-theme="b" onclick="location.reload();" data-inline="true">Reset</a>
+		<a data-role="button" data-theme="b" onclick="submitFilter();" data-inline="true">Save</a>
+		<a data-role="button" data-theme="b" onclick="Reset();" data-inline="true">Reset</a>
         </center><center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
 	</div>
 </div>
