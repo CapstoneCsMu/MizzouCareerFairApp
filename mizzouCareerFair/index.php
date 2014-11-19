@@ -101,7 +101,7 @@
                     <a data-transition="flip" href="#map">Map of the Career Fair</a>
                 </li>	
 				<li>
-					<a data-transition="flip" href="newsFeed.php#posts">News Feed</a>
+					<a data-transition="flip"  rel="external" href="newsFeedView.php">News Feed</a>
 				</li>
 			</ul>
 
