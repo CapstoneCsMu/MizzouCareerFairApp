@@ -47,10 +47,6 @@
 	<?php endif; ?>
 	<!-- Include Google Maps API -->
 	 <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
-
-	<!-- Includes directions functionality -->
-	
-
 </head>
 
 <body style="width: 100%; height: 100%;">
@@ -143,7 +139,6 @@
   </div>
   
   <?php include('displayProfile.php'); ?>
-  
   <div data-role="page" data-theme="a" id="companies">
         <div data-role="header" data-position="fixed">
             <h1 onclick="$.mobile.silentScroll(0)">Companies</h1>
@@ -159,7 +154,7 @@
 						<li><a href="#filtered">Filtered</a></li>
 						<?php
 						if($_SESSION['student_loggedin']){
-							echo '<li><a href="#visited">Favorites</a></li>';
+							echo '<li><a href="#visited">Visited</a></li>';
 						}
 						?>
 					</ul>
@@ -186,9 +181,9 @@
 				<?php if($_SESSION['student_loggedin']): ?>
 				<div id="visited">
 					<form class="ui-filterable">
-						<input id="UNFILTERED" data-type="search">
+						<input id="VISITED" data-type="search">
 					</form>
-					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#VISITED" data-autodividers="true">
+					<ul data-dividertheme="b" data-inset="true" data-role="listview" data-filter="true" data-input="#VISITED" data-autodividers="false">
 					<?php include 'displayVisited.php'; ?>
 					</ul>
 				</div>

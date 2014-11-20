@@ -44,7 +44,7 @@ if($Majorfilters != NULL)
 		echo "</center></br>";
 		//sort names alphabetically and print them as list options
 		//asort RETAINS the previous key, it helps increase the efficiency.
-		asort($companyNames);
+		// asort($companyNames);
 		$i = 0;
 		foreach($companyNames as $key => $val)
 		{

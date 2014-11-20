@@ -5,7 +5,7 @@ Parent: index.php (approx. line 163)
 Purpose: To display companies students had visited.
 */
 
-echo '<div class="ui-bar ui-bar-a">';
+
 if ($_SESSION['student_loggedin']){
 	
 		$stuEmail = $_SESSION['student_loggedin'];
@@ -15,14 +15,10 @@ if ($_SESSION['student_loggedin']){
 		$result = pg_query($query1) or die("Query failed: " . pg_last_error());
 		
 		$num_rows = pg_num_rows($result);
-		if ($num_rows > 0){
-			echo '<div data-role="content">
-			<ul data-dividertheme="b" data-inset="true" data-role="listview">
-			<li data-role="list-divider">Companies You Visited</li>';
-			
+		if ($num_rows > 0){			
 			$j=0;
 			while ($line = pg_fetch_assoc($result)) {
-				asort($companyNames);
+				// asort($companyNames);
 				$_SESSION['companies'] = $companyNames;
 				$i = 1;
 				foreach($companyNames as $companyName => $val)
@@ -35,16 +31,13 @@ if ($_SESSION['student_loggedin']){
 					$i++;
 				}
 				$j++;			
-			}	
-			echo '</ul>';
-			echo '</div>';		
-			
+			}				
 		}
 		else{
-			echo '<center><p><b>You have not visited any companies yet. </br>When a company scans your QR Code,  they will appear here.</b></p></center>';
+			echo '</br><div class="ui-bar ui-bar-a">';
+			echo "<center><b>You have no visited any companies yet.</b></center>";
+			echo '</div>';
 		}	
 		
 }
-echo'</div>
-</div>';
 ?>
