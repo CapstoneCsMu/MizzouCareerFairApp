@@ -51,7 +51,7 @@
 
 <body style="width: 100%; height: 100%;">
     <div data-role="page" data-theme="a" id="home">
-        <div data-role="header" >
+        <div data-role="header" data-position="fixed">
 			</br>
 			<center><?php print ( isset($_POST['fairname']) ? $_POST['fairname'] : '2014 Engineering Career Fair') ; ?></center>
 			</br>
@@ -118,8 +118,8 @@
 		
 		<a  style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-bars ui-btn-icon-left" href="#fairSelect">Select a Fair</a>
 		<a style="text-overflow: ellipsis; overflow: visible; white-space: normal" class="ui-btn ui-icon-navigation ui-btn-icon-left" data-transition="flip" href="#map_page">Get Directions</a>
-		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent">
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add Fair to Calendar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="http://example.com/link-to-your-event" title="Add to Calendar" class="addthisevent" style="width: 80%;">
+				<center>Add Fair to Calendar</center>
 				<span class="_start">02-10-2015 10:00:00</span>
 				<span class="_end">02-10-2015 15:30:00</span>
 				<span class="_zonecode">11</span>
