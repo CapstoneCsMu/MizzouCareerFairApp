@@ -35,13 +35,11 @@
 	<?php if($_SERVER['HTTP_HOST'] == 'localhost'): ?>
 		<script type="text/javascript" src="https://platform.linkedin.com/in.js">
   		api_key: 750nr1ytn6d9bz
-  		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
 	<?php else: ?>
 	<script type="text/javascript" src="https://platform.linkedin.com/in.js">
   		api_key: 75a6k7ahbjlrny
-  		onLoad: onLinkedInLoad
   		authorize: true
 	</script>
 	<?php endif; ?>
@@ -448,8 +446,8 @@ Free Food!  Prizes for the Winners!!!!!</span>
 
         <div data-role="content">
         	<h2>LinkedIn : </h2>
-			<?php echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
-			<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
+			<?php // echo"<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script>
+			echo "<script type=\"IN/JYMBII\" data-format=\"inline\"></script>" ?>
 			<ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li>
                     <a href="addResume.php">Add a Resume</a>
@@ -537,29 +535,6 @@ Free Food!  Prizes for the Winners!!!!!</span>
         </div>
     </div>
 	<!--End Failure file type Resume HTML.-->
-	
-	<!-- Testing what we can do for a company -->
-    <div data-role="page" data-theme="a" id="ibm">
-    	<div data-role="header" data-position="fixed">
-            <h1>IBM</h1>
-            <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            href="#home">Home</a> <a data-icon="search" data-iconpos="notext"
-            data-rel="dialog" data-transition="fade" href=
-            "../nav.html">Search</a>
-        </div>
-        
-        <div data-role="content">
-        	<h3>Company Information:
-        	</h3>
-        	The International Business Machines Corporation (IBM) is an American multinational technology and consulting corporation, with headquarters in Armonk, New York, United States. IBM manufactures and markets computer hardware and software, and offers infrastructure, hosting and consulting services in areas ranging from mainframe computers to nanotechnology.
-        <br>
-        <?php 
-			echo "<script src=\"//platform.linkedin.com/in.js\" type=\"text/javascript\"></script><script type=\"IN/CompanyProfile\" data-id=\"1009\" data-format=\"inline\"></script>" ;
-			include('linkedIn.php');
-		?>
-        </div>	
-    </div>
-	<!--End Testing what we can do for a company-->
 
 	<!--Start map HTML-->
     <div data-role="page" data-theme="a" id="map">
@@ -576,16 +551,10 @@ Free Food!  Prizes for the Winners!!!!!</span>
         <div data-role="header" data-position="fixed">
             <h1>Mizzou Career Fair App Hearnes Map</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-            data-transition="flip" href="#home">Home</a> <a data-icon="search"
-            data-iconpos="notext" data-rel="dialog" data-transition="fade"
-            href="../nav.html">Search</a>
+            data-transition="flip" href="#home">Home</a>
         </div>
 
-
-        <div data-role="content"><img alt="Fair Map" src="<?php echo $filePath;?>"
-        style="width:100%">
-        </div>
-
+        <img alt="Fair Map" src="<?php echo $filePath;?>" style="width:100%" data-elem="pinchzoomer" data-options="scaleMode:full;"/>
 
         <div data-position="fixed" data-role="footer">
            <center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
