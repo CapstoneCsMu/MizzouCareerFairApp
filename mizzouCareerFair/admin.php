@@ -76,7 +76,7 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
                         <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">Welcome, <?php echo $_SESSION['admin_loggedin']; ?></li>
                 <li>
-                    <a data-transition="flip" href="#option">RSS Feed</a>
+                    <a data-transition="flip" href="#option">Manage Fairs</a>
                 </li>
                 <li>
                     <a data-transition="flip" href="#uploadMap">Upload Map</a>
@@ -84,9 +84,9 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
                 <li>
                     <a data-transition="flip" href="adminUsers.php" rel="external">Manage Users</a>
                 </li>
-                <!--<li>
-                    <a data-transition="flip" href="#anylink">News Feed</a>
-                </li>-->
+                <li>
+                    <a data-transition="flip" href="newsFeed.php">News Feed</a>
+                </li>
                 <li>
                     <a data-transition="flip" href="#changePass">Change Password</a>
                 </li>

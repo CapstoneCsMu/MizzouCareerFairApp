@@ -564,6 +564,7 @@ Free Food!  Prizes for the Winners!!!!!</span>
 
 	<!--Start old rewrite code-->
     <div data-role="page" data-theme="a" id="prep">
+
         <div data-role="header" data-position="fixed">
             <h1>Career Fair Events</h1>
             <a data-direction="reverse" data-icon="home" data-iconpos="notext"
@@ -573,8 +574,8 @@ Free Food!  Prizes for the Winners!!!!!</span>
         </div>
 
 
-        <div data-role="content">
-            <ul data-dividertheme="b" data-inset="true" data-role="listview">
+       <div data-role="content">
+            <!--<ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">How To's and Tutorials</li>
 				
 				<li>
@@ -596,7 +597,7 @@ Free Food!  Prizes for the Winners!!!!!</span>
 				<li>
                     <a href="#badGrades">Bad Grades?</a>
                 </li>
-            </ul>
+            </ul>-->
 
             <ul data-dividertheme="b" data-inset="true" data-role="listview">
                 <li data-role="list-divider">Keys to a successful career fair</li>
@@ -617,7 +618,7 @@ Free Food!  Prizes for the Winners!!!!!</span>
         </div>
 
 
-        <div data-role="footer">
+        <div data-position="fixed" data-role="footer">
             <center>&copy; 2014 Mizzou Career Fair App Dev Team</center>
         </div>
     </div>
