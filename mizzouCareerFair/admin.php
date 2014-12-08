@@ -64,7 +64,7 @@ $conn = pg_connect(HOST." ".DBNAME." ".USERNAME." ".PASSWORD) or die('Could not 
         <center>Admin Dashboard</center>
         </br>
         <a data-direction="reverse" data-icon="home" data-iconpos="notext"
-           data-transition="flip" href="index.php">Home</a> <a data-icon="search"
+           data-transition="flip" href="index.php" rel="external">Home</a> <a data-icon="search"
                                                                data-iconpos="notext" data-rel="dialog" data-transition="fade"
                                                                href="../nav.html">Search</a>
     </div>
