@@ -81,7 +81,7 @@ function printResults($result)
         // echo "<ul data-dividertheme='b' data-inset='true' data-role='listview'>";
         //echo "<ul data-inset='true' data-role='listview'>";
         //echo "<p data-role='list-divider' style='background-color:#C2C6C6;border-radius:4px;padding:7px;'>$columnData --  Posted by: </p><p style='background-color:#ffcc33;border-radius:4px;padding:7px;height:auto;font-weight:normal;' data-role='list-divider'>$colData</p><br /><br />";
-        echo "<div style='background-color:#ffcc33;padding:5px;border-radius:5px 5px 0px 0px;font-weight:bold'>".$line['title']." -- Posted by: </div>
+        echo "<div style='background-color:#ffcc33;padding:5px;border-radius:5px 5px 0px 0px;font-weight:bold'>".$line['title']."</div>
         <div style='background-color:#dddddd;padding:5px 0px 10px 10px;border-radius:0px 0px 5px 5px;font-weight:normal'>".$line['textpost']."</div>"
         ;
         //echo "<li data-role='list-divider'>$columnData --  Posted by: </li><li style='background-color:#ffcc33;height:auto;font-weight:normal;'>$colData</li><br /><br />";
